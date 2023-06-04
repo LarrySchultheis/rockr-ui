@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import LoginButton from './LoginButton';
 import './App.css';
 import LogoutButton from './LogoutButton';
+import RegisterButton from './RegisterButton';
 import Profile from './Profile';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -18,6 +19,7 @@ function App() {
         <p></p>
         <p></p>
         <LoginButton/>
+        <RegisterButton/>
         <LogoutButton/>
       </header>
     </div>
