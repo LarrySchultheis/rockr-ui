@@ -12,7 +12,7 @@ const LogoutButton = () => {
           })
         }
       >
-        Log Out
+        <b>Log Out</b>
       </button>
     );
   };

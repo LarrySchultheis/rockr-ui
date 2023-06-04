@@ -8,6 +8,11 @@
       "type": "image/x-icon"
     },
     {
+      "src": "Rockr_Logo_Start.png",
+      "type": "image/png",
+      "sizes": "262x194"
+    },
+    {
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"

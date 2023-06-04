@@ -9,12 +9,32 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: none;
   }
 }
 
+/* Change style attributes of the buttons */
+button {
+  height:50px !important;
+  width:200px !important;
+  background-color: #FF0000; 
+  border: 2px solid white; 
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  transition-duration: 0.4s; /*For the color change effect*/
+}
+
+button:hover {
+  background-color: white; 
+  color: #FF0000;
+}
+
 .App-header {
-  background-color: #282c34;
+  background-color: #00FF00;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

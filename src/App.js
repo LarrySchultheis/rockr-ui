@@ -10,20 +10,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <LoginButton/>
-      <LogoutButton/>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <img src="/Rockr_Logo_Start.png" />
+        <h1>
+          <font color="red" size="24">Connect With Other Musicians!</font>
+        </h1>
+        <p></p>
+        <p></p>
+        <p></p>
+        <LoginButton/>
+        <LogoutButton/>
       </header>
     </div>
   );
