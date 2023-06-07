@@ -1,17 +1,17 @@
 import logo from './logo.svg';
-import LoginButton from './LoginButton';
+import LoginButton from './components/LoginButton';
 import './App.css';
-import LogoutButton from './LogoutButton';
-import Profile from './Profile';
-import { useAuth0 } from '@auth0/auth0-react';
+import LogoutButton from './components/LogoutButton';
+import Profile from './components/Profile';
 
 
-function App() {    
+function App() {  
   return (
     <div className="App">
       <header className="App-header">
       <LoginButton/>
       <LogoutButton/>
+      <Profile></Profile>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
