@@ -12,8 +12,10 @@ import Register from './/Register';
 function App() {    
   /*Making a variable to test the authentication*/
   var Authyesno = "Yes"
-  var Authname = ""
-  /*Variable to hold the page names*/
+  //For the user's name. Had to put user? with Question Mark to avoid Undefined Error
+  var Authname = useAuth0().user?.name;
+
+  /*Variable to hold the page structure*/
   var homepage = (
     <div className="App">
       <header className="App-header">
@@ -21,7 +23,7 @@ function App() {
         <h1>
           <font color="red" size="24">Connect With Other Musicians!</font>
         </h1>
-        <p>{Authyesno}</p>
+        <p></p>
         <p></p>
         <p></p>
         <LoginButton/>
@@ -39,7 +41,7 @@ function App() {
         <header className="App-header">
           <img src="/Rockr_Logo_Start.png" />
           <h1>
-            <font color="red" size="24">Welcome Back!</font>
+            <font color="red" size="24">Welcome Back! {Authname}</font>
           </h1>
           <p></p>
           <p></p>
@@ -52,7 +54,6 @@ function App() {
   /*when the user has logged out*/
   else {
     Authyesno = "No"
-    Authname = useAuth0.
     homepage = (
       <div className="App">
         <header className="App-header">
