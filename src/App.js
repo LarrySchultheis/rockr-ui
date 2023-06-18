@@ -11,6 +11,7 @@ import LandingPage from './pages/LandingPage';
 import AppFooter from './components/AppFooter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/Theme';
+import Profile from './components/Profile';
 
 
 const App = () => {
