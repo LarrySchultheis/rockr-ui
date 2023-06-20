@@ -4,7 +4,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Bands from "./components/Bands";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import LandingPage from './pages/LandingPage';
