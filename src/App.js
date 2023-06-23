@@ -11,6 +11,7 @@ import LandingPage from './pages/LandingPage';
 import AppFooter from './components/AppFooter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/Theme';
+import AdminManagement from './components/AdminManagement';
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
           <Routes>
             <Route path="/bands" element={<Bands />}/>
             <Route path="/" element={<LandingPage />}/>
+            <Route path="admin-management" element={<AdminManagement  />}/>
           </Routes>
         </div>
       </Router>
