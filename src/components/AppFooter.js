@@ -25,7 +25,7 @@ export default function AppFooter() {
       sx={{ display: 'flex', bgcolor: 'secondary.light' }}
     >
       <Container sx={{ my: 8, display: 'flex' }}>
-        <Grid container spacing={5}>
+        {/* <Grid container spacing={5}>
           <Grid item xs={6} sm={4} md={3}>
             <Grid
               container
@@ -45,7 +45,7 @@ export default function AppFooter() {
               <Grid item>
               </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}
           <Grid item xs={6} sm={4} md={2}>
             <Box component="ul" sx={{ m: 0, listStyle: 'none', p: 0 }}>
               <Box component="li" sx={{ py: 0.5 }}>
@@ -60,7 +60,7 @@ export default function AppFooter() {
           </Grid>
           <Grid item>
           </Grid>
-        </Grid>
+        {/* </Grid> */}
       </Container>
     </Typography>
   );

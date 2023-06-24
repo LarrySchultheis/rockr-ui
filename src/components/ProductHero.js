@@ -1,14 +1,18 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import banner from "../images/banner.jpg"
 import theme from './Theme';
+import RegistrationModal from './RegistrationModal';
 
-import { useAuth0 } from '@auth0/auth0-react'
+
 
 export default function ProductHero() {
-  const { loginWithRedirect} = useAuth0();
+  const [openModal, setOpenModal] = React.useState(false);
+  const modalHandler = () => setOpenModal(!openModal);
+  
   return (
     <ProductHeroLayout
       sxBackground={{
@@ -37,15 +41,12 @@ export default function ProductHero() {
       <Button
         color="secondary"
         variant="contained"
-        size="large"
-        component="a"
-        href=""
         sx={{ minWidth: 200 }}
-        onClick={() => loginWithRedirect({authorizationParams: {screen_hint: "signup",}}
-        )}
+        onClick={modalHandler}
       >
         Register
       </Button>
+      <RegistrationModal open={openModal} modalHandler={modalHandler}/>
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Sign-up to get started
       </Typography>
@@ -53,4 +54,4 @@ export default function ProductHero() {
   );
 }
 
-// CITE THIS
+// CITE THIS: https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate

@@ -9,12 +9,12 @@ const axiosInstance = axios.create({
   });
 
 
-const getBands = await axiosInstance.get("/get_bands")
-  .then(function (response) {
-    return response?.data;
-  })
-
+// const register = await axiosInstance.get("/register")
+//   .then(function (response) {
+//     return response?.data;
+//   })
+const register = "";
 
 export default{
-    getBands,
+    register,
 };

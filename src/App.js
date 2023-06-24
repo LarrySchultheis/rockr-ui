@@ -5,7 +5,7 @@ import {
   Route
 } from "react-router-dom";
 import React from 'react';
-import Bands from "./components/Bands";
+import RegistrationModal from "./components/RegistrationModal";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import LandingPage from './pages/LandingPage';
 import AppFooter from './components/AppFooter';
@@ -25,7 +25,7 @@ const App = () => {
         <div>
           <ResponsiveAppBar></ResponsiveAppBar>
           <Routes>
-            <Route path="/bands" element={<Bands />}/>
+            <Route path="/register" element={<RegistrationModal />}/>
             <Route path="/" element={<LandingPage />}/>
           </Routes>
         </div>
