@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
@@ -11,7 +10,7 @@ import RegistrationModal from './RegistrationModal';
 
 export default function ProductHero() {
   const [openModal, setOpenModal] = React.useState(false);
-  const modalHandler = () => setOpenModal(!openModal);
+  const handleModal = () => setOpenModal(!openModal);
   
   return (
     <ProductHeroLayout
@@ -42,11 +41,11 @@ export default function ProductHero() {
         color="secondary"
         variant="contained"
         sx={{ minWidth: 200 }}
-        onClick={modalHandler}
+        onClick={handleModal}
       >
         Register
       </Button>
-      <RegistrationModal open={openModal} modalHandler={modalHandler}/>
+      <RegistrationModal open={openModal} handleModal={handleModal}/>
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Sign-up to get started
       </Typography>

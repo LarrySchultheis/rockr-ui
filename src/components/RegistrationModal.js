@@ -1,9 +1,9 @@
 import React from "react";
-import FormGroup from '@mui/material/FormGroup';
-import Input from '@mui/material/Input';
+import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import {postRegistration} from '../api/endpoints'
 
 const style = {
   position: 'absolute',
@@ -17,55 +17,37 @@ const style = {
   p: 4,
 };
 
-// import { useNavigate } from "react-router-dom";
-// let navigate = useNavigate();
-// const routeChange = () =>{ 
-//   let path = `register`; 
-//   navigate(path);
-// }
-{/* <Button
-        color="secondary"
-        variant="contained"
-        size="large"
-        component="a"
-        href=""
-        sx={{ minWidth: 200 }}
-        onClick={routeChange} //</ProductHeroLayout>loginWithRedirect({authorizationParams: {screen_hint: "signup",}}}
-      ></Button> */}
-
 function RegistrationModal({
   open,
-  modalHandler
+  handleModal
 }) {
+  const { register, handleSubmit } = useForm()
+  const onSubmit = (data) => {
+    postRegistration(data);
+    handleModal();
+  }
+
 
   return (
     <div>
       <Modal
         open={open}
-        onClose={modalHandler}
+        onClose={handleModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <FormGroup sx={{padding: 2}}>
-            <Input id="reg-email" placeholder="Email Address" />
-            <Input id="reg-password" type="password" placeholder="Password" />
-            <Button
-              color="secondary"
-              variant="contained"
-              type="submit"
-              // onClick={() => loginWithRedirect()}
-            >
-            Create Account
+          <form sx={{padding: 2}} onSubmit={handleSubmit(onSubmit)}>
+            <input id="email" required={true} type="email" placeholder="Email Address" {...register("email")}/>
+            <input id="password" required={true} type="password" placeholder="Password" />
+            <Button color="secondary" variant="contained" type="submit">
+              Create Account
             </Button>
-          </FormGroup>
+          </form>
         </Box>
       </Modal>
     </div>
   )
 };
-  // return (
-
-// )};
 
 export default RegistrationModal;
