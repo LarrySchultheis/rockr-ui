@@ -5,12 +5,12 @@ import {
   Route
 } from "react-router-dom";
 import React from 'react';
-import Bands from "./components/Bands";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import LandingPage from './pages/LandingPage';
 import AppFooter from './components/AppFooter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/Theme';
+import Profile from "./components/Profile"
 
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
         <div>
           <ResponsiveAppBar></ResponsiveAppBar>
           <Routes>
-            <Route path="/bands" element={<Bands />}/>
+            <Route path="/register" element={<Profile />}/>
             <Route path="/" element={<LandingPage />}/>
           </Routes>
         </div>
