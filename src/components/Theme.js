@@ -3,24 +3,24 @@ import { createTheme, responsiveFontSizes } from "@mui/material";
 const theme = responsiveFontSizes(createTheme({
 	spacing: 4,
 	typography: {
-		// fontFamily: [
-		// 	'Roboto',
-		// 	'Raleway',
-		// 	'Open Sans',
-		// ].join(','),
-		// h1: {
-		// 	fontSize: '5rem',
-		// 	fontFamily: 'Raleway',
-		// },
-		// h2: {
-		// 	fontSize: '3.5rem',
-		// 	fontFamily: 'Open Sans',
-		// 	fontStyle: 'bold',
-		// },
-		// h3: {
-		// 	fontSize: '2.5rem',
-		// 	fontFamily: 'Roboto',
-		// },
+		fontFamily: [
+			'Roboto',
+			'Raleway',
+			'Open Sans',
+		].join(','),
+		h1: {
+			fontSize: '5rem',
+			fontFamily: 'Raleway',
+		},
+		h2: {
+			fontSize: '3.5rem',
+			fontFamily: 'Open Sans',
+			fontStyle: 'bold',
+		},
+		h3: {
+			fontSize: '2.5rem',
+			fontFamily: 'Roboto',
+		},
 	},
 	palette: {
 		background: {
