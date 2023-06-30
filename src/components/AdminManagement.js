@@ -11,7 +11,6 @@ export default function AdminManagement() {
     const [users, setUsers] = useState([])
 
     useEffect(() => {
-        
           fetch('http://localhost:5000/get_users')
               .then(response => response.json())
               .then(data => {
@@ -59,14 +58,34 @@ export default function AdminManagement() {
         }
 
     const deleteUser = (user_id) => {
-        fetch(`http://localhost:5000/delete_user_account?user_id=${user_id}`)
-        .then((res) => { 
-            if(res.status === 200) {
+        console.log(user_id)
+        fetch(`http://localhost:5000/delete_user_account?id=${user_id}`)
+        .then((response) => { 
+            if(response.status === 200) {
                 // Better than firing a reload IMO
-                setUsers(users.filter((u) => { return u.pkid !== user_id }))
+                setUsers(users.filter((u) => { return u.id !== user_id }))
             }
             else {
                 alert("Error deleting user")
+            }
+        })
+    }
+
+    const createUser = (user) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*' },
+            body: JSON.stringify(user)
+        }
+        fetch('http://localhost:5000/create_user_account', requestOptions)
+        .then((response) => {
+            if (response.status === 200) {
+                alert("User successfully created")
+
+            }
+            else {
+                alert("Error creating user")
             }
         })
     }
@@ -136,7 +155,7 @@ export default function AdminManagement() {
                                 <Button 
                                     sx={{backgroundColor: theme.palette.secondary.main}} 
                                     variant="contained" 
-                                    onClick={() => deleteUser(u.pkid)}
+                                    onClick={() => deleteUser(u.id)}
                                 >
                                     Delete
                                 </Button>          
@@ -156,7 +175,23 @@ export default function AdminManagement() {
                         onClick={() => handleSave()}
                     >
                         Save
-                    </Button>                  
+                    </Button> 
+                    <Button 
+                        sx={{m:5, backgroundColor: theme.palette.secondary.main}} 
+                        variant="contained" 
+                        size="large"
+                        onClick={() => createUser({
+                            username: "testing2",
+                            first_name: "test",
+                            last_name: "ing2",
+                            email: "testing2@wtf.com",
+                            is_admin: false,
+                            is_band: false,
+                            is_active: true
+                        })}
+                    >
+                        Create User
+                    </Button>                   
                 </Box>
 
             </TableContainer>
