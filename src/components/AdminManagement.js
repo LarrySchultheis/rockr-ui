@@ -4,16 +4,12 @@ import Paper from '@mui/material/Paper';
 import theme from "./Theme";
 import CreateUserModal from "./CreateUserModal";
 
-
-
-
 export default function AdminManagement() {
-    // const [isAuthenticated, isLoading] = useAuth0();
+
     const [users, setUsers] = useState([]);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
     useEffect(() => {
         getUsers();
       }, [setUsers])
