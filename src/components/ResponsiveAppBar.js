@@ -195,8 +195,7 @@ function ResponsiveAppBar() {
                     <Button
                       color="secondary"
                       variant="outlined"
-                      onClick={() => loginWithRedirect({authorizationParams: {screen_hint: "signup",}}
-                      )}
+                      onClick={() => loginWithRedirect({authorizationParams: {screen_hint: "signup"}, appState: { returnTo: `${window.location.origin}/user_profile`}})}
                     >
                       Sign up
                     </Button>

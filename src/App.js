@@ -28,7 +28,8 @@ const App = () => {
           <Routes>
             <Route path="/register" element={<Profile />}/>
             <Route path="/" element={<LandingPage />}/>
-            <Route path="admin-management" element={<AdminManagement  />}/>
+            <Route path="admin_management" element={<AdminManagement  />}/>
+            <Route path="user_profile" element={<Profile/>}/>
           </Routes>
         </div>
       </Router>

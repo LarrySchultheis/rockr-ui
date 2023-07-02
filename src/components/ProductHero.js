@@ -4,13 +4,12 @@ import Typography from '@mui/material/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import banner from "../images/banner.jpg"
 import theme from './Theme';
-import RegistrationModal from './RegistrationModal';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 
 export default function ProductHero() {
-  const [openModal, setOpenModal] = React.useState(false);
-  const handleModal = () => setOpenModal(!openModal);
+  const { loginWithRedirect } = useAuth0();
   
   return (
     <ProductHeroLayout
@@ -41,11 +40,10 @@ export default function ProductHero() {
         color="secondary"
         variant="contained"
         sx={{ minWidth: 200 }}
-        onClick={handleModal}
+        onClick={() => loginWithRedirect({authorizationParams: {screen_hint: "signup"}, appState: { returnTo: `${window.location.origin}/user_profile`}})}
       >
         Register
       </Button>
-      <RegistrationModal open={openModal} handleModal={handleModal}/>
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Sign-up to get started
       </Typography>
