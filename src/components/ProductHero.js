@@ -1,3 +1,6 @@
+// REFERENCES:
+//  * https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate
+
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -26,7 +29,7 @@ export default function ProductHero() {
         alt="increase priority"
       />
       <Typography color="inherit" align="center" marked="center" variant="h2">  
-        ROCKR
+        Welcome to ROCKR!
       </Typography>
       <Typography
         color="inherit"

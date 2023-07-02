@@ -12,6 +12,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/Theme';
 import AdminManagement from './components/AdminManagement';
 import Profile from "./components/Profile"
+import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
 
 

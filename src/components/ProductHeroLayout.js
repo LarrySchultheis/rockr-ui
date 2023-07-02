@@ -1,3 +1,6 @@
+// REFERENCES:
+//  * https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate
+
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';

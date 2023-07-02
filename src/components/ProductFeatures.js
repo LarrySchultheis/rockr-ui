@@ -34,7 +34,7 @@ function ProductFeatures() {
             <Box sx={item}>
               <HeadphonesIcon fontSize='large'/>
               <Typography variant="h6" sx={{ my: 5 }}>
-                Feature #1
+                Meet Others Who Love Music
               </Typography>
               <Typography variant="h5">
               {
@@ -50,7 +50,7 @@ function ProductFeatures() {
             <Box sx={item}>
               <Diversity3Icon fontSize='large'/>
               <Typography variant="h6" sx={{ my: 5 }}>
-                Feature #2
+                Create a Band
               </Typography>
               <Typography variant="h5">
                 {
@@ -65,8 +65,8 @@ function ProductFeatures() {
           <Grid item xs={12} md={4}>
             <Box sx={item}>
                 <MusicNoteIcon fontSize='large'/>
-              <Typography variant="h6" sx={{ my: 5 }}>
-                Feature #3
+              <Typography variant="h6" sx={{ my: 5}}>
+                Find a Jam Partner
               </Typography>
               <Typography variant="h5">
                 {

@@ -39,25 +39,17 @@ const theme = responsiveFontSizes(createTheme({
 			main: '#FC7B09', //orange
 		},
 		info: {
-			main: '#6B7D6A', //gray
+			main: '#8A8A8A', //gray
 		},
 		success: {
-			main: '#09FE00', //green
+			main: '#009900', //green
 		},
 		text: {
 			primary: '#000000', //black
 			secondary: '#FFFFFF', //white
 		},
-	},
+	}
 }));
-
-// render() {
-//     return(
-//         <ThemeProvider theme={theme}>
-//             <Project />
-//         </ThemeProvider>
-//     )
-// }
 
 export default theme;
 
