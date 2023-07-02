@@ -17,11 +17,11 @@ const axiosInstance = axios.create({
 //     }
 //   },[route]);
   
-const getInstruments = await axiosInstance.get("/instruments")
-  .then(function (response) {
-    console.log(response?.data)
-    return response?.data;
-  })
+// const getInstruments = await axiosInstance.get("/instruments")
+//   .then(function (response) {
+//     console.log(response?.data)
+//     return response?.data;
+//   })
 
 const postRegistration = ( data ) => {
     axiosInstance.post("/register", {
@@ -40,6 +40,6 @@ const postRegistration = ( data ) => {
 };
 
 export {
-    getInstruments,
+    // getInstruments,
     postRegistration,
 };

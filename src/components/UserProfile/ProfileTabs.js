@@ -8,7 +8,7 @@ import Tab from '@mui/material/Tab';
 import { Grid, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import PersonalDetailsForm from '../UserProfile/PersonalDetailsForm'
-import MatchProfileLayout from '../Match Profile/MatchProfileLayout';
+import MatchProfileLayout from '../MatchProfile/MatchProfileLayout';
 
 
 function TabPanel(props) {

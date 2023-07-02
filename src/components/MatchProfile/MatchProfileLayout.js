@@ -1,24 +1,42 @@
-import * as React from 'react';
+import {useState, useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import GoalSelection from "./GoalSelection";
-import InstrumentSelection from "./InstrumentSelection";
+import AllChipsArray from "./AllChipsArray";
 import UserTypeButtons from "./UserTypeButtons";
-import {getInstruments} from "../../api/endpoints";
+import axios from 'axios';
 
+
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
 
 export default function MatchProfileLayout() {
-    // const instruments = getInstruments;
-    const i_list=[
-        { key: 1, label: "bass" },
-        { key: 2, label: "electric guitar" },
-        { key: 3, label: "acoustic guitar" }
-    ]
-    const [instruments, setInstruments] = React.useState(null);
+    const [instruments, setInstruments] = useState(null);
+    const [goals, setGoals] = useState(null)
+    const [interests, setInterests] = useState(null)
     
-    React.useEffect(() => {
-        setInstruments(i_list);
+    useEffect(() => { 
+        axiosInstance.get("/instrument").then(response => {
+          setInstruments(response?.data?.data);
+        });
+
+        axiosInstance.get("/goal").then(response => {
+            setGoals(response?.data?.data);
+          });
+
+        axiosInstance.get("/musical_interest").then(response => {
+            setInterests(response?.data?.data);
+        });
     }, [])
+
+    // useEffect(() => {
+    //         axiosInstance.get("/goal").then(response => {
+    //             setGoals(response?.data?.data);
+    //       });
+    // }, [])
 
     return(
         <>
@@ -26,39 +44,48 @@ export default function MatchProfileLayout() {
                 item
                 container
                 direction="row"
-                justifyContent="flex-start"
-                alignItems="flex-start"
                 gridAutoRows={true}
             >
                 <Stack
                     justifyContent="center"
                     alignItems="center"
-                    sx={{mb:"2rem", mr:"2rem", width:"48%"}}
+                    sx={{m:"2rem", mr:"2rem", width:"40%"}}
                 >
                     <UserTypeButtons/>
                 </Stack>
                 <Stack
-                    sx={{mb:"2rem", width:"48%"}}
+                    sx={{m:"2rem", width:"40%"}}
                 >
-                    <GoalSelection chips={i_list} />
+                    {
+                        interests 
+                        ? <AllChipsArray chips={interests}/> 
+                        : <></>
+                    }
+                    
                 </Stack>
             </Grid>
             <Grid
                 item
                 container
                 direction="row"
-                justifyContent="flex-start"
-                alignItems="flex-start"
             >
                 <Stack
-                    sx={{mr:"2rem", width:"48%"}}
+                    sx={{m:"2rem", width:"40%"}}
                 >
-                <GoalSelection/>
+                    {
+                        instruments 
+                        ? <AllChipsArray chips={instruments}/> 
+                        : <></>
+                    }
                 </Stack>
                 <Stack
-                    sx={{width:"48%"}}
+                    sx={{m:"2rem", width:"40%"}}
                 >
-                    <GoalSelection/>
+                    {
+                        goals 
+                        ? <AllChipsArray chips={goals}/> 
+                        : <></>
+                    }
                 </Stack>
             </Grid>
         </>
