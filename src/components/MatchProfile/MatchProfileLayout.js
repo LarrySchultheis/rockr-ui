@@ -32,12 +32,6 @@ export default function MatchProfileLayout() {
         });
     }, [])
 
-    // useEffect(() => {
-    //         axiosInstance.get("/goal").then(response => {
-    //             setGoals(response?.data?.data);
-    //       });
-    // }, [])
-
     return(
         <>
             <Grid

@@ -127,6 +127,12 @@ function ResponsiveAppBar(props) {
                   {page}
                 </Button>
               ))}
+                <Button
+                  href="/user_profile"
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                Profile
+                </Button>
               </>
               : <></>
             }

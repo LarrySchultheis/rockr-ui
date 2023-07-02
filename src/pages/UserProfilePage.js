@@ -17,13 +17,19 @@ const axiosInstance = axios.create({
 
 function UserProfilePage(props) {
     const [user, setUser] = useState(null)
-    useEffect(() => { 
-        axiosInstance.get("/user").then(response => {
-            setUser(response?.data?.data);
-        
-        });
+    useEffect(() => {
+        if(props.user){
+                axiosInstance.get("/user", {
+                params: {
+                    email: props?.user?.email
+                }
+            }).then(response => {
+                setUser(response?.data?.data);
+            
+            });
+        }
         // setUser(props?.user);
-    }, [])
+    }, [props.user])
 
     return (
         <>
