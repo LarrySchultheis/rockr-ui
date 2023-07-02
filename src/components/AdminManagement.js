@@ -2,28 +2,35 @@ import React, { useEffect, useState }from "react";
 import {Box, Table, TableHead, TextField, TableBody, TableRow, TableCell, TableContainer, Checkbox, Button} from "@mui/material";
 import Paper from '@mui/material/Paper';
 import theme from "./Theme";
+import CreateUserModal from "./CreateUserModal";
 
 
 
 
 export default function AdminManagement() {
     // const [isAuthenticated, isLoading] = useAuth0();
-    const [users, setUsers] = useState([])
+    const [users, setUsers] = useState([]);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
-          fetch('http://localhost:5000/get_users')
-              .then(response => response.json())
-              .then(data => {
-                data.data.map((d) => {
-                    return d.modified = false;
-                })
-                setUsers(data.data)
-              });
-        
+        getUsers();
       }, [setUsers])
 
+      const getUsers = () => {
+        fetch('http://localhost:5000/get_users')
+        .then(response => response.json())
+        .then(data => {
+          data.data.map((d) => {
+              return d.modified = false;
+          })
+          setUsers(data.data)
+        });
+      }
+
       const handleCheckboxToggle = (id, field) => {
-        let u = users.find(u => u.pkid === id);
+        let u = users.find(u => u.id === id);
         u[field] = !u[field];
         u.modified = true;
         setUsers(users);
@@ -31,7 +38,7 @@ export default function AdminManagement() {
 
       const handleInputChange = (e, id, field) => {
         console.log(e, id)
-        let u = users.find(u => u.pkid === id);
+        let u = users.find(u => u.id === id);
         u[field] = e.target.value;
         u.modified = true;
         setUsers(users);
@@ -39,6 +46,7 @@ export default function AdminManagement() {
 
       const handleSave = () => {
         let updatedUsers = users.filter((u => u.modified === true))
+        console.log(updatedUsers)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json',
@@ -57,9 +65,8 @@ export default function AdminManagement() {
         })
         }
 
-    const deleteUser = (user_id) => {
-        console.log(user_id)
-        fetch(`http://localhost:5000/delete_user_account?id=${user_id}`)
+    const deleteUser = (user_id, email) => {
+        fetch(`http://localhost:5000/delete_user_account?id=${user_id}&email=${email}`)
         .then((response) => { 
             if(response.status === 200) {
                 // Better than firing a reload IMO
@@ -82,14 +89,14 @@ export default function AdminManagement() {
         .then((response) => {
             if (response.status === 200) {
                 alert("User successfully created")
-
+                getUsers()
             }
             else {
                 alert("Error creating user")
             }
         })
+        handleClose();
     }
-        
 
     return (
         <div>
@@ -118,44 +125,44 @@ export default function AdminManagement() {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    <TextField variant="standard" defaultValue={u.first_name} onChange={(e) => handleInputChange(e, u.pkid, "first_name")}/>
+                                    <TextField variant="standard" defaultValue={u.first_name} onChange={(e) => handleInputChange(e, u.id, "first_name")}/>
                                 </TableCell>
                                 <TableCell component="th" scope="row">
-                                    <TextField variant="standard" defaultValue={u.last_name} onChange={(e) => handleInputChange(e, u.pkid, "last_name")}/>
+                                    <TextField variant="standard" defaultValue={u.last_name} onChange={(e) => handleInputChange(e, u.id, "last_name")}/>
                                 </TableCell>
                                 <TableCell align="flex">
-                                    <TextField variant="standard" defaultValue={u.username}/>
+                                    <TextField variant="standard" defaultValue={u.username} onChange={(e) => handleInputChange(e, u.id, "username")}/>
                                 </TableCell>
                                 <TableCell align="flex">
-                                    <TextField variant="standard" defaultValue={u.email} sx={{width:"250px"}}/>
+                                    <TextField variant="standard" defaultValue={u.email} sx={{width:"250px"}} onChange={(e) => handleInputChange(e, u.id, "email")}/>
                                 </TableCell>
                                 <TableCell align="flex">
                                     <Checkbox
                                         color="primary"
                                         sx={{color: "black", '&.Mui-checked': {color: "primary"}}}
                                         defaultChecked={u.is_admin}
-                                        onChange={() => handleCheckboxToggle(u.pkid, 'is_admin')}
+                                        onChange={() => handleCheckboxToggle(u.id, 'is_admin')}
                                     />
                                 </TableCell>
                                 <TableCell align="flex">
                                     <Checkbox
                                         sx={{color: "black", '&.Mui-checked': {color: "primary"}}}
                                         defaultChecked={u.is_active}
-                                        onChange={() => handleCheckboxToggle(u.pkid, 'is_active')}
+                                        onChange={() => handleCheckboxToggle(u.id, 'is_active')}
                                     />
                                 </TableCell>
                                 <TableCell align="flex">
                                 <Checkbox
                                         sx={{color: "black", '&.Mui-checked': {color: "primary"}}}
                                         defaultChecked={u.is_band}
-                                        onChange={() => handleCheckboxToggle(u.pkid, 'is_band')}
+                                        onChange={() => handleCheckboxToggle(u.id, 'is_band')}
                                     />
                                 </TableCell>
                                 <TableCell align="flex">
                                 <Button 
                                     sx={{backgroundColor: theme.palette.secondary.main}} 
                                     variant="contained" 
-                                    onClick={() => deleteUser(u.id)}
+                                    onClick={() => deleteUser(u.id, u.email)}
                                 >
                                     Delete
                                 </Button>          
@@ -180,20 +187,16 @@ export default function AdminManagement() {
                         sx={{m:5, backgroundColor: theme.palette.secondary.main}} 
                         variant="contained" 
                         size="large"
-                        onClick={() => createUser({
-                            username: "testing2",
-                            first_name: "test",
-                            last_name: "ing2",
-                            email: "testing2@wtf.com",
-                            is_admin: false,
-                            is_band: false,
-                            is_active: true
-                        })}
+                        onClick={() => handleOpen()}
                     >
                         Create User
-                    </Button>                   
+                    </Button>                                           
                 </Box>
-
+                <CreateUserModal
+                    open={open}
+                    handleClose={handleClose}
+                    handleSubmit={createUser}
+                ></CreateUserModal>
             </TableContainer>
 
             </Paper>
