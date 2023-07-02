@@ -15,12 +15,14 @@ const axiosInstance = axios.create({
     }
   });
 
-function UserProfilePage() {
+function UserProfilePage(props) {
     const [user, setUser] = useState(null)
     useEffect(() => { 
         axiosInstance.get("/user").then(response => {
             setUser(response?.data?.data);
+        
         });
+        // setUser(props?.user);
     }, [])
 
     return (
@@ -83,7 +85,7 @@ function UserProfilePage() {
                     container 
                     md={8}
                 >
-                    <ProfileTabs />
+                    <ProfileTabs user={user}/>
                 </Grid>
             </Grid>
             : <Grid/>

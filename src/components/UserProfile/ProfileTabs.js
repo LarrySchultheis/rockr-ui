@@ -56,12 +56,14 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
   },
 }));
 
-export default function ProfileTab() {
+export default function ProfileTab(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+
 
   return (
     <>
@@ -75,10 +77,10 @@ export default function ProfileTab() {
       </Box>
     </Box> 
       <TabPanel value={value} index={0}>
-          <PersonalDetailsForm />
+          <PersonalDetailsForm user={props?.user}/>
       </TabPanel>
     <TabPanel value={value} index={1}>
-        <MatchProfileLayout/>
+        <MatchProfileLayout user={props?.user}/>
     </TabPanel>
     </>
   );

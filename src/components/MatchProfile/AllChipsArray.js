@@ -1,7 +1,7 @@
 // REFERENCES:
 //  * https://mui.com/material-ui/react-chip/#system-ChipsArray.js
 
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import { styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
@@ -11,11 +11,15 @@ const ListItem = styled('li')(({ theme }) => ({
 }));
 
 export default function GoalSelection(props) {
-  const [chipData, setChipData] = React.useState(props.chips);
+  const [chipData, setChipData] = useState(props.chips);
 
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   };
+
+  useEffect(() => {
+    setChipData(props?.chips);
+  }, [])
 
   return (
     <Paper
@@ -36,10 +40,10 @@ export default function GoalSelection(props) {
         let icon;
 
         return (
-          <ListItem key={data.key}>
+          <ListItem key={data.id}>
             <Chip
               icon={icon}
-              label={data.label}
+              label={data.description}
               onDelete={handleDelete(data)}
             />
           </ListItem>

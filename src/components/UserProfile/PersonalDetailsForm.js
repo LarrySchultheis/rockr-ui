@@ -10,7 +10,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 
-export default function PersonalDetailsForm() {
+export default function PersonalDetailsForm(props) {
     const [gender, setGender] = React.useState('');
     const handleChange = (event) => {
         setGender(event.target.value);
@@ -30,6 +30,7 @@ export default function PersonalDetailsForm() {
                 variant="standard"
                 color="primary"
                 sx = {{minWidth: "15rem", mb: "1.5rem"}}
+                value={props?.user?.first_name}
             />
             <TextField
                 hiddenLabel
@@ -39,11 +40,12 @@ export default function PersonalDetailsForm() {
                 variant="standard"
                 color="primary"
                 sx = {{minWidth: "15rem", mb: "1.5rem"}}
+                value={props?.user?.last_name}
             />
             <Select
                 labelId="gender-select"
                 id="gender-select"
-                value={gender}
+                value={2}
                 label="Gender"
                 onChange={handleChange}
                 sx = {{ minWidth: "15rem", mb: "1.5rem"}}
