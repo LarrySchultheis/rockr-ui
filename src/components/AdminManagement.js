@@ -3,17 +3,18 @@ import {Box, Table, TableHead, TextField, TableBody, TableRow, TableCell, TableC
 import Paper from '@mui/material/Paper';
 import theme from "./Theme";
 import CreateUserModal from "./CreateUserModal";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
 
 export default function AdminManagement() {
-    // const [isAuthenticated, isLoading] = useAuth0();
+
+    const {isAuthenticated, user} = useAuth0();
     const [users, setUsers] = useState([]);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
     useEffect(() => {
         getUsers();
       }, [setUsers])

@@ -4,7 +4,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import LandingPage from './pages/LandingPage';
 import AppFooter from './components/AppFooter';
@@ -12,9 +12,28 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/Theme';
 import AdminManagement from './components/AdminManagement';
 import Profile from "./components/Profile"
+import { useAuth0 } from '@auth0/auth0-react';
 
 
-const App = () => {
+export default function App () {
+  const {isAuthenticated, isLoading, user} = useAuth0();
+  const [userRole, setUserRole] = useState()
+  // const [isAuthenticated, setIsAuthenticated] = useState();
+  console.log(isAuthenticated, user);
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+                   'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ user_id: user.sub })
+      };
+      fetch('http://localhost:5000/get_user_role', requestOptions)
+          .then(response => response.json())
+          .then(data => setUserRole(data.data[0]));
+    }
+  }, [user, isAuthenticated, isLoading])
   return (
     <ThemeProvider theme={theme}>
       <head><link
@@ -24,12 +43,15 @@ const App = () => {
       </head>
       <Router>
         <div>
-          <ResponsiveAppBar></ResponsiveAppBar>
+          <ResponsiveAppBar user={user} role={userRole}></ResponsiveAppBar>
           <Routes>
             <Route path="/register" element={<Profile />}/>
             <Route path="/" element={<LandingPage />}/>
-            <Route path="admin_management" element={<AdminManagement  />}/>
-            <Route path="user_profile" element={<Profile/>}/>
+            {
+              userRole && userRole.name === 'Admin' &&
+              <Route path="/admin_management" Component={() => <AdminManagement user={user}/>} />
+            }
+            <Route path="/user_profile" element={<Profile/>}/>
           </Routes>
         </div>
       </Router>
@@ -37,5 +59,3 @@ const App = () => {
     </ThemeProvider>
   );
 };
-
-export default App;

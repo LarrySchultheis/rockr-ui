@@ -20,7 +20,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 const pages = ['Matches', 'Messages'];
 const settings = ['Account', 'Logout'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -141,12 +141,15 @@ function ResponsiveAppBar() {
                     <AccountCircleIcon></AccountCircleIcon>
                   </IconButton>
                 </Tooltip>
-                <Button
-                  href="/admin-management"
-                  color="secondary"
-                >
-                  Admin Management
-                </Button>
+                {props.role && props.role.name === "Admin" &&
+                  <Button
+                    href="/admin_management"
+                    color="secondary"
+                  >
+                    Admin Management
+                  </Button>
+                }
+
                 <Button
                   color="secondary"
                   onClick={() =>
@@ -186,7 +189,10 @@ function ResponsiveAppBar() {
                     <Button
                       color="secondary"
                       variant="contained"
-                      onClick={() => loginWithRedirect()}
+                      onClick={() => {
+                        loginWithRedirect();
+
+                      }}
                     >
                     Log In
                     </Button>
@@ -195,7 +201,9 @@ function ResponsiveAppBar() {
                     <Button
                       color="secondary"
                       variant="outlined"
-                      onClick={() => loginWithRedirect({authorizationParams: {screen_hint: "signup"}, appState: { returnTo: `${window.location.origin}/user_profile`}})}
+                      onClick={() => {
+                        loginWithRedirect({authorizationParams: {screen_hint: "signup"}, appState: { returnTo: `${window.location.origin}/user_profile`}});
+                      }}
                     >
                       Sign up
                     </Button>
