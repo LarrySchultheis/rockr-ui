@@ -142,6 +142,12 @@ function ResponsiveAppBar() {
                   </IconButton>
                 </Tooltip>
                 <Button
+                  href="/admin-management"
+                  color="secondary"
+                >
+                  Admin Management
+                </Button>
+                <Button
                   color="secondary"
                   onClick={() =>
                     logout({
