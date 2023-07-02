@@ -13,7 +13,7 @@ function UserProfilePage() {
         <Grid 
             container
             direction='row'
-            
+            sx={{ mt:"3rem", mb: "3rem", ml:"1.5rem", mr:"1.5rem"}}
         >
             <Grid 
                 container
@@ -21,7 +21,6 @@ function UserProfilePage() {
                 justifyContent="center"
                 alignItems="center"
                 md={3}
-                
             >
                 <Stack
                     justifyContent="center"
@@ -67,9 +66,6 @@ function UserProfilePage() {
                 item
                 container 
                 md={8}
-                sx={{ 
-                    mt: '4rem', mb: '10rem'
-                }}
             >
                 <ProfileTabs />
             </Grid>

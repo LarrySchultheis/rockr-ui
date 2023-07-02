@@ -1,3 +1,6 @@
+// REFERENCES:
+//  * https://clipart-library.com/
+
 import './App.css';
 import {
   BrowserRouter as Router,
