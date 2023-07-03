@@ -33,7 +33,6 @@ export default function AdminManagement() {
       }
 
       const handleInputChange = (e, id, field) => {
-        console.log(e, id)
         let u = users.find(u => u.id === id);
         u[field] = e.target.value;
         u.modified = true;
@@ -42,7 +41,6 @@ export default function AdminManagement() {
 
       const handleSave = () => {
         let updatedUsers = users.filter((u => u.modified === true))
-        console.log(updatedUsers)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json',

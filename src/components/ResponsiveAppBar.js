@@ -1,3 +1,6 @@
+// REFERENCES:
+//  * https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate
+
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,7 +14,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import FastForwardIcon from '@mui/icons-material/FastForward';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Grid from '@mui/material/Grid';
 
 import { useAuth0 } from '@auth0/auth0-react'
@@ -44,20 +47,15 @@ function ResponsiveAppBar(props) {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters >
-          <FastForwardIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <PlayArrowIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
             href="/"
             sx={{
-              mr: 2,
+              mr: "3rem",
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
             }}
           >
             ROCKR
@@ -94,12 +92,12 @@ function ResponsiveAppBar(props) {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center"  sx={{ "&:hover": { color: "#5f3af2" } }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <FastForwardIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <PlayArrowIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -129,6 +127,12 @@ function ResponsiveAppBar(props) {
                   {page}
                 </Button>
               ))}
+                <Button
+                  href="/user_profile"
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                Profile
+                </Button>
               </>
               : <></>
             }
@@ -217,5 +221,3 @@ function ResponsiveAppBar(props) {
   );
 }
 export default ResponsiveAppBar;
-
-// CITE THIS: https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate

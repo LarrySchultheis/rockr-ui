@@ -3,14 +3,14 @@ import { useForm } from "react-hook-form";
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import {postRegistration} from '../api/endpoints'
-import PersonalDetailsForm from './UserProfile/PersonalDetailsForm'
+import PersonalDetailsForm from '../UserProfile/PersonalDetailsForm'
 import RequiredFieldsForm from './RequiredFieldsForm'
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
-const style = theme => ({
+const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -20,9 +20,10 @@ const style = theme => ({
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-});
+};
 
-function RegistrationModal({
+
+function LoginModal({
   open,
   handleModal
 }) {
@@ -42,8 +43,6 @@ function RegistrationModal({
       >
         <Stack alignItems="center" sx={style}>
           <RequiredFieldsForm/>
-          <Divider variant="middle" sx={{mt:"2rem"}}/>
-          <PersonalDetailsForm/>
           <Button 
             color="secondary"
             variant="contained"
@@ -53,17 +52,16 @@ function RegistrationModal({
           >
             Create Account
           </Button>
-          <p>Already have an account?</p>
+          <p>Don't have an account?</p>
           <Link href="#">
             <Typography color="
-              #1d17d1">Log in.
+              #1d17d1">Sign up.
             </Typography>
           </Link>
         </Stack>
-        
       </Modal>
     </div>
   )
 };
 
-export default RegistrationModal;
+export default LoginModal;

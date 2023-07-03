@@ -1,3 +1,6 @@
+// REFERENCES:
+//  * https://clipart-library.com/
+
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -12,6 +15,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/Theme';
 import AdminManagement from './components/AdminManagement';
 import Profile from "./components/Profile"
+import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
 
 
@@ -19,7 +23,6 @@ export default function App () {
   const {isAuthenticated, isLoading, user} = useAuth0();
   const [userRole, setUserRole] = useState()
   // const [isAuthenticated, setIsAuthenticated] = useState();
-  console.log(isAuthenticated, user);
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
@@ -51,7 +54,7 @@ export default function App () {
               userRole && userRole.name === 'Admin' &&
               <Route path="/admin_management" Component={() => <AdminManagement user={user}/>} />
             }
-            <Route path="/user_profile" element={<Profile/>}/>
+            <Route path="/user_profile" element={<UserProfilePage user={user}/>}/>
           </Routes>
         </div>
       </Router>

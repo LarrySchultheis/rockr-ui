@@ -17,8 +17,9 @@ const axiosInstance = axios.create({
 //     }
 //   },[route]);
   
-// const register = await axiosInstance.get("/register")
+// const getInstruments = await axiosInstance.get("/instruments")
 //   .then(function (response) {
+//     console.log(response?.data)
 //     return response?.data;
 //   })
 
@@ -39,5 +40,6 @@ const postRegistration = ( data ) => {
 };
 
 export {
+    // getInstruments,
     postRegistration,
 };
