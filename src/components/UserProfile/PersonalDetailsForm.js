@@ -11,11 +11,11 @@ import MenuItem from '@mui/material/MenuItem';
 
 
 export default function PersonalDetailsForm(props) {
-    const [gender, setGender] = React.useState('');
+    const [gender, setGender] = React.useState(2);
     const handleChange = (event) => {
         setGender(event.target.value);
     };
-  
+    console.log(gender);
     return (
         <>
             <Typography sx={{mt: "2rem", mb:"2rem"}} color='#8A8A8A' variant="h4">Personal Details</Typography>
@@ -45,7 +45,7 @@ export default function PersonalDetailsForm(props) {
             <Select
                 labelId="gender-select"
                 id="gender-select"
-                value={2}
+                value={gender}
                 label="Gender"
                 onChange={handleChange}
                 sx = {{ minWidth: "15rem", mb: "1.5rem"}}

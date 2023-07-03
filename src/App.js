@@ -23,7 +23,6 @@ export default function App () {
   const {isAuthenticated, isLoading, user} = useAuth0();
   const [userRole, setUserRole] = useState()
   // const [isAuthenticated, setIsAuthenticated] = useState();
-  console.log(isAuthenticated, user);
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {

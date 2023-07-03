@@ -37,7 +37,7 @@ export default function UserTypeButtons() {
                         sx={{width:"100%"}}
                     >
                         Individual
-                        <img src={indv} style={{maxWidth: '75%'}}/>
+                        <img src={indv} alt={"Individual"} style={{maxWidth: '75%'}}/>
                     </Stack>
                 </ToggleButton>
                 <ToggleButton value="right" aria-label="right aligned" sx={{p:"1rem", width:"48%"}}>
@@ -47,7 +47,7 @@ export default function UserTypeButtons() {
                         sx={{width:"100%"}}
                     >
                         Band
-                        <img src={band} style={{maxWidth: '85%'}}/>
+                        <img src={band} alt={"Band"} style={{maxWidth: '85%'}}/>
                     </Stack>
                 </ToggleButton>
             </ToggleButtonGroup>

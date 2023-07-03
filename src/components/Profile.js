@@ -26,7 +26,7 @@ const Profile = () => {
 
   return (
     isAuthenticated && (
-        <UserProfilePage user={user}/>
+        <UserProfilePage userRole={userRole} user={user}/>
       // <div>
       //   <h2>{user.name}</h2>
       //   <p>{user.email}</p>

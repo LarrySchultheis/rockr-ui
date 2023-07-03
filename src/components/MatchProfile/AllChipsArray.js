@@ -19,7 +19,7 @@ export default function GoalSelection(props) {
 
   useEffect(() => {
     setChipData(props?.chips);
-  }, [])
+  }, [props?.chips])
 
   return (
     <Paper
