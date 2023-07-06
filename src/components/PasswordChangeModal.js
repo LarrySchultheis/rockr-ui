@@ -34,7 +34,7 @@ export default function CreateUserModal(props) {
             if (newPassword.length < 8) errs.push("\nPassword must be at least 8 characters");
             if (!/[A-Z]/.test(newPassword)) errs.push("\nPassword must contain at least one uppercase letter");
             if (!/\d/.test(newPassword)) errs.push("\nPassword must contain at least one number");
-            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(newPassword)) errs.push("\nPassword must contain at least one special character");
+            if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(newPassword)) errs.push("\nPassword must contain at least one special character");
             if (errs.length > 0) alert(errs);
             else props.handleSubmit(newPassword)
         }

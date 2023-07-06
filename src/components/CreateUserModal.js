@@ -42,7 +42,7 @@ export default function CreateUserModal(props) {
           if (password.length < 8) errs.push("Password must be at least 8 characters");
           if (!/[A-Z]/.test(password)) errs.push("Password must contain at least one uppercase letter");
           if (!/\d/.test(password)) errs.push("Password must contain at least one number");
-          if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)) errs.push("Password must contain at least one special character");
+          if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(password)) errs.push("Password must contain at least one special character");
           if (errs.length > 0) {
             alert(errs.join('\n'));
             return false;
@@ -51,8 +51,8 @@ export default function CreateUserModal(props) {
       }
 
       const validateUsername = () => {
-        console.log(props.usernames, username)
-        if (props.usernames.includes(username)) {
+        setUsername(username === "" ? null : username);
+        if (username !== null && props.usernames.includes(username)) {
           alert("Sorry, this username is already in our system!")
           return false
         }
