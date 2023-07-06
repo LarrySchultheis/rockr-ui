@@ -29,7 +29,6 @@ function UserProfilePage(props) {
                 }
             }).then(response => {
                 setUser(response?.data?.data);
-                console.log(user);
             });
         }
         // setUser(props?.user);
