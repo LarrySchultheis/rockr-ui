@@ -7,6 +7,7 @@ import CreateUserModal from "./CreateUserModal";
 export default function AdminManagement() {
 
     const [users, setUsers] = useState([]);
+    const [usernames, setUsernames] = useState([]);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -18,10 +19,13 @@ export default function AdminManagement() {
         fetch('http://localhost:5000/get_users')
         .then(response => response.json())
         .then(data => {
+          let usrNames = [];
           data.data.map((d) => {
+              usrNames.push(d.username);
               return d.modified = false;
           })
-          setUsers(data.data)
+          setUsers(data.data);
+          setUsernames(usrNames);
         });
       }
 
@@ -190,6 +194,7 @@ export default function AdminManagement() {
                     open={open}
                     handleClose={handleClose}
                     handleSubmit={createUser}
+                    usernames={usernames}
                 ></CreateUserModal>
             </TableContainer>
 

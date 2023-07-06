@@ -25,6 +25,7 @@ export default function CreateUserModal(props) {
     const [isBand, setIsBand] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [password, setPassword] = useState("");
+    const formRef = React.useRef();
 
     const handleInputChange = (e, field) => {
         if(field === 'firstName') setFirstName(e.target.value);
@@ -36,6 +37,42 @@ export default function CreateUserModal(props) {
         if(field === 'password') setPassword(e.target.value);
     }
 
+    const validatePassword = () => {
+      let errs = [];
+          if (password.length < 8) errs.push("Password must be at least 8 characters");
+          if (!/[A-Z]/.test(password)) errs.push("Password must contain at least one uppercase letter");
+          if (!/\d/.test(password)) errs.push("Password must contain at least one number");
+          if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)) errs.push("Password must contain at least one special character");
+          if (errs.length > 0) {
+            alert(errs.join('\n'));
+            return false;
+          }
+          return true
+      }
+
+      const validateUsername = () => {
+        console.log(props.usernames, username)
+        if (props.usernames.includes(username)) {
+          alert("Sorry, this username is already in our system!")
+          return false
+        }
+        return true
+      }
+ 
+    const validateForm = () => {
+      if (formRef.current.reportValidity() && validateUsername() && validatePassword()) {
+        props.handleSubmit({
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          username: username === "" ? null : username,
+          password: password,
+          is_band: isBand,
+          is_active: true,
+          is_admin: isAdmin,
+        })
+      }
+    }
   return (
     <div>
       <Modal
@@ -44,14 +81,15 @@ export default function CreateUserModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-            <FormGroup>
-                <TextField InputLabelProps={{ shrink: true }} required={true} variant="standard" sx={{p: 2}}  onChange={(e) => handleInputChange(e, "firstName")} placeholder="First Name"/>
-                <TextField InputLabelProps={{ shrink: true }} required={true} variant="standard" sx={{p: 2}} onChange={(e) => handleInputChange(e, "lastName")} placeholder="Last Name"/>
-                <TextField InputLabelProps={{ shrink: true }} required={true} variant="standard" sx={{p: 2}} onChange={(e) => handleInputChange(e, "email")} placeholder="Email"/>
-                <TextField InputLabelProps={{ shrink: true }} required={true} variant="standard" type="password" sx={{p: 2}} onChange={(e) => handleInputChange(e, "password")} placeholder="Password"/>
+          <form ref={formRef}>
+          <FormGroup>
+                <TextField required InputLabelProps={{ shrink: true }} label="Required" variant="standard" focused={true} sx={{p: 2}}  onChange={(e) => handleInputChange(e, "firstName")} placeholder="First Name" />
+                <TextField required InputLabelProps={{ shrink: true }} label="Required" variant="standard" focused={true} sx={{p: 2}} onChange={(e) => handleInputChange(e, "lastName")} placeholder="Last Name"/>
+                <TextField required InputLabelProps={{ shrink: true }} label="Required" variant="standard" focused={true} type="email" sx={{p: 2}} onChange={(e) => handleInputChange(e, "email")} placeholder="Email"/>
+                <TextField required InputLabelProps={{ shrink: true }} label="Required" variant="standard" focused={true} type="password" sx={{p: 2}} onChange={(e) => handleInputChange(e, "password")} placeholder="Password"/>
                 <TextField InputLabelProps={{ shrink: true }} variant="standard" sx={{p: 2}} onChange={(e) => handleInputChange(e, "username")} placeholder="Username"/>
-                <FormControlLabel required control={<Switch />} onChange={(e) => handleInputChange(e, "isBand")}label="Registering as a band?"/>
-                <FormControlLabel required control={<Switch />} onChange={(e) => handleInputChange(e, "isAdmin")}label="Admin?"/>
+                <FormControlLabel control={<Switch />} onChange={(e) => handleInputChange(e, "isBand")}label="Registering as a band?"/>
+                <FormControlLabel control={<Switch />} onChange={(e) => handleInputChange(e, "isAdmin")}label="Admin?"/>
                 <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                     <Button 
                         sx={{m:1, backgroundColor: theme.palette.secondary.main}} 
@@ -63,21 +101,13 @@ export default function CreateUserModal(props) {
                     <Button 
                         sx={{m:1, backgroundColor: theme.palette.secondary.main}} 
                         variant="contained" 
-                        onClick={() => {props.handleSubmit({
-                            first_name: firstName,
-                            last_name: lastName,
-                            email: email,
-                            username: username,
-                            password: password,
-                            is_band: isBand,
-                            is_active: true,
-                            is_admin: isAdmin,
-                        })}}
+                        onClick={() => validateForm()}
                     >
                         Submit
                     </Button>
                 </Box>
-            </FormGroup>        
+            </FormGroup>  
+          </form>
         </Box>
       </Modal>
     </div>
