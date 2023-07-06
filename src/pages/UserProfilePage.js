@@ -4,7 +4,8 @@ import defaultAvatar from '../images/default_avatar.png'
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
-import ProfileTabs from '../components/UserProfile/ProfileTabs'
+import ProfileTabs from '../components/UserProfile/ProfileTabs';
+import PasswordChangeModal from '../components/PasswordChangeModal';
 import axios from 'axios';
 
 
@@ -16,7 +17,10 @@ const axiosInstance = axios.create({
   });
 
 function UserProfilePage(props) {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     useEffect(() => {
         if(props.user){
                 axiosInstance.get("/user", {
@@ -25,11 +29,31 @@ function UserProfilePage(props) {
                 }
             }).then(response => {
                 setUser(response?.data?.data);
-            
+                console.log(user);
             });
         }
         // setUser(props?.user);
     }, [props.user])
+
+    const changePassword = (newPassword) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*' },
+            body: JSON.stringify({password:  newPassword, email: user.email})
+        }
+        fetch('http://localhost:5000/change_password', requestOptions)
+        .then((response) => {
+            if (response.status === 200) {
+                alert("Password successfully updated")
+                handleClose();
+            }
+            else {
+                alert("Error updating password");
+                handleClose();
+            }
+        })
+    }
 
     return (
         <>
@@ -61,6 +85,17 @@ function UserProfilePage(props) {
                             }}
                         >
                             save
+                        </Button>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={() => handleOpen()}
+                            sx={{ 
+                                minWidth: '8rem',
+                                mt:"1.5rem",
+                            }}
+                        >
+                            update password
                         </Button>
                         <Button
                             color="primary"
@@ -96,6 +131,12 @@ function UserProfilePage(props) {
             </Grid>
             : <Grid/>
         }
+        <PasswordChangeModal
+            open={open}
+            handleClose={handleClose}
+            handleSubmit={changePassword}
+        >
+        </PasswordChangeModal>
         </>
     );
 }
