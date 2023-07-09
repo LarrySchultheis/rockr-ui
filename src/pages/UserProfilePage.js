@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Grid, Stack, FormControl } from '@mui/material';
 import defaultAvatar from '../images/default_avatar.png'
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
@@ -21,18 +21,41 @@ function UserProfilePage(props) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    // useEffect(() => {
+    // //     if(props.user){
+    // //         console.log(user?.sub);
+    // //             axiosInstance.get(`/user/${user?.sub}`, {
+    // //             params: {
+    // //                 email: props?.user?.email
+    // //             }
+    // //         }).then(response => {
+    // //             setUser(response?.data?.data);
+
+    // //         });
+    // //     }
+    //     setUser(props?.user);
+    // }, [props.user])
+
+    // const [appUser, setAppUser] = useState(null)
     useEffect(() => {
-        if(props.user){
-                axiosInstance.get("/user", {
-                params: {
-                    email: props?.user?.email
-                }
-            }).then(response => {
-                setUser(response?.data?.data);
-            });
-        }
-        // setUser(props?.user);
-    }, [props.user])
+      axiosInstance.get("/users/165")
+        .then(response => {
+          setUser(response?.data);
+
+        });
+    }, [])
+
+    const handleSubmit = () => {
+        // fetch('/somewhere.html', {
+        //   method: 'POST',
+        //   body: JSON.stringify(formValues),
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        // })
+        console.log("submit");
+      }
 
     const changePassword = (newPassword) => {
         const requestOptions = {
@@ -56,7 +79,6 @@ function UserProfilePage(props) {
 
     return (
         <>
-        { user ?
             <Grid 
                 container
                 direction='row'
@@ -78,7 +100,10 @@ function UserProfilePage(props) {
                             color="primary"
                             variant="contained"
                             endIcon={<SaveIcon />}
-                            sx={{ 
+                            type="submit"
+                            form="userForm"
+                            onClick={handleSubmit}
+                            sx={{
                                 minWidth: '8rem',
                                 mt:"1.5rem",
                             }}
@@ -89,7 +114,7 @@ function UserProfilePage(props) {
                             color="primary"
                             variant="contained"
                             onClick={() => handleOpen()}
-                            sx={{ 
+                            sx={{
                                 minWidth: '8rem',
                                 mt:"1.5rem",
                             }}

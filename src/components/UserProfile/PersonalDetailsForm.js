@@ -11,13 +11,12 @@ import MenuItem from '@mui/material/MenuItem';
 
 
 export default function PersonalDetailsForm(props) {
-    const [gender, setGender] = React.useState(2);
+    const [gender, setGender] = React.useState(1);
     const handleChange = (event) => {
         setGender(event.target.value);
     };
-    console.log(gender);
     return (
-        <>
+        <form id="userForm">
             <Typography sx={{mt: "2rem", mb:"2rem"}} color='#8A8A8A' variant="h4">Personal Details</Typography>
         <Stack
             component="form"
@@ -25,7 +24,7 @@ export default function PersonalDetailsForm(props) {
         >
             <TextField
                 hiddenLabel
-                id="firstname"
+                name="firstname"
                 placeholder="First Name"
                 variant="standard"
                 color="primary"
@@ -35,7 +34,7 @@ export default function PersonalDetailsForm(props) {
             <TextField
                 hiddenLabel
                 required={true}
-                id="lastname"
+                name="lastname"
                 placeholder="Last Name"
                 variant="standard"
                 color="primary"
@@ -45,8 +44,10 @@ export default function PersonalDetailsForm(props) {
             <Select
                 labelId="gender-select"
                 id="gender-select"
+                name="gender"
                 value={gender}
                 label="Gender"
+                placeholder='Gender'
                 onChange={handleChange}
                 sx = {{ minWidth: "15rem", mb: "1.5rem"}}
             >
@@ -56,7 +57,7 @@ export default function PersonalDetailsForm(props) {
                 <MenuItem value={4}>Prefer not to say</MenuItem>
             </Select>
         </Stack>
-    </>
+    </form>
   );
 }
 

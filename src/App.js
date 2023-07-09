@@ -17,7 +17,14 @@ import AdminManagement from './components/AdminManagement';
 import Profile from "./components/Profile"
 import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
 export default function App () {
   const {isAuthenticated, isLoading, user} = useAuth0();
@@ -37,6 +44,20 @@ export default function App () {
           .then(data => setUserRole(data.data[0]));
     }
   }, [user, isAuthenticated, isLoading])
+
+  // useEffect(() => {
+  //   if (!isLoading && isAuthenticated) {
+  //         axiosInstance.get(`/get_user_role/${user?.sub}`, {
+  //     }).then(response => response.json())
+  //       .then(data => setUserRole(data?.data[0]));
+      
+  //     // .then(response => {
+  //     //     setUser(response?.data?.data);
+      
+  //     // });
+  //   }
+  // }, [user, isAuthenticated, isLoading])
+
   return (
     <ThemeProvider theme={theme}>
       <head><link
