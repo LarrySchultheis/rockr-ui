@@ -66,48 +66,29 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
 
 export default function ProfileTabs(props) {
   const [value, setValue] = useState(0);
-  const [personalDetails, setPersonalDetails] = useState({
-    firstname: props?.user?.first_name || "",
-    lastname: props?.user?.last_name || "",
-    // gender: props?.user?.gender || "",
 
-  });
-
-  const [matchProfile, setMatchProfile] = useState({
-    instruments: [],
-    goals: [],
-    interests: [],
-  });
+  const [instruments, setInstruments] = useState([]);
+  const [goals, setGoals] = useState([]);
+  const [interests, setInterests] = useState([]);
 
   useEffect(() => {
     if(props.user){
       axiosInstance.get(`/user_instruments/${props.user.id}`).then(response => {
-        matchProfile.instruments=response?.data?.data;
+        setInstruments(response?.data?.data);
       })
       axiosInstance.get(`/user_goals/${props.user.id}`).then(response => {
-        matchProfile.goals=response?.data?.data;     
+        setGoals(response?.data?.data);     
       })
       axiosInstance.get(`/user_musical_interests/${props.user.id}`).then(response => {
-        matchProfile.interests=response?.data?.data;
+        setInterests(response?.data?.data);
       })
     }
 }, [props?.user])
 
 
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const handlePersonalDetailsCallback = (childData) => {
-      // Update the name in the component's state
-      // this.setState({ name: childData })
-  }
-
-  const handleMatchProfileCallback = (childData) => {
-    // Update the name in the component's state
-    // this.setState({ name: childData })
-  }
 
   return (
     <>
@@ -121,16 +102,15 @@ export default function ProfileTabs(props) {
         </Box>
       </Box> 
         <TabPanel value={value} index={0}>
-            <PersonalDetailsForm 
-              parentCallback={handlePersonalDetailsCallback} 
-              personalDetails={personalDetails}
+            <PersonalDetailsForm
               user={props?.user}
             />
         </TabPanel>
       <TabPanel value={value} index={1}>
           <MatchProfileForm 
-            parentCallback={handleMatchProfileCallback}
-            matchProfile={matchProfile}
+            instruments={instruments}
+            goals={goals}
+            interests={interests}
             user={props?.user}
           />
       </TabPanel>

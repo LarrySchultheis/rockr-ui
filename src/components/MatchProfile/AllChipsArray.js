@@ -2,11 +2,9 @@
 //  * https://mui.com/material-ui/react-chip/#system-ChipsArray.js
 
 import {useEffect, useState} from 'react';
-import { styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
-import { TextField, Autocomplete, MenuItem, ListItem } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
+import { ListItem } from "@mui/material";
 import axios from 'axios';
 
 const axiosInstance = axios.create({

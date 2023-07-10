@@ -3,7 +3,7 @@
 //  * https://static.thenounproject.com/png/643342-200.png 
 //  * https://cdn-icons-png.flaticon.com/512/431/431249.png
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Grid from '@mui/material/Grid';
@@ -20,19 +20,13 @@ const axiosInstance = axios.create({
 });
 
 export default function UserTypeButtons(props) {
-    const [alignment, setAlignment] = useState();
+    const [alignment, setAlignment] = useState(props.user.is_band);
 
-    useEffect(() => {
-        setAlignment(props.user.is_band);
-      }, [props?.user?.is_band])
-
-    const handleAlignment = (event) => {
-      setAlignment(!props.user.is_band);
-    //   setIsBand(!isBand);
-    //   console.log(isBand);
+    const handleAlignment = (event, newAlignment) => {
+      setAlignment(newAlignment);
       axiosInstance.patch(`/users/${props?.user?.id}`, {
         params: {
-          is_band: !props.user.is_band
+          is_band: newAlignment
         }
       })
       .catch(error => {

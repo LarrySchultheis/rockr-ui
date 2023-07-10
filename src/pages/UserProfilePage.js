@@ -1,20 +1,19 @@
 import {useEffect, useState} from 'react';
-import { Button, Grid, Stack, FormControl } from '@mui/material';
+import { Button, Grid, Stack } from '@mui/material';
 import defaultAvatar from '../images/default_avatar.png'
 import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/PasswordChangeModal';
-import axios from 'axios';
+// import axios from 'axios';
 
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
+// const axiosInstance = axios.create({
+//     baseURL: "http://localhost:5000",
+//     headers: {
+//       "Content-Type": "application/json"
+//     }
+//   });
 
 function UserProfilePage(props) {
     const [user, setUser] = useState(null);
@@ -22,40 +21,9 @@ function UserProfilePage(props) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    // useEffect(() => {
-    // //     if(props.user){
-    // //         console.log(user?.sub);
-    // //             axiosInstance.get(`/user/${user?.sub}`, {
-    // //             params: {
-    // //                 email: props?.user?.email
-    // //             }
-    // //         }).then(response => {
-    // //             setUser(response?.data?.data);
-
-    // //         });
-    // //     }
-    //     setUser(props?.user);
-    // }, [props.user])
-
-    // const [appUser, setAppUser] = useState(null)
     useEffect(() => {
-      axiosInstance.get("/users/165")
-        .then(response => {
-          setUser(response?.data);
-
-        });
-    }, [])
-
-    const handleSubmit = () => {
-        // fetch('/somewhere.html', {
-        //   method: 'POST',
-        //   body: JSON.stringify(formValues),
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        // })
-        console.log("submit");
-      }
+      setUser(props?.user)
+    }, [props?.user])
 
     const changePassword = (newPassword) => {
         const requestOptions = {
@@ -99,31 +67,6 @@ function UserProfilePage(props) {
                         <Button
                             color="primary"
                             variant="contained"
-                            endIcon={<SaveIcon />}
-                            type="submit"
-                            form="userForm"
-                            onClick={handleSubmit}
-                            sx={{
-                                minWidth: '8rem',
-                                mt:"1.5rem",
-                            }}
-                        >
-                            save
-                        </Button>
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={() => handleOpen()}
-                            sx={{
-                                minWidth: '8rem',
-                                mt:"1.5rem",
-                            }}
-                        >
-                            update password
-                        </Button>
-                        <Button
-                            color="primary"
-                            variant="outlined"
                             endIcon={<InsertEmoticonIcon/>}
                             sx={{ 
                                 minWidth: '8rem',
@@ -131,6 +74,17 @@ function UserProfilePage(props) {
                             }}
                         >
                             preview
+                        </Button>
+                        <Button
+                            color="primary"
+                            variant="outlined"
+                            onClick={() => handleOpen()}
+                            sx={{
+                                minWidth: '8rem',
+                                mt:"1.5rem",
+                            }}
+                        >
+                            update password
                         </Button>
                         <Button
                             color="error"
@@ -153,8 +107,6 @@ function UserProfilePage(props) {
                     <ProfileTabs user={user}/>
                 </Grid>
             </Grid>
-            : <Grid/>
-        }
         <PasswordChangeModal
             open={open}
             handleClose={handleClose}

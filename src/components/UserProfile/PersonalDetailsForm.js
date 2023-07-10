@@ -2,7 +2,7 @@
 //     * https://mui.com/material-ui/react-text-field/#system-TextFieldHiddenLabel.js
 //     * https://mui.com/material-ui/react-select/#system-BasicSelect.js 
 
-import * as React from 'react';
+import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { Typography } from '@mui/material';
@@ -11,10 +11,22 @@ import MenuItem from '@mui/material/MenuItem';
 
 
 export default function PersonalDetailsForm(props) {
-    const [gender, setGender] = React.useState(1);
+    const [firstname, setFirstname] = useState(props?.user?.first_name || "")
+    const handleFirstnameChange = (event) => {
+        setFirstname(event.target.value);
+    };
+
+    const [lastname, setLastname] = useState(props?.user?.last_name || "")
+    const handleLastnameChange = (event) => {
+        setLastname(event.target.value);
+    };
+
+    const [gender, setGender] = useState(1);
     const handleChange = (event) => {
         setGender(event.target.value);
     };
+
+
     return (
         <form id="userForm">
             <Typography sx={{mt: "2rem", mb:"2rem"}} color='#8A8A8A' variant="h4">Personal Details</Typography>
@@ -28,8 +40,9 @@ export default function PersonalDetailsForm(props) {
                 placeholder="First Name"
                 variant="standard"
                 color="primary"
-                sx = {{minWidth: "15rem", mb: "1.5rem"}}
-                value={props?.user?.first_name}
+                sx={{minWidth: "15rem", mb: "1.5rem"}}
+                value={firstname}
+                onChange={handleFirstnameChange}
             />
             <TextField
                 hiddenLabel
@@ -38,8 +51,9 @@ export default function PersonalDetailsForm(props) {
                 placeholder="Last Name"
                 variant="standard"
                 color="primary"
-                sx = {{minWidth: "15rem", mb: "1.5rem"}}
-                value={props?.user?.last_name}
+                sx={{minWidth: "15rem", mb: "1.5rem"}}
+                value={lastname}
+                onChange={handleLastnameChange}
             />
             <Select
                 labelId="gender-select"
@@ -49,7 +63,7 @@ export default function PersonalDetailsForm(props) {
                 label="Gender"
                 placeholder='Gender'
                 onChange={handleChange}
-                sx = {{ minWidth: "15rem", mb: "1.5rem"}}
+                sx={{ minWidth: "15rem", mb: "1.5rem"}}
             >
                 <MenuItem value={1}>Male</MenuItem>
                 <MenuItem value={2}>Female</MenuItem>
