@@ -17,26 +17,34 @@ import AdminManagement from './components/AdminManagement';
 import Profile from "./components/Profile"
 import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
 export default function App () {
   const {isAuthenticated, isLoading, user} = useAuth0();
   const [userRole, setUserRole] = useState()
-  // const [isAuthenticated, setIsAuthenticated] = useState();
+  const [userObj, setUserObj] = useState()
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-                   'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ user_id: user.sub })
-      };
-      fetch('http://localhost:5000/get_user_role', requestOptions)
-          .then(response => response.json())
-          .then(data => setUserRole(data.data[0]));
+      axiosInstance.get('/get_user_role', {
+      params: {
+        id: user.sub,
+        email: user.email
+      }
+      }).then(response => {
+        setUserRole(response?.data["role"]);
+        setUserObj(response?.data["user_obj"]);
+      });
     }
   }, [user, isAuthenticated, isLoading])
+
   return (
     <ThemeProvider theme={theme}>
       <head><link
@@ -54,7 +62,7 @@ export default function App () {
               userRole && userRole.name === 'Admin' &&
               <Route path="/admin_management" Component={() => <AdminManagement user={user}/>} />
             }
-            <Route path="/user_profile" element={<UserProfilePage user={user}/>}/>
+            <Route path="/user_profile" element={<UserProfilePage user={userObj}/>}/>
           </Routes>
         </div>
       </Router>
