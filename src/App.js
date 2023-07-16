@@ -17,7 +17,9 @@ import AdminManagement from './components/AdminManagement';
 import Profile from "./components/Profile"
 import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
-
+import ChatManager from './components/ChatService/ChatManager';
+import { Socket } from './components/ChatService/Socket';
+import ChatPage from './components/ChatService/ChatPage';
 
 export default function App () {
   const {isAuthenticated, isLoading, user} = useAuth0();
@@ -37,6 +39,7 @@ export default function App () {
           .then(data => setUserRole(data.data[0]));
     }
   }, [user, isAuthenticated, isLoading])
+  console.log(user);
   return (
     <ThemeProvider theme={theme}>
       <head><link
@@ -55,6 +58,8 @@ export default function App () {
               <Route path="/admin_management" Component={() => <AdminManagement user={user}/>} />
             }
             <Route path="/user_profile" element={<UserProfilePage user={user}/>}/>
+            <Route path="/messages" element={<ChatPage socket={Socket} user={user}/>}/>
+
           </Routes>
         </div>
       </Router>
