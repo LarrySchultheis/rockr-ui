@@ -23,7 +23,7 @@ export default function PersonalDetailsForm({
     const [lastname, setLastname] = useState("")
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const handleCloseSnackbar = () => setOpenSnackbar(false);
-    
+
     useEffect(() => {
         setFirstname(user?.first_name)
         setLastname(user?.last_name)
@@ -42,8 +42,8 @@ export default function PersonalDetailsForm({
             setFirstname(response?.data.first_name);
             setOpenSnackbar(true)
         })
-        .catch( 
-            (e) => console.log( e ) 
+        .catch(
+            (e) => console.log( e )
         );
     };
 
@@ -60,10 +60,16 @@ export default function PersonalDetailsForm({
             setLastname(response?.data.last_name);
             setOpenSnackbar(true)
         })
-        .catch( 
-            (e) => console.log( e ) 
+        .catch(
+            (e) => console.log( e )
         );
     };
+
+    const [isActive, setIsActive] = useState(props?.user?.is_active || false);
+    //Pause Account
+    const handleCheckboxToggle = (event) => {
+        setIsActive(event.target.value);
+    }
 
     return (
         <form id="userForm">
@@ -94,6 +100,13 @@ export default function PersonalDetailsForm({
                 value={lastname}
                 onChange={handleLastnameChange}
                 onBlur={patchLastname}
+            />
+            <Typography sx={{mt: "2rem", mb:"2rem"}} color='#000000'>Pause Account?</Typography>
+            <Checkbox
+                sx={{color: "black", '&.Mui-checked': {color: "primary"}} }
+                label="Label"
+                defaultChecked={isActive}
+                onChange={handleCheckboxToggle}
             />
         </Stack>
         <SaveSuccessSnackbar
