@@ -29,17 +29,14 @@ export default function App () {
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
       const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-                   'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ user_id: user.sub })
+        method: 'GET',
       };
-      fetch('http://localhost:5000/get_user_role', requestOptions)
+      fetch(`http://localhost:5000/get_user_role?id=${user.sub}&email=${user.email}`, requestOptions)
           .then(response => response.json())
-          .then(data => setUserRole(data.data[0]));
+          .then(data => setUserRole(data.role[0]));
     }
   }, [user, isAuthenticated, isLoading])
-  console.log(user);
+  console.log(userRole)
   return (
     <ThemeProvider theme={theme}>
       <head><link

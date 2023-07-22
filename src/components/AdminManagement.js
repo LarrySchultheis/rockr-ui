@@ -16,15 +16,15 @@ export default function AdminManagement() {
       }, [setUsers])
 
       const getUsers = () => {
-        fetch('http://localhost:5000/get_users')
+        fetch('http://localhost:5000/users')
         .then(response => response.json())
         .then(data => {
           let usrNames = [];
-          data.data.map((d) => {
+          data.map((d) => {
               usrNames.push(d.username);
               return d.modified = false;
           })
-          setUsers(data.data);
+          setUsers(data);
           setUsernames(usrNames);
         });
       }

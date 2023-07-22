@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 
-const ChatFooter = () => {
+const ChatFooter = (props) => {
+  const { socket, currentMatch, user } = props
   const [message, setMessage] = useState('');
-
+  console.log(socket)
   const handleSendMessage = (e) => {
     e.preventDefault();
-    console.log({ userName: localStorage.getItem('userName'), message });
+    if (message.trim()) {
+      socket.emit('message', {
+        text: message,
+        sender: user,
+        recipient: currentMatch.user,
+        id: `${socket.id}${Math.random()}`,
+        socketID: socket.id,
+      });
+    }
     setMessage('');
   };
   return (
