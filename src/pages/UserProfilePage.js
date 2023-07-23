@@ -26,7 +26,6 @@ export default function UserProfilePage({
             axiosInstance.get(`/check_match_profile/${user.id}`)
             .then(response => {
                 setShowModal(!response?.data?.is_match_profile_complete);
-                console.log(response?.data);
             })
             .catch( 
                 (e) => console.log( e ) 
