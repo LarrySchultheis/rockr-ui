@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { Typography } from '@mui/material';
+import { Typography, Checkbox } from '@mui/material';
 import SaveSuccessSnackbar from '../SaveSuccessSnackbar';
 import axios from 'axios';
 
@@ -21,12 +21,14 @@ export default function PersonalDetailsForm({
 }) {
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
+    const [isPaused, setIsPaused] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const handleCloseSnackbar = () => setOpenSnackbar(false);
-    
+
     useEffect(() => {
-        setFirstname(user?.first_name)
-        setLastname(user?.last_name)
+        setFirstname(user?.first_name);
+        setLastname(user?.last_name);
+        setIsPaused(!user?.is_active); // negate is_active to match semantics
     }, [user])
 
     const handleFirstnameChange = (event) => {
@@ -40,10 +42,10 @@ export default function PersonalDetailsForm({
         })
         .then(response => {
             setFirstname(response?.data.first_name);
-            setOpenSnackbar(true)
+            setOpenSnackbar(true);
         })
-        .catch( 
-            (e) => console.log( e ) 
+        .catch(
+            (e) => console.log( e )
         );
     };
 
@@ -58,10 +60,25 @@ export default function PersonalDetailsForm({
         })
         .then(response => {
             setLastname(response?.data.last_name);
-            setOpenSnackbar(true)
+            setOpenSnackbar(true);
         })
-        .catch( 
-            (e) => console.log( e ) 
+        .catch(
+            (e) => console.log( e )
+        );
+    };
+
+    const patchIsActive = (event) => {
+        axiosInstance.patch(`/users/${user?.id}`, {
+            params: {
+                is_active: !event.target.checked
+            }
+        })
+        .then(response => {
+            setIsPaused(!response?.data.is_active);
+            setOpenSnackbar(true);
+        })
+        .catch(
+            (e) => console.log( e )
         );
     };
 
@@ -94,6 +111,13 @@ export default function PersonalDetailsForm({
                 value={lastname}
                 onChange={handleLastnameChange}
                 onBlur={patchLastname}
+            />
+            <Typography sx={{mt: "2rem", mb:"2rem"}} color='#000000'>Pause Account?</Typography>
+            <Checkbox
+                sx={{color: "black", '&.Mui-checked': {color: "primary"}} }
+                label="Label"
+                checked={isPaused}
+                onChange={patchIsActive}
             />
         </Stack>
         <SaveSuccessSnackbar
