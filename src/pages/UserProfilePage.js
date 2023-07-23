@@ -5,25 +5,39 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/PasswordChangeModal';
-// import axios from 'axios';
+import RegistrationModal from '../components/RegistrationModal';
+import axios from 'axios';
 
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
-// const axiosInstance = axios.create({
-//     baseURL: "http://localhost:5000",
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   });
+export default function UserProfilePage({
+    user
+}) {
+    // RegistrationModal
+    const [showModal, setShowModal] = useState(false);
+    const closeModal = () => setShowModal(false);
+    useEffect(() => {
+        if(user){
+            axiosInstance.get(`/check_match_profile/${user.id}`)
+            .then(response => {
+                setShowModal(!response?.data?.is_match_profile_complete);
+                console.log(response?.data);
+            })
+            .catch( 
+                (e) => console.log( e ) 
+            );
+        }
+      }, [user])
 
-function UserProfilePage(props) {
-    const [user, setUser] = useState(null);
+    // PasswordChangeModal
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    useEffect(() => {
-      setUser(props?.user)
-    }, [props?.user])
 
     const changePassword = (newPassword) => {
         const requestOptions = {
@@ -107,14 +121,16 @@ function UserProfilePage(props) {
                     <ProfileTabs user={user}/>
                 </Grid>
             </Grid>
-        <PasswordChangeModal
-            open={open}
-            handleClose={handleClose}
-            handleSubmit={changePassword}
-        >
-        </PasswordChangeModal>
+            <PasswordChangeModal
+                open={open}
+                handleClose={handleClose}
+                handleSubmit={changePassword}
+            />
+            <RegistrationModal
+                user={user}
+                showModal={showModal}
+                closeModal={closeModal}
+            />
         </>
     );
 }
-
-export default UserProfilePage;

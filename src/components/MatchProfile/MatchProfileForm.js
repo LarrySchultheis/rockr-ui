@@ -1,51 +1,30 @@
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import AllChipsArray from "./AllChipsArray";
 import UserTypeButtons from "./UserTypeButtons";
+import InstrumentSelect from './InstrumentsSelect';
+import InterestsSelect from './InterestsSelect';
+import GoalsSelect from './GoalsSelect';
 
 
-export default function MatchProfileLayout(props) {
+export default function MatchProfileForm({
+    user
+}) {
     return(
         <>
-            <Grid
-                item
-                container
-                direction="row"
-                gridAutoRows={true}
-            >
-                <Stack
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{m:"2rem", mr:"2rem", width:"40%"}}
-                >
-                    <UserTypeButtons user={props.user}/>
+            <Grid item container direction="row" gridAutoRows={true}>
+                <Stack justifyContent="center" alignItems="center" sx={{m:"2rem", mr:"2rem", width:"40%"}}>
+                    <UserTypeButtons user={user}/>
                 </Stack>
-                <Stack
-                    sx={{m:"2rem", width:"40%"}}
-                >
-                    <AllChipsArray 
-                        chips={props?.interests} 
-                        url={`/user_musical_interests/${props.user.id}`}
-                    /> 
+                <Stack sx={{m:"2rem", width:"40%"}}>
+                    <InterestsSelect user={user}/>
                 </Stack>
             </Grid>
-            <Grid
-                item
-                container
-                direction="row"
-            >
-                <Stack
-                    sx={{m:"2rem", width:"40%"}}
-                >
-                    <AllChipsArray 
-                        chips={props?.instruments}
-                        url={`/user_instruments/${props.user.id}`}
-                    /> 
+            <Grid item container direction="row">
+                <Stack sx={{m:"2rem", width:"40%"}}>
+                    <InstrumentSelect user={user}/>
                 </Stack>
-                <Stack
-                    sx={{m:"2rem", width:"40%"}}
-                >
-                    <AllChipsArray chips={props?.goals} url={`/user_goals/${props.user.id}`}/> 
+                <Stack sx={{m:"2rem", width:"40%"}}>
+                    <GoalsSelect user={user}/>
                 </Stack>
             </Grid>
         </>
