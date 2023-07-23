@@ -17,7 +17,6 @@ import AdminManagement from './components/AdminManagement';
 import Profile from "./components/Profile"
 import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
-import ChatManager from './components/ChatService/ChatManager';
 import { Socket } from './components/ChatService/Socket';
 import ChatPage from './components/ChatService/ChatPage';
 
