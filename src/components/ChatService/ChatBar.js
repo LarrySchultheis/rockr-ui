@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 
 const ChatBar = (props) => {
-  const {matches, setCurrentMatch} = props;
+  const {matches, handleUserChange} = props;
   const handleMatchChange = (user) => {
-    setCurrentMatch(user);
+    handleUserChange(user);
   }
 
   return (

@@ -15,7 +15,6 @@ export default function PersonalDetailsForm(props) {
     const handleChange = (event) => {
         setGender(event.target.value);
     };
-    console.log(gender);
     return (
         <>
             <Typography sx={{mt: "2rem", mb:"2rem"}} color='#8A8A8A' variant="h4">Personal Details</Typography>

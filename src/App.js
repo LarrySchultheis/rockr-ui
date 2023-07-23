@@ -23,7 +23,8 @@ import ChatPage from './components/ChatService/ChatPage';
 
 export default function App () {
   const {isAuthenticated, isLoading, user} = useAuth0();
-  const [userRole, setUserRole] = useState()
+  const [userRole, setUserRole] = useState();
+  const [dbUser, setDbUser] = useState();
   // const [isAuthenticated, setIsAuthenticated] = useState();
 
   useEffect(() => {
@@ -36,7 +37,18 @@ export default function App () {
           .then(data => setUserRole(data.role[0]));
     }
   }, [user, isAuthenticated, isLoading])
-  console.log(userRole)
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      const requestOptions = {
+        method: 'GET',
+      };
+      fetch(`http://localhost:5000/user?email=${user.email}`, requestOptions)
+          .then(response => response.json())
+          .then(data => setDbUser(data.data[0]));
+    }
+  }, [user, isAuthenticated, isLoading])
+
   return (
     <ThemeProvider theme={theme}>
       <head><link
@@ -55,7 +67,7 @@ export default function App () {
               <Route path="/admin_management" Component={() => <AdminManagement user={user}/>} />
             }
             <Route path="/user_profile" element={<UserProfilePage user={user}/>}/>
-            <Route path="/messages" element={<ChatPage socket={Socket} user={user}/>}/>
+            <Route path="/messages" element={<ChatPage socket={Socket} user={user} dbUser={dbUser}/>}/>
 
           </Routes>
         </div>

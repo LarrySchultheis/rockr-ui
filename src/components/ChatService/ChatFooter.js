@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const ChatFooter = (props) => {
   const { socket, currentMatch, user } = props
   const [message, setMessage] = useState('');
-  console.log(socket)
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (message.trim()) {

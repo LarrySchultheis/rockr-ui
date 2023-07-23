@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
@@ -17,29 +17,44 @@ export default function ChatPage(props) {
   const [matches, setMatches] = useState([]);
   const [currentMatch, setCurrentMatch] = useState(null);
   const [messages, setMessages] = useState([]);
-
   const socket = props.socket;
+
+  const compare = (a,b) => {
+    if (a.ts < b.ts)
+       return -1;
+    if (a.ts > b.ts)
+      return 1;
+    return 0;
+  }
+    
   useEffect(() => {
-      if (props.user) {
-          console.log(props.user)
-          axiosInstance.get(`/matches?email=${props.user.email}`).then(response => {
-              setMatches(response?.data?.data);
-          });
-      }
+    if (props.user) {
+      axiosInstance.get(`/matches?email=${props.user.email}`).then(response => {
+        let m = response?.data?.data;
+        m = m.sort(compare)
+        setMatches(m);
+    });
+    axiosInstance.get('/messages').then(response => {
+      setMessages(response?.data?.data);
+    });
+    }
   }, [props.user])
 
   useEffect(() => {
-    socket.on('messageResponse', (data) => setMessages([...messages, data]));
-  }, [socket, messages]);
+    socket.on('messageResponse', (data) => {
+      setMessages([...messages, data]);
+    })
+  });
 
-  console.log(matches)
-  console.log(currentMatch)
+  const handleUserChange = ((match) => {
+    setCurrentMatch(match);
+  })
 
   return (
     <div className="chat">
-      <ChatBar user={props.user} matches={matches} setCurrentMatch={setCurrentMatch}/>
+      <ChatBar user={props.user} matches={matches} handleUserChange={handleUserChange}/>
       <div className="chat__main">
-        <ChatBody messages={messages}/>
+        <ChatBody messages={messages} user={props.dbUser} currentMatch={currentMatch}/>
         <ChatFooter socket={socket} currentMatch={currentMatch} user={props.user}/>
       </div>
     </div>
