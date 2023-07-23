@@ -1,10 +1,31 @@
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import UserTypeButtons from "./UserTypeButtons";
+<<<<<<< HEAD
 import InstrumentSelect from './InstrumentsSelect';
 import InterestsSelect from './InterestsSelect';
 import GoalsSelect from './GoalsSelect';
+=======
+import { Button, ButtonGroup } from '@mui/material';
+>>>>>>> a850819 (Added buttons to MatchProfileForm for adding and removing matched users from a band.)
 
+const add_user_band_func = (user_id) => {
+    fetch(`http://localhost:5000/add_user_band?id=${band_id}`)
+    .then((response) => { 
+        if(response.status != 201) {
+            alert("Error adding band member")
+        }
+    })
+}
+
+const remove_user_band_func = (user_id, band_id) => {
+    fetch(`http://localhost:5000/remove_user_band?id=${user_id}`)
+    .then((response) => { 
+        if(response.status != 204) {
+            alert("Error removing band member")
+        }
+    })
+}
 
 export default function MatchProfileForm({
     user
@@ -27,6 +48,15 @@ export default function MatchProfileForm({
                     <GoalsSelect user={user}/>
                 </Stack>
             </Grid>
+            <ButtonGroup style={{ margin: "auto" }} 
+                variant="contained">
+                <Button onClick={() => {
+                    add_user_band_func(props.user.id);
+                }}>Add To Band</Button>
+                <Button onClick={() => {
+                    remove_user_band_func(props.user.id);
+                }}>Remove From Band</Button>
+            </ButtonGroup>
         </>
     );
 }
