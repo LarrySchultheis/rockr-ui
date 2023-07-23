@@ -40,7 +40,6 @@ export default function ProductHero() {
         Connect with local musicians today!
       </Typography>
       <Button
-        isNewUser={true}
         color="secondary"
         variant="contained"
         sx={{ minWidth: 200 }}
@@ -54,5 +53,3 @@ export default function ProductHero() {
     </ProductHeroLayout>
   );
 }
-
-// CITE THIS: https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate

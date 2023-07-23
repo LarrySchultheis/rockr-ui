@@ -2,30 +2,68 @@
 //     * https://mui.com/material-ui/react-text-field/#system-TextFieldHiddenLabel.js
 //     * https://mui.com/material-ui/react-select/#system-BasicSelect.js 
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { Typography } from '@mui/material';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import SaveSuccessSnackbar from '../SaveSuccessSnackbar';
+import axios from 'axios';
 
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
 
-export default function PersonalDetailsForm(props) {
-    const [firstname, setFirstname] = useState(props?.user?.first_name || "")
+export default function PersonalDetailsForm({
+    user
+}) {
+    const [firstname, setFirstname] = useState("")
+    const [lastname, setLastname] = useState("")
+    const [openSnackbar, setOpenSnackbar] = useState(false)
+    const handleCloseSnackbar = () => setOpenSnackbar(false);
+    
+    useEffect(() => {
+        setFirstname(user?.first_name)
+        setLastname(user?.last_name)
+    }, [user])
+
     const handleFirstnameChange = (event) => {
-        setFirstname(event.target.value);
+        setFirstname(event.target.value)
+    };
+    const patchFirstname = (event) => {
+        axiosInstance.patch(`/users/${user?.id}`, {
+            params:{
+                first_name: event.target.value
+            }
+        })
+        .then(response => {
+            setFirstname(response?.data.first_name);
+            setOpenSnackbar(true)
+        })
+        .catch( 
+            (e) => console.log( e ) 
+        );
     };
 
-    const [lastname, setLastname] = useState(props?.user?.last_name || "")
     const handleLastnameChange = (event) => {
-        setLastname(event.target.value);
+        setLastname(event.target.value)
     };
-
-    const [gender, setGender] = useState("");
-    const handleChange = (event) => {
-        setGender(event.target.value);
+    const patchLastname = (event) => {
+        axiosInstance.patch(`/users/${user?.id}`, {
+            params: {
+                last_name: event.target.value
+            }
+        })
+        .then(response => {
+            setLastname(response?.data.last_name);
+            setOpenSnackbar(true)
+        })
+        .catch( 
+            (e) => console.log( e ) 
+        );
     };
-
 
     return (
         <form id="userForm">
@@ -43,6 +81,7 @@ export default function PersonalDetailsForm(props) {
                 sx={{minWidth: "15rem", mb: "1.5rem"}}
                 value={firstname}
                 onChange={handleFirstnameChange}
+                onBlur={patchFirstname}
             />
             <TextField
                 hiddenLabel
@@ -54,23 +93,14 @@ export default function PersonalDetailsForm(props) {
                 sx={{minWidth: "15rem", mb: "1.5rem"}}
                 value={lastname}
                 onChange={handleLastnameChange}
+                onBlur={patchLastname}
             />
-            <Select
-                labelId="gender-select"
-                id="gender-select"
-                name="gender"
-                value={gender}
-                label="Gender"
-                placeholder='Gender'
-                onChange={handleChange}
-                sx={{ minWidth: "15rem", mb: "1.5rem"}}
-            >
-                <MenuItem value={1}>Male</MenuItem>
-                <MenuItem value={2}>Female</MenuItem>
-                <MenuItem value={3}>Non-binary</MenuItem>
-                <MenuItem value={4}>Prefer not to say</MenuItem>
-            </Select>
         </Stack>
+        <SaveSuccessSnackbar
+            component={"Personal Details"}
+            open={openSnackbar}
+            handleSnackbarClose={handleCloseSnackbar}
+        />
     </form>
   );
 }

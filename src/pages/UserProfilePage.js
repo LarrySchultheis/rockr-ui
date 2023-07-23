@@ -6,34 +6,38 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/PasswordChangeModal';
 import RegistrationModal from '../components/RegistrationModal';
-// import axios from 'axios';
+import axios from 'axios';
 
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
-// const axiosInstance = axios.create({
-//     baseURL: "http://localhost:5000",
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   });
-
-function UserProfilePage(props) {
-    const [user, setUser] = useState(null);
-
+export default function UserProfilePage({
+    user
+}) {
     // RegistrationModal
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     const closeModal = () => setShowModal(false);
-    // useEffect(() => {
-    //     setShowModal(props?.isNewUser || true)
-    //   }, [props?.isNewUser])
+    useEffect(() => {
+        if(user){
+            axiosInstance.get(`/check_match_profile/${user.id}`)
+            .then(response => {
+                setShowModal(!response?.data?.is_match_profile_complete);
+                console.log(response?.data);
+            })
+            .catch( 
+                (e) => console.log( e ) 
+            );
+        }
+      }, [user])
 
     // PasswordChangeModal
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    useEffect(() => {
-      setUser(props?.user)
-    }, [props?.user])
 
     const changePassword = (newPassword) => {
         const requestOptions = {
@@ -130,5 +134,3 @@ function UserProfilePage(props) {
         </>
     );
 }
-
-export default UserProfilePage;
