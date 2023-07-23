@@ -53,5 +53,3 @@ export default function ProductHero() {
     </ProductHeroLayout>
   );
 }
-
-// CITE THIS: https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate

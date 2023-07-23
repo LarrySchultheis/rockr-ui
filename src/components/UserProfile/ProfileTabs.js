@@ -1,15 +1,14 @@
 // REFERENCES: 
 //      * https://mui.com/material-ui/react-tabs/#system-CustomizedTabs.js
 
-import * as React from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Grid, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import PersonalDetailsForm from '../UserProfile/PersonalDetailsForm'
-import MatchProfileLayout from '../MatchProfile/MatchProfileLayout';
-
+import PersonalDetailsForm from './PersonalDetailsForm'
+import MatchProfileForm from '../MatchProfile/MatchProfileForm';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -56,32 +55,63 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
   },
 }));
 
-export default function ProfileTab(props) {
-  const [value, setValue] = React.useState(0);
+export default function ProfileTabs({
+  user
+}) {
+  const [value, setValue] = useState(0);
+
+//   const [instruments, setInstruments] = useState([]);
+//   const [goals, setGoals] = useState([]);
+//   const [interests, setInterests] = useState([]);
+
+//   useEffect(() => {
+//     if(props.user){
+//       axiosInstance.get(`/user_instruments/${props.user.id}`).then(response => {
+//         setInstruments(response?.data?.data);
+//       })
+//       axiosInstance.get(`/user_goals/${props.user.id}`).then(response => {
+//         setGoals(response?.data?.data);     
+//       })
+//       axiosInstance.get(`/user_musical_interests/${props.user.id}`).then(response => {
+//         setInterests(response?.data?.data);
+//       })
+//     }
+// }, [props?.user])
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-
-
   return (
     <>
-    <Box sx={{ width: '100%'}}>
-      <Box sx={{ bgcolor: '#fff' }}>
-        <AntTabs value={value} onChange={handleChange} aria-label="ant example">
-          <AntTab label="Personal Details"/>
-          <AntTab label="Match Profile" />
-        </AntTabs>
-        <Box />
-      </Box>
-    </Box> 
-      <TabPanel value={value} index={0}>
-          <PersonalDetailsForm user={props?.user}/>
+      <Box sx={{ width: '100%'}}>
+        <Box sx={{ bgcolor: '#fff' }}>
+          <AntTabs value={value} onChange={handleChange} aria-label="ant example">
+            <AntTab label="Personal Details"/>
+            <AntTab label="Match Profile" />
+            {
+              user?.is_band ?
+              <AntTab label="Band Management"/>
+              : <></>
+            }
+          </AntTabs>
+          <Box />
+        </Box>
+      </Box> 
+        <TabPanel value={value} index={0}>
+            <PersonalDetailsForm
+              user={user}
+            />
+        </TabPanel>
+      <TabPanel value={value} index={1}>
+          <MatchProfileForm 
+            // instruments={instruments}
+            // goals={goals}
+            // interests={interests}
+            user={user}
+          />
       </TabPanel>
-    <TabPanel value={value} index={1}>
-        <MatchProfileLayout user={props?.user}/>
-    </TabPanel>
     </>
   );
 }

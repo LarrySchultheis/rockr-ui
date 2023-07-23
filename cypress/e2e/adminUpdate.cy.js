@@ -12,11 +12,23 @@ Cypress.Commands.add('login', () => {
 describe('template spec', () => {
   it('passes', () => {
     cy.login()
-    // WIP test to update user info
-    // const children = cy.get('input[value="ttchilders"]').parents('tr[class^=MuiTableRow]').children();
-    // children.get('input[value="Tyler"]').type('Tyler1');
-    // children.get('input[value="Childers"]').type('Childers1');
-    // children.get('input[value="ttchilders"]').type('ttchilders1');
-    // children.get('input[value="the_child_man@ky.gov"]').type('the_child_man1@ky.gov');
+    cy.contains('Admin Management').click();
+    // Change ty man
+    let children = cy.get('input[value="ttchilders"]').parents('tr[class^=MuiTableRow]').children();
+    children.get('input[value="Tyler"]').clear().type('Tyler1');
+    children.get('input[value="Childers"]').clear().type('Childers1');
+    children.get('input[value="ttchilders"]').clear().type('ttchilders1');
+    children.get('input[value="the_child_man@ky.gov"]').clear().type('the_child_man1@ky.gov');
+    cy.contains('Save').click();
+    cy.reload();
+
+    // Change him back
+    children = cy.get('input[value="ttchilders1"]').parents('tr[class^=MuiTableRow]').children();
+    children.get('input[value="Tyler1"]').clear().type('Tyler');
+    children.get('input[value="Childers1"]').clear().type('Childers');
+    children.get('input[value="ttchilders1"]').clear().type('ttchilders');
+    children.get('input[value="the_child_man1@ky.gov"]').clear().type('the_child_man@ky.gov');
+    cy.contains('Save').click();
+
   })
 })

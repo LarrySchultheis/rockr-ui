@@ -1,67 +1,62 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+// import { useState, useEffect} from "react";
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import {postRegistration} from '../api/endpoints'
 import PersonalDetailsForm from './UserProfile/PersonalDetailsForm'
-import RequiredFieldsForm from './RequiredFieldsForm'
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import UserTypeButtons from "./MatchProfile/UserTypeButtons";
+import InstrumentSelect from "./MatchProfile/InstrumentsSelect";
+import InterestsSelect from "./MatchProfile/InterestsSelect";
+import GoalsSelect from "./MatchProfile/GoalsSelect";
 
 const style = theme => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '50%',
+  height:'75%',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow:"scroll",
 });
 
+
 function RegistrationModal({
-  open,
-  handleModal
+  user,
+  showModal,
+  closeModal
 }) {
-  const { register, handleSubmit } = useForm()
-  const onSubmit = (data) => {
-    postRegistration(data);
-    handleModal();
-  }
 
   return (
     <div>
-      <Modal
-        open={open}
-        onClose={handleModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Stack alignItems="center" sx={style}>
-          <RequiredFieldsForm/>
-          <Divider variant="middle" sx={{mt:"2rem"}}/>
-          <PersonalDetailsForm/>
-          <Button 
-            color="secondary"
-            variant="contained"
-            type="submit"
-            sx={{minWidth:"8rem", minHeight:"3rem", mt:"1rem", mb:"1rem"}}
-            onSubmit={{handleSubmit}}
-          >
-            Create Account
-          </Button>
-          <p>Already have an account?</p>
-          <Link href="#">
-            <Typography color="
-              #1d17d1">Log in.
+      { user ? 
+        <Modal open={showModal}>
+          <Stack alignItems="center" sx={style}>
+            <PersonalDetailsForm/>
+            <Divider variant="middle" sx={{mt:"2rem"}}/>
+            <Typography 
+              sx={{mt: "2rem", mb:"2rem"}}
+              color='#8A8A8A'
+              variant="h4">
+                Match Profile
             </Typography>
-          </Link>
-        </Stack>
-        
-      </Modal>
+            <UserTypeButtons user={user}/>
+            <InterestsSelect user={user}/>
+            <InstrumentSelect user={user}/>
+            <GoalsSelect user={user}/>
+            <Button
+                color="primary"
+                variant="contained" 
+                onClick={() => {closeModal()}}
+            >
+                Done
+            </Button>
+          </Stack>
+        </Modal>
+      : <></>}
     </div>
   )
 };

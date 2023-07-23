@@ -2,37 +2,41 @@ import {useEffect, useState} from 'react';
 import { Button, Grid, Stack } from '@mui/material';
 import defaultAvatar from '../images/default_avatar.png'
 import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/PasswordChangeModal';
+import RegistrationModal from '../components/RegistrationModal';
 import axios from 'axios';
 
-
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
-function UserProfilePage(props) {
-    const [user, setUser] = useState(null);
+export default function UserProfilePage({
+    user
+}) {
+    // RegistrationModal
+    const [showModal, setShowModal] = useState(false);
+    const closeModal = () => setShowModal(false);
+    useEffect(() => {
+        if(user){
+            axiosInstance.get(`/check_match_profile/${user.id}`)
+            .then(response => {
+                setShowModal(!response?.data?.is_match_profile_complete);
+            })
+            .catch( 
+                (e) => console.log( e ) 
+            );
+        }
+      }, [user])
+
+    // PasswordChangeModal
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    useEffect(() => {
-        if(props.user){
-                axiosInstance.get("/user", {
-                params: {
-                    email: props?.user?.email
-                }
-            }).then(response => {
-                setUser(response?.data?.data);
-            });
-        }
-        // setUser(props?.user);
-    }, [props.user])
 
     const changePassword = (newPassword) => {
         const requestOptions = {
@@ -56,7 +60,6 @@ function UserProfilePage(props) {
 
     return (
         <>
-        { user ?
             <Grid 
                 container
                 direction='row'
@@ -77,28 +80,6 @@ function UserProfilePage(props) {
                         <Button
                             color="primary"
                             variant="contained"
-                            endIcon={<SaveIcon />}
-                            sx={{ 
-                                minWidth: '8rem',
-                                mt:"1.5rem",
-                            }}
-                        >
-                            save
-                        </Button>
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={() => handleOpen()}
-                            sx={{ 
-                                minWidth: '8rem',
-                                mt:"1.5rem",
-                            }}
-                        >
-                            update password
-                        </Button>
-                        <Button
-                            color="primary"
-                            variant="outlined"
                             endIcon={<InsertEmoticonIcon/>}
                             sx={{ 
                                 minWidth: '8rem',
@@ -106,6 +87,17 @@ function UserProfilePage(props) {
                             }}
                         >
                             preview
+                        </Button>
+                        <Button
+                            color="primary"
+                            variant="outlined"
+                            onClick={() => handleOpen()}
+                            sx={{
+                                minWidth: '8rem',
+                                mt:"1.5rem",
+                            }}
+                        >
+                            update password
                         </Button>
                         <Button
                             color="error"
@@ -128,16 +120,16 @@ function UserProfilePage(props) {
                     <ProfileTabs user={user}/>
                 </Grid>
             </Grid>
-            : <Grid/>
-        }
-        <PasswordChangeModal
-            open={open}
-            handleClose={handleClose}
-            handleSubmit={changePassword}
-        >
-        </PasswordChangeModal>
+            <PasswordChangeModal
+                open={open}
+                handleClose={handleClose}
+                handleSubmit={changePassword}
+            />
+            <RegistrationModal
+                user={user}
+                showModal={showModal}
+                closeModal={closeModal}
+            />
         </>
     );
 }
-
-export default UserProfilePage;

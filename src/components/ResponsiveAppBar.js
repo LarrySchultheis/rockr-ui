@@ -146,7 +146,7 @@ function ResponsiveAppBar(props) {
           <Box sx={{ flexGrow: 0 }}>
             { isAuthenticated ? 
                 <>
-                  <Tooltip title="Open settings">
+                <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <AccountCircleIcon></AccountCircleIcon>
                   </IconButton>
@@ -197,6 +197,7 @@ function ResponsiveAppBar(props) {
               <Grid container spacing={2}>
                 <Grid item grid-xs-auto>
                     <Button
+                      isNewUser={false}
                       color="secondary"
                       variant="contained"
                       onClick={() => {
@@ -209,6 +210,7 @@ function ResponsiveAppBar(props) {
                 </Grid>
                 <Grid item sgrid-xs-auto>
                     <Button
+                      isNewUser={true}
                       color="secondary"
                       variant="outlined"
                       onClick={() => {
