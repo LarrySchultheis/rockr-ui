@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/PasswordChangeModal';
+import RegistrationModal from '../components/RegistrationModal';
 // import axios from 'axios';
 
 
@@ -17,6 +18,15 @@ import PasswordChangeModal from '../components/PasswordChangeModal';
 
 function UserProfilePage(props) {
     const [user, setUser] = useState(null);
+
+    // RegistrationModal
+    const [showModal, setShowModal] = useState(true);
+    const closeModal = () => setShowModal(false);
+    // useEffect(() => {
+    //     setShowModal(props?.isNewUser || true)
+    //   }, [props?.isNewUser])
+
+    // PasswordChangeModal
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -107,12 +117,16 @@ function UserProfilePage(props) {
                     <ProfileTabs user={user}/>
                 </Grid>
             </Grid>
-        <PasswordChangeModal
-            open={open}
-            handleClose={handleClose}
-            handleSubmit={changePassword}
-        >
-        </PasswordChangeModal>
+            <PasswordChangeModal
+                open={open}
+                handleClose={handleClose}
+                handleSubmit={changePassword}
+            />
+            <RegistrationModal
+                user={user}
+                showModal={showModal}
+                closeModal={closeModal}
+            />
         </>
     );
 }

@@ -40,6 +40,7 @@ export default function ProductHero() {
         Connect with local musicians today!
       </Typography>
       <Button
+        isNewUser={true}
         color="secondary"
         variant="contained"
         sx={{ minWidth: 200 }}

@@ -21,7 +21,7 @@ export default function PersonalDetailsForm(props) {
         setLastname(event.target.value);
     };
 
-    const [gender, setGender] = useState(1);
+    const [gender, setGender] = useState("");
     const handleChange = (event) => {
         setGender(event.target.value);
     };

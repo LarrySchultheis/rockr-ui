@@ -13,7 +13,7 @@ root.render(
     domain="dev-6ary27eqnmjykel3.us.auth0.com"
     clientId="7ZGbKRlV9YDvZluAFKDrc5cdul5GINdN"
     authorizationParams={{
-      redirect_uri: window.location.origin
+      redirect_uri: `${window.location.origin}/user_profile`
     }}
     useRefreshTokens={ true }
     cacheLocation="localstorage"
