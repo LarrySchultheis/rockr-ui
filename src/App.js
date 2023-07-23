@@ -66,7 +66,7 @@ export default function App () {
               userRole && userRole.name === 'Admin' &&
               <Route path="/admin_management" Component={() => <AdminManagement user={user}/>} />
             }
-            <Route path="/user_profile" element={<UserProfilePage user={user}/>}/>
+            <Route path="/user_profile" element={<UserProfilePage user={dbUser}/>}/>
             <Route path="/messages" element={<ChatPage socket={Socket} user={user} dbUser={dbUser}/>}/>
 
           </Routes>
