@@ -20,7 +20,7 @@ import Grid from '@mui/material/Grid';
 import { useAuth0 } from '@auth0/auth0-react'
 
 
-const pages = ['Matches', 'Messages'];
+const pages = ['Matches'];
 const settings = ['Account', 'Logout'];
 
 function ResponsiveAppBar(props) {
@@ -132,6 +132,12 @@ function ResponsiveAppBar(props) {
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                 Profile
+                </Button>
+                <Button
+                  href="/messages"
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                Messages
                 </Button>
               </>
               : <></>
