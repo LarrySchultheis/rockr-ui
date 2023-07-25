@@ -50,16 +50,26 @@ export default function App () {
       axiosInstance.get('/get_user_role', {
         params: {
           id: user.sub,
-          email: user.email
         }
         }).then(response => {
-          setUserRole(response?.data["role"]);
-          setDbUser(response?.data["db_user"]);
+          setUserRole(response?.data["role"][0]);
         })
         .catch(function(error) {
           console.log(error);
         });
+
+        axiosInstance.get('/user', {
+          params: {
+            email: user.email,
+          }
+        }).then(response => {
+          setDbUser(response?.data?.data[0])
+        })
+        .catch((err) => {
+          console.log(err);
+        }) 
       }
+
   }, [user, isAuthenticated, isLoading, logout])
 
 
