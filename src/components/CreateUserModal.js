@@ -68,7 +68,7 @@ export default function CreateUserModal(props) {
           username: username === "" ? null : username,
           password: password,
           is_band: isBand,
-          is_active: true,
+          is_paused: false,
           is_admin: isAdmin,
         })
       }

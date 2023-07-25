@@ -1,7 +1,7 @@
 // REFERENCES:
 //  * https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate
 
-import * as React from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,18 +16,17 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Grid from '@mui/material/Grid';
-
 import { useAuth0 } from '@auth0/auth0-react'
 
 
-const pages = ['Matches'];
+const pages = ['Matches', 'Profile', 'Messages'];
 const settings = ['Account', 'Logout'];
 
 function ResponsiveAppBar(props) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const { isAuthenticated, loginWithRedirect, logout} = useAuth0();
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -197,11 +196,13 @@ function ResponsiveAppBar(props) {
               <Grid container spacing={2}>
                 <Grid item grid-xs-auto>
                     <Button
-                      isNewUser={false}
                       color="secondary"
                       variant="contained"
                       onClick={() => {
                         loginWithRedirect();
+                        // loginWithRedirect({
+                        //   appState: { returnTo: `${window.location.origin}/`}
+                        // });
 
                       }}
                     >
@@ -210,11 +211,13 @@ function ResponsiveAppBar(props) {
                 </Grid>
                 <Grid item sgrid-xs-auto>
                     <Button
-                      isNewUser={true}
                       color="secondary"
                       variant="outlined"
                       onClick={() => {
-                        loginWithRedirect({authorizationParams: {screen_hint: "signup"}, appState: { returnTo: `${window.location.origin}/user_profile`}});
+                        loginWithRedirect({
+                          authorizationParams: {screen_hint: "signup"}, 
+                          appState: { returnTo: `${window.location.origin}/`}
+                        });
                       }}
                     >
                       Sign up

@@ -19,34 +19,49 @@ import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Socket } from './components/ChatService/Socket';
 import ChatPage from './components/ChatService/ChatPage';
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
 export default function App () {
-  const {isAuthenticated, isLoading, user} = useAuth0();
+  const {isAuthenticated, isLoading, user, logout} = useAuth0();
   const [userRole, setUserRole] = useState();
   const [dbUser, setDbUser] = useState();
-  // const [isAuthenticated, setIsAuthenticated] = useState();
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      const requestOptions = {
-        method: 'GET',
-      };
-      fetch(`http://localhost:5000/get_user_role?id=${user.sub}&email=${user.email}`, requestOptions)
-          .then(response => response.json())
-          .then(data => setUserRole(data.role[0]));
-    }
-  }, [user, isAuthenticated, isLoading])
+      // start session on BE
+      axiosInstance.get('/login', {
+        params: {
+          email: user.email
+        }})
+        .catch(function(error) {
+          logout({
+            returnTo: window.location.origin,
+          });
+          console.log(error);
+        });
 
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      const requestOptions = {
-        method: 'GET',
-      };
-      fetch(`http://localhost:5000/user?email=${user.email}`, requestOptions)
-          .then(response => response.json())
-          .then(data => setDbUser(data.data[0]));
-    }
-  }, [user, isAuthenticated, isLoading])
+      axiosInstance.get('/get_user_role', {
+        params: {
+          id: user.sub,
+          email: user.email
+        }
+        }).then(response => {
+          setUserRole(response?.data["role"]);
+          setDbUser(response?.data["db_user"]);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }
+  }, [user, isAuthenticated, isLoading, logout])
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,7 +82,6 @@ export default function App () {
             }
             <Route path="/user_profile" element={<UserProfilePage user={dbUser}/>}/>
             <Route path="/messages" element={<ChatPage socket={Socket} user={user} dbUser={dbUser}/>}/>
-
           </Routes>
         </div>
       </Router>

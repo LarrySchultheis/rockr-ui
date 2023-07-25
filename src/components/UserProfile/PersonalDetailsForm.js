@@ -28,7 +28,7 @@ export default function PersonalDetailsForm({
     useEffect(() => {
         setFirstname(user?.first_name);
         setLastname(user?.last_name);
-        setIsPaused(!user?.is_active); // negate is_active to match semantics
+        setIsPaused(user?.is_paused);
     }, [user])
 
     const handleFirstnameChange = (event) => {
@@ -70,11 +70,11 @@ export default function PersonalDetailsForm({
     const patchIsActive = (event) => {
         axiosInstance.patch(`/users/${user?.id}`, {
             params: {
-                is_active: !event.target.checked
+                is_paused: event.target.checked
             }
         })
         .then(response => {
-            setIsPaused(!response?.data.is_active);
+            setIsPaused(!response?.data.is_paused);
             setOpenSnackbar(true);
         })
         .catch(
