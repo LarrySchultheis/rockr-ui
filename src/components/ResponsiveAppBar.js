@@ -19,7 +19,7 @@ import Grid from '@mui/material/Grid';
 import { useAuth0 } from '@auth0/auth0-react'
 
 
-const pages = ['Matches'];
+const pages = ['Matches', 'Profile', 'Messages'];
 const settings = ['Account', 'Logout'];
 
 function ResponsiveAppBar(props) {
