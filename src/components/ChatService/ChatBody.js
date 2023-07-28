@@ -9,11 +9,10 @@ const ChatBody = (props) => {
     navigate('/');
     window.location.reload();
   };
-
   return (
     <>
       <header className="chat__mainHeader">
-        <p>Hangout with Colleagues</p>
+        {currentMatch ? <p>Chatting with {currentMatch.user.first_name} {currentMatch.user.last_name}</p> : <p>Select a match to open chat!</p>}
         <button className="leaveChat__btn" onClick={handleLeaveChat}>
           LEAVE CHAT
         </button>
@@ -24,21 +23,24 @@ const ChatBody = (props) => {
         messages.map((message) =>
         {
           if(message.sender_id === user.id && message.recipient_id === currentMatch.user.id) {
+              return(
                 <div className="message__chats" key={message.id}>
                 <p className="sender__name">You</p>
                 <div className="message__sender">
                   <p>{message.message}</p>
                 </div>
               </div>
+              )
           }
           if (message.sender_id === currentMatch.user.id && message.recipient_id === user.id) {
+            return (
               <div className="message__chats" key={message.id}>
               <p>{message.name}</p>
               <div className="message__recipient">
                 <p>{message.message}</p>
               </div>
             </div>
-            
+            )
           }
         })}
       
