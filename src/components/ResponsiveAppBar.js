@@ -194,7 +194,7 @@ function ResponsiveAppBar(props) {
               </>
               :
               <Grid container spacing={2}>
-                <Grid item grid-xs-auto>
+                <Grid item grid-xs-auto="true">
                     <Button
                       color="secondary"
                       variant="contained"
@@ -209,7 +209,7 @@ function ResponsiveAppBar(props) {
                     Log In
                     </Button>
                 </Grid>
-                <Grid item sgrid-xs-auto>
+                <Grid item sgrid-xs-auto="true">
                     <Button
                       color="secondary"
                       variant="outlined"

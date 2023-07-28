@@ -74,11 +74,10 @@ export default function App () {
 
   return (
     <ThemeProvider theme={theme}>
-      <head><link
+      <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       />
-      </head>
       <Router>
         <div>
           <ResponsiveAppBar user={user} role={userRole}></ResponsiveAppBar>
