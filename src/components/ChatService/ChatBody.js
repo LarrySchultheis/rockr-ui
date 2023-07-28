@@ -24,22 +24,26 @@ const ChatBody = (props) => {
         messages.map((message) =>
         {
           if(message.sender_id === user.id && message.recipient_id === currentMatch.user.id) {
-                <div className="message__chats" key={message.id}>
+            return(
+              <div className="message__chats" key={message.id}>
                 <p className="sender__name">You</p>
                 <div className="message__sender">
                   <p>{message.message}</p>
                 </div>
               </div>
+            )
           }
           if (message.sender_id === currentMatch.user.id && message.recipient_id === user.id) {
-              <div className="message__chats" key={message.id}>
+            return (
+            <div className="message__chats" key={message.id}>
               <p>{message.name}</p>
               <div className="message__recipient">
                 <p>{message.message}</p>
               </div>
             </div>
-            
+            )
           }
+          return null;
         })}
       
 
