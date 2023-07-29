@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import banner from "../images/banner.jpg"
+import rockrlogo from "../images/Rockr_Logo.png"
 import theme from './Theme';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -26,6 +27,11 @@ export default function ProductHero() {
       <img
         style={{ display: 'none' }}
         src={banner}
+        alt="increase priority"
+      />
+      <img
+        style={{ display: 'none' }}
+        src={rockrlogo}
         alt="increase priority"
       />
       <Typography color="inherit" align="center" marked="center" variant="h2">  

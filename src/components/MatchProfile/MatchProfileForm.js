@@ -4,7 +4,49 @@ import UserTypeButtons from "./UserTypeButtons";
 import InstrumentSelect from './InstrumentsSelect';
 import InterestsSelect from './InterestsSelect';
 import GoalsSelect from './GoalsSelect';
+import { Button, ButtonGroup } from '@mui/material';
+import axios from 'axios';
 
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+      "Content-Type": "application/json"
+    }
+});
+
+const handleBandAccept = (user_id, band_id) => {
+    axiosInstance.patch(`/users/${props?.user?.id}`, {
+      params: {
+        band_id: band_id,
+        is_verified: True
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
+
+const addUserBandFunc = (user_id, band_id) => {
+    axiosInstance.post(`/user_band/${user_id}`, {
+        params: {
+            band_id: band_id
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+};
+
+const removeUserBandFunc = (user_id, band_id) => {
+    axiosInstance.delete(`/user_band/${user_id}`, {
+        params: {
+            band_id: band_id
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+};
 
 export default function MatchProfileForm({
     user
@@ -27,6 +69,18 @@ export default function MatchProfileForm({
                     <GoalsSelect user={user}/>
                 </Stack>
             </Grid>
+            <ButtonGroup style={{ margin: "auto" }} 
+                variant="contained">
+                <Button onClick={() => {
+                    addUserBandFunc(user?.id);
+                }}>Add To Band</Button>
+                <Button onClick={() => {
+                    handleBandAccept(user?.id);
+                }}>Accept Band Request</Button>
+                <Button onClick={() => {
+                    removeUserBandFunc(user?.id);
+                }}>Remove From Band</Button>
+            </ButtonGroup>
         </>
     );
 }
