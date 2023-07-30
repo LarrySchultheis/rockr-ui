@@ -19,9 +19,10 @@ const ChatBody = (props) => {
       </header>
 
       <div className="message__container">
-        {currentMatch && 
+        {currentMatch && user &&
         messages.map((message) =>
         {
+          console.log(message)
           if(message.sender_id === user.id && message.recipient_id === currentMatch.user.id) {
             return(
               <div className="message__chats" key={message.id}>
@@ -44,11 +45,6 @@ const ChatBody = (props) => {
           }
           return null;
         })}
-      
-
-        <div className="message__status">
-          <p>Someone is typing...</p>
-        </div>
       </div>
     </>
   );

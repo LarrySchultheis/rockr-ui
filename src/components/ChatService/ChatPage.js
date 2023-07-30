@@ -42,7 +42,7 @@ export default function ChatPage(props) {
 
   useEffect(() => {
     socket.on('messageResponse', (data) => {
-      setMessages([...messages, data]);
+      setMessages([...messages, {message: data.data, recipient_id: data.recipient.id, sender_id: data.sender.id}]);
     })
   });
 
@@ -55,7 +55,7 @@ export default function ChatPage(props) {
       <ChatBar user={props.user} matches={matches} handleUserChange={handleUserChange}/>
       <div className="chat__main">
         <ChatBody messages={messages} user={props.dbUser} currentMatch={currentMatch}/>
-        <ChatFooter socket={socket} currentMatch={currentMatch} user={props.user}/>
+        <ChatFooter socket={socket} currentMatch={currentMatch} user={props.dbUser}/>
       </div>
     </div>
   );

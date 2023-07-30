@@ -144,14 +144,14 @@ code {
   background-color: rgb(129, 201, 129);
 }
 .message__recipient {
-  background-color: #f5ccc2;
+  background-color: #fce1ee;
   width: 300px;
   padding: 10px;
   border-radius: 10px;
   font-size: 15px;
 }
 .message__sender {
-  background-color: rgb(194, 243, 194);
+  background-color: #E769A6;
   max-width: 300px;
   padding: 10px;
   border-radius: 10px;
