@@ -14,7 +14,8 @@ describe('template spec', () => {
     cy.login();
     cy.contains('Messages').click();
     cy.contains('Matches');
-    cy.contains('Unmatch');
-    cy.contains('Conversation');
+    cy.contains('LEAVE CHAT');
+    cy.contains('Larry Schultheis').click();
+    cy.get('div[class="message__sender"]');
   })
 })
