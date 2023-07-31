@@ -39,13 +39,15 @@ export default function App () {
       axiosInstance.get('/login', {
         params: {
           email: user.email
-        }})
+        }}).then(response => {
+          setDbUser(response?.data?.data);
+        })
         .catch(function(error) {
           logout({
             returnTo: window.location.origin,
           });
           console.log(error);
-        });
+      });
 
       axiosInstance.get('/get_user_role', {
         params: {
@@ -54,14 +56,12 @@ export default function App () {
         }
         }).then(response => {
           setUserRole(response?.data["role"]);
-          setDbUser(response?.data["db_user"]);
         })
         .catch(function(error) {
           console.log(error);
         });
       }
   }, [user, isAuthenticated, isLoading, logout])
-
 
   return (
     <ThemeProvider theme={theme}>
