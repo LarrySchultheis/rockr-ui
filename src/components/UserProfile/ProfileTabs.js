@@ -59,26 +59,6 @@ export default function ProfileTabs({
   user
 }) {
   const [value, setValue] = useState(0);
-
-//   const [instruments, setInstruments] = useState([]);
-//   const [goals, setGoals] = useState([]);
-//   const [interests, setInterests] = useState([]);
-
-//   useEffect(() => {
-//     if(props.user){
-//       axiosInstance.get(`/user_instruments/${props.user.id}`).then(response => {
-//         setInstruments(response?.data?.data);
-//       })
-//       axiosInstance.get(`/user_goals/${props.user.id}`).then(response => {
-//         setGoals(response?.data?.data);     
-//       })
-//       axiosInstance.get(`/user_musical_interests/${props.user.id}`).then(response => {
-//         setInterests(response?.data?.data);
-//       })
-//     }
-// }, [props?.user])
-
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -105,10 +85,7 @@ export default function ProfileTabs({
             />
         </TabPanel>
       <TabPanel value={value} index={1}>
-          <MatchProfileForm 
-            // instruments={instruments}
-            // goals={goals}
-            // interests={interests}
+          <MatchProfileForm
             user={user}
           />
       </TabPanel>

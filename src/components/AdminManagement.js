@@ -3,98 +3,86 @@ import {Box, Table, TableHead, TextField, TableBody, TableRow, TableCell, TableC
 import Paper from '@mui/material/Paper';
 import theme from "./Theme";
 import CreateUserModal from "./CreateUserModal";
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json"
+  }
+});
 
 export default function AdminManagement() {
-
     const [users, setUsers] = useState([]);
     const [usernames, setUsernames] = useState([]);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    
     useEffect(() => {
         getUsers();
       }, [setUsers])
 
-      const getUsers = () => {
-        fetch('http://localhost:5000/users')
+    const getUsers = () => {
+    fetch('http://localhost:5000/users')
         .then(response => response.json())
         .then(data => {
-          let usrNames = [];
-          data.map((d) => {
-              usrNames.push(d.username);
-              return d.modified = false;
-          })
-          setUsers(data);
-          setUsernames(usrNames);
+            let usrNames = [];
+            data.map((d) => {
+                usrNames.push(d.username);
+                return d.modified = false;
+            })
+            setUsers(data);
+            setUsernames(usrNames);
         });
-      }
+    }
 
-      const handleCheckboxToggle = (id, field) => {
+    const handleCheckboxToggle = (id, field) => {
         let u = users.find(u => u.id === id);
         u[field] = !u[field];
         u.modified = true;
         setUsers(users);
-      }
+    }
 
-      const handleInputChange = (e, id, field) => {
+    const handleInputChange = (e, id, field) => {
         let u = users.find(u => u.id === id);
         u[field] = e.target.value;
         u.modified = true;
         setUsers(users);
-      }
+    }
 
-      const handleSave = () => {
+    const handleSave = () => {
         let updatedUsers = users.filter((u => u.modified === true))
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*' },
-            body: JSON.stringify(updatedUsers)
-        };
         
-        fetch('http://localhost:5000/update_user_account', requestOptions)
-        .then(response => {
-            if (response.status === 200) {
+        axiosInstance.post(`/users`, JSON.stringify(updatedUsers))
+            .then(
                 alert("User settings successfully updated")
-            }
-            else {
-                alert("Error updating user settings")
-            }
-        })
-        }
-
-    const deleteUser = (user_id, email) => {
-        fetch(`http://localhost:5000/delete_user_account?id=${user_id}&email=${email}`)
-        .then((response) => { 
-            if(response.status === 200) {
-                // Better than firing a reload IMO
-                setUsers(users.filter((u) => { return u.id !== user_id }))
-            }
-            else {
-                alert("Error deleting user")
-            }
-        })
+            )
+            .catch(function(error) {
+                console.log(error);
+                alert("Error updating user settings");
+            });
     }
 
-    const createUser = (user) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*' },
-            body: JSON.stringify(user)
-        }
-        fetch('http://localhost:5000/create_user_account', requestOptions)
-        .then((response) => {
-            if (response.status === 200) {
-                alert("User successfully created")
-                getUsers()
-            }
-            else {
-                alert("Error creating user")
-            }
+    const deleteUser = (user_id) => axiosInstance.delete(`/users/${user_id}`)
+        .then(
+            setUsers(users.filter((u) => { return u.id !== user_id }))
+        )
+        .catch(function(error) {
+            console.log(error);
+            alert("Error deleting user");
+        });
+
+    const createUser = (user)  => axiosInstance.post(`/users`, {user})
+        .then(
+            alert("User successfully created"),
+            getUsers(),
+        )
+        .catch(function(error) {
+            console.log(error);
+            alert("Error creating user");
         })
-        handleClose();
-    }
+        .finally(handleClose());
 
     return (
         <div>
@@ -145,8 +133,8 @@ export default function AdminManagement() {
                                 <TableCell align="flex">
                                     <Checkbox
                                         sx={{color: "black", '&.Mui-checked': {color: "primary"}}}
-                                        defaultChecked={u.is_active}
-                                        onChange={() => handleCheckboxToggle(u.id, 'is_active')}
+                                        defaultChecked={u.is_paused}
+                                        onChange={() => handleCheckboxToggle(u.id, 'is_paused')}
                                     />
                                 </TableCell>
                                 <TableCell align="flex">
@@ -160,7 +148,7 @@ export default function AdminManagement() {
                                 <Button 
                                     sx={{backgroundColor: theme.palette.secondary.main}} 
                                     variant="contained" 
-                                    onClick={() => deleteUser(u.id, u.email)}
+                                    onClick={() => deleteUser(u.id)}
                                 >
                                     Delete
                                 </Button>          
