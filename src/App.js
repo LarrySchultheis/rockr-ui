@@ -58,12 +58,12 @@ export default function App () {
           console.log(error);
         });
 
-        axiosInstance.get('/user', {
+        axiosInstance.get('/users', {
           params: {
             email: user.email,
           }
         }).then(response => {
-          setDbUser(response?.data?.data[0])
+          setDbUser(response?.data)
         })
         .catch((err) => {
           console.log(err);
