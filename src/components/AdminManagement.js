@@ -6,7 +6,7 @@ import CreateUserModal from "./CreateUserModal";
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: "https://18.220.27.37:5000",
+  baseURL: "http://18.220.27.37:5000",
   headers: {
     "Content-Type": "application/json"
   }
@@ -24,7 +24,7 @@ export default function AdminManagement() {
       }, [setUsers])
 
     const getUsers = () => {
-    fetch('https://18.220.27.37:5000/users')
+    fetch('http://18.220.27.37:5000/users')
         .then(response => response.json())
         .then(data => {
             let usrNames = [];
