@@ -2,7 +2,7 @@ import React from 'react';
 import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import axios from 'axios';
 
@@ -17,6 +17,8 @@ export default function ChatPage(props) {
   const [matches, setMatches] = useState([]);
   const [currentMatch, setCurrentMatch] = useState(null);
   const [messages, setMessages] = useState([]);
+  const lastMessageRef = useRef(null);
+
   const socket = props.socket;
 
   const compare = (a,b) => {
@@ -41,6 +43,11 @@ export default function ChatPage(props) {
   }, [props.user])
 
   useEffect(() => {
+    // 👇️ scroll to bottom every time messages change
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  useEffect(() => {
     socket.on('messageResponse', (data) => {
       setMessages([...messages, {message: data.data, recipient_id: data.recipient.id, sender_id: data.sender.id}]);
     })
@@ -54,7 +61,7 @@ export default function ChatPage(props) {
     <div className="chat">
       <ChatBar user={props.user} matches={matches} handleUserChange={handleUserChange}/>
       <div className="chat__main">
-        <ChatBody messages={messages} user={props.dbUser} currentMatch={currentMatch}/>
+        <ChatBody messages={messages} user={props.dbUser} lastMessageRef={lastMessageRef} currentMatch={currentMatch}/>
         <ChatFooter socket={socket} currentMatch={currentMatch} user={props.dbUser}/>
       </div>
     </div>
