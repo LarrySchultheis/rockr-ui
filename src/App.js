@@ -38,29 +38,28 @@ export default function App () {
       // start session on BE
       axiosInstance.get('/login', {
         params: {
-          email: user.email
+          email: user?.email
         }}).then(response => {
           setDbUser(response?.data?.data);
-        })
+        }).then(
+          axiosInstance.get('/get_user_role', {
+            params: {
+              id: user.sub
+            }
+            }).then(response => {
+              setUserRole(response?.data["role"]);
+            })
+            .catch(function(error) {
+              console.log(error);
+            })
+        )
         .catch(function(error) {
           logout({
             returnTo: window.location.origin,
           });
           console.log(error);
       });
-
-      axiosInstance.get('/get_user_role', {
-        params: {
-          id: user.sub,
-          email: user.email
-        }
-        }).then(response => {
-          setUserRole(response?.data["role"]);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      }
+    } 
   }, [user, isAuthenticated, isLoading, logout])
 
   return (

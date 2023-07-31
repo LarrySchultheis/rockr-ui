@@ -4,49 +4,25 @@ import UserTypeButtons from "./UserTypeButtons";
 import InstrumentSelect from './InstrumentsSelect';
 import InterestsSelect from './InterestsSelect';
 import GoalsSelect from './GoalsSelect';
-import { Button, ButtonGroup } from '@mui/material';
-import axios from 'axios';
+// import { Button, ButtonGroup } from '@mui/material';
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-      "Content-Type": "application/json"
-    }
-});
+// const AddUserBandFunc = (user_id) => {
+//     fetch(`http://localhost:5000/add_user_band?id=${band_id}`)
+//     .then((response) => { 
+//         if(response.status != 201) {
+//             alert("Error adding band member")
+//         }
+//     })
+// }
 
-const handleBandAccept = (user_id, band_id) => {
-    axiosInstance.patch(`/users/${props?.user?.id}`, {
-      params: {
-        band_id: band_id,
-        is_verified: True
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  };
-
-const addUserBandFunc = (user_id, band_id) => {
-    axiosInstance.post(`/user_band/${user_id}`, {
-        params: {
-            band_id: band_id
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-};
-
-const removeUserBandFunc = (user_id, band_id) => {
-    axiosInstance.delete(`/user_band/${user_id}`, {
-        params: {
-            band_id: band_id
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-};
+// const RemoveUserBandFunc = (user_id, band_id) => {
+//     fetch(`http://localhost:5000/remove_user_band?id=${user_id}`)
+//     .then((response) => { 
+//         if(response.status != 204) {
+//             alert("Error removing band member")
+//         }
+//     })
+// }
 
 export default function MatchProfileForm({
     user
@@ -69,18 +45,6 @@ export default function MatchProfileForm({
                     <GoalsSelect user={user}/>
                 </Stack>
             </Grid>
-            <ButtonGroup style={{ margin: "auto" }} 
-                variant="contained">
-                <Button onClick={() => {
-                    addUserBandFunc(user?.id);
-                }}>Add To Band</Button>
-                <Button onClick={() => {
-                    handleBandAccept(user?.id);
-                }}>Accept Band Request</Button>
-                <Button onClick={() => {
-                    removeUserBandFunc(user?.id);
-                }}>Remove From Band</Button>
-            </ButtonGroup>
         </>
     );
 }
