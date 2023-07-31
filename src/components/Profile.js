@@ -14,7 +14,7 @@ const Profile = () => {
                    'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify({ user_id: user.sub })
       };
-      fetch('http://18.220.27.37:5000/get_user_role', requestOptions)
+      fetch('https://18.220.27.37:5000/get_user_role', requestOptions)
           .then(response => response.json())
           .then(data => {setUserRole(data.data[0].name)});
     }

@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: "http://18.220.27.37:5000",
+  baseURL: "https://18.220.27.37:5000",
   headers: {
     "Content-Type": "application/json"
   }
