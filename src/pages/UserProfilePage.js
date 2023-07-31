@@ -9,7 +9,7 @@ import RegistrationModal from '../components/RegistrationModal';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://18.220.27.37:5000",
   headers: {
     "Content-Type": "application/json"
   }
@@ -45,7 +45,7 @@ export default function UserProfilePage({
                         'Access-Control-Allow-Origin': '*' },
             body: JSON.stringify({password:  newPassword, email: user.email})
         }
-        fetch('http://localhost:5000/change_password', requestOptions)
+        fetch('https://18.220.27.37:5000/change_password', requestOptions)
         .then((response) => {
             if (response.status === 200) {
                 alert("Password successfully updated")

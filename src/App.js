@@ -22,7 +22,7 @@ import ChatPage from './components/ChatService/ChatPage';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://18.220.27.37:5000",
   headers: {
     "Content-Type": "application/json"
   }
