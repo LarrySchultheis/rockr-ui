@@ -24,11 +24,8 @@ const style = theme => ({
 });
 
 
-function RegistrationModal({
-  user,
-  showModal,
-  closeModal
-}) {
+function RegistrationModal(props) {
+  const{user, showModal, closeModal, axiosInstance} = props;
 
   return (
     <div>
@@ -43,10 +40,10 @@ function RegistrationModal({
               variant="h4">
                 Match Profile
             </Typography>
-            <UserTypeButtons user={user}/>
-            <InterestsSelect user={user}/>
-            <InstrumentSelect user={user}/>
-            <GoalsSelect user={user}/>
+            <UserTypeButtons user={user} axiosInstance={axiosInstance}/>
+            <InterestsSelect user={user} axiosInstance={axiosInstance}/>
+            <InstrumentSelect user={user} axiosInstance={axiosInstance}/>
+            <GoalsSelect user={user} axiosInstance={axiosInstance}/>
             <Button
                 color="primary"
                 variant="contained" 

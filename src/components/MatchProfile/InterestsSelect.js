@@ -1,23 +1,16 @@
 import {useEffect, useState} from 'react';
 import { Autocomplete, TextField } from "@mui/material";
 import SaveSuccessSnackbar from '../SaveSuccessSnackbar';
-import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: "https://18.220.27.37:5000",
-  headers: {
-    "Content-Type": "application/json"
-  }
-});
 
-export default function InterestsSelect({
-    user,
-}) {
+
+export default function InterestsSelect(props) {
     const [userInterests, setUserInterests] = useState([]);
     const [interests, setInterests] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const handleCloseSnackbar = () => setOpenSnackbar(false);
+    const {user, axiosInstance} = props;
   
     function handleChange(event, value) {
       setUserInterests(value);
@@ -44,7 +37,7 @@ export default function InterestsSelect({
           })
         )
       }
-    }, [user])
+    }, [user, axiosInstance])
 
     return(
       <>

@@ -4,22 +4,12 @@ import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
 import { useState, useEffect, useRef } from 'react';
 
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-  baseURL: "https://18.220.27.37:5000",
-  headers: {
-    "Content-Type": "application/json"
-  }
-});
-
 export default function ChatPage(props) {
   const [matches, setMatches] = useState([]);
   const [currentMatch, setCurrentMatch] = useState(null);
   const [messages, setMessages] = useState([]);
   const lastMessageRef = useRef(null);
-
-  const socket = props.socket;
+  const {socket, axiosInstance} = props;
 
   const compare = (a,b) => {
     if (a.ts < b.ts)
@@ -36,22 +26,26 @@ export default function ChatPage(props) {
         m = m.sort(compare)
         setMatches(m);
     });
+
+    }
+  }, [axiosInstance, props.user])
+
+  useEffect(() => {
     axiosInstance.get('/messages').then(response => {
       setMessages(response?.data?.data);
     });
-    }
-  }, [props.user])
+  }, [axiosInstance]);
 
-  useEffect(() => {
-    // 👇️ scroll to bottom every time messages change
-    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  // useEffect(() => {
+  //   // 👇️ scroll to bottom every time messages change
+  //   lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // }, [messages]);
 
   useEffect(() => {
     socket.on('messageResponse', (data) => {
       setMessages([...messages, {message: data.data, recipient_id: data.recipient.id, sender_id: data.sender.id}]);
     })
-  });
+  }, [messages, socket]);
 
   const handleUserChange = ((match) => {
     setCurrentMatch(match);

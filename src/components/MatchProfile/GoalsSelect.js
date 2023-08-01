@@ -1,23 +1,14 @@
 import {useEffect, useState} from 'react';
 import { Autocomplete, TextField } from "@mui/material";
 import SaveSuccessSnackbar from '../SaveSuccessSnackbar';
-import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: "https://18.220.27.37:5000",
-  headers: {
-    "Content-Type": "application/json"
-  }
-});
-
-export default function GoalsSelect({
-    user,
-}) {
+export default function GoalsSelect(props) {
     const [userGoals, setUserGoals] = useState([]);
     const [goals, setGoals] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const handleCloseSnackbar = () => setOpenSnackbar(false);
+    const {user, axiosInstance} = props;
   
     function handleChange(event, value) {
       setUserGoals(value);
@@ -44,7 +35,7 @@ export default function GoalsSelect({
             })
         )
       }
-    }, [user])
+    }, [user, axiosInstance])
     
     return(
         <>

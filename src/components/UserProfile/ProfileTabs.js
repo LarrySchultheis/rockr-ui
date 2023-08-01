@@ -55,13 +55,12 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
   },
 }));
 
-export default function ProfileTabs({
-  user
-}) {
+export default function ProfileTabs(props) {
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const {user, axiosInstance} = props;
 
   return (
     <>
@@ -82,11 +81,13 @@ export default function ProfileTabs({
         <TabPanel value={value} index={0}>
             <PersonalDetailsForm
               user={user}
+              axiosInstance={axiosInstance}
             />
         </TabPanel>
       <TabPanel value={value} index={1}>
           <MatchProfileForm
             user={user}
+            axiosInstance={axiosInstance}
           />
       </TabPanel>
     </>

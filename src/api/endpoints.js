@@ -1,9 +1,10 @@
 import axios from 'axios'
+const settings = require("../settings.json")
 // import { useNavigate } from "react-router-dom";
 
 
 const axiosInstance = axios.create({
-    baseURL: "https://18.220.27.37:5000",
+    baseURL: settings.apiUrl,
     headers: {
       "Content-Type": "application/json"
     }

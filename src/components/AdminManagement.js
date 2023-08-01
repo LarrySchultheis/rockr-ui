@@ -3,30 +3,19 @@ import {Box, Table, TableHead, TextField, TableBody, TableRow, TableCell, TableC
 import Paper from '@mui/material/Paper';
 import theme from "./Theme";
 import CreateUserModal from "./CreateUserModal";
-import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: "https://18.220.27.37:5000",
-  headers: {
-    "Content-Type": "application/json"
-  }
-});
-
-export default function AdminManagement() {
+export default function AdminManagement(props) {
     const [users, setUsers] = useState([]);
     const [usernames, setUsernames] = useState([]);
     const [open, setOpen] = useState(false);
+    const axiosInstance = props.axiosInstance;
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    
-    useEffect(() => {
-        getUsers();
-      }, [setUsers])
 
-    const getUsers = () => {
-    fetch('https://18.220.27.37:5000/users')
-        .then(response => response.json())
-        .then(data => {
+    useEffect(() => {
+        axiosInstance.get('/users')
+        .then(response => {
+            let data = response?.data;
             let usrNames = [];
             data.map((d) => {
                 usrNames.push(d.username);
@@ -34,8 +23,8 @@ export default function AdminManagement() {
             })
             setUsers(data);
             setUsernames(usrNames);
-        });
-    }
+        })
+    }, [axiosInstance])
 
     const handleCheckboxToggle = (id, field) => {
         let u = users.find(u => u.id === id);
@@ -76,7 +65,7 @@ export default function AdminManagement() {
     const createUser = (user)  => axiosInstance.post(`/users`, {user})
         .then(
             alert("User successfully created"),
-            getUsers(),
+            setUsers(...users, user)
         )
         .catch(function(error) {
             console.log(error);
