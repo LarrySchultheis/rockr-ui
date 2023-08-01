@@ -11,7 +11,6 @@ export default function AdminManagement(props) {
     const axiosInstance = props.axiosInstance;
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
     useEffect(() => {
         axiosInstance.get('/users')
         .then(response => {
