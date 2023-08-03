@@ -1,5 +1,0 @@
-{
-    "environment": "development",
-    "url": "https://localhost:3000",
-    "apiUrl": "https://localhost:5000"
-}
