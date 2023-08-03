@@ -5,7 +5,6 @@ import InstrumentSelect from './InstrumentsSelect';
 import InterestsSelect from './InterestsSelect';
 import GoalsSelect from './GoalsSelect';
 
-
 export default function MatchProfileForm({
     user
 }) {

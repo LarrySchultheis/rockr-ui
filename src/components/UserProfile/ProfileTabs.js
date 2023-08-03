@@ -9,6 +9,7 @@ import { Grid, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import PersonalDetailsForm from './PersonalDetailsForm'
 import MatchProfileForm from '../MatchProfile/MatchProfileForm';
+import BandManagementForm from '../BandManagementForm';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -59,6 +60,10 @@ export default function ProfileTabs({
   user
 }) {
   const [value, setValue] = useState(0);
+  // const [user, setUser] = useState();
+  
+  console.log(user);
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -89,6 +94,14 @@ export default function ProfileTabs({
             user={user}
           />
       </TabPanel>
+      { user?.is_band ?
+        <TabPanel value={value} index={2}>
+          <BandManagementForm 
+            user={user}
+          />
+        </TabPanel>
+        : <></>
+      }
     </>
   );
 }
