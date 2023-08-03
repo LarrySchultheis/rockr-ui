@@ -25,3 +25,6 @@ yarn-error.log*
 cypress-settings.json
 cypress/videos
 cypress/screenshots
+
+settings.json
+react-cert
