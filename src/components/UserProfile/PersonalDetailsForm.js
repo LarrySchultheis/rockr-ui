@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { Typography, Checkbox } from '@mui/material';
-import SaveSuccessSnackbar from '../SaveSuccessSnackbar';
+import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
 import axios from 'axios';
 
 const axiosInstance = axios.create({

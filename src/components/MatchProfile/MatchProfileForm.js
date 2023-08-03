@@ -4,25 +4,6 @@ import UserTypeButtons from "./UserTypeButtons";
 import InstrumentSelect from './InstrumentsSelect';
 import InterestsSelect from './InterestsSelect';
 import GoalsSelect from './GoalsSelect';
-// import { Button, ButtonGroup } from '@mui/material';
-
-// const AddUserBandFunc = (user_id) => {
-//     fetch(`http://localhost:5000/add_user_band?id=${band_id}`)
-//     .then((response) => { 
-//         if(response.status != 201) {
-//             alert("Error adding band member")
-//         }
-//     })
-// }
-
-// const RemoveUserBandFunc = (user_id, band_id) => {
-//     fetch(`http://localhost:5000/remove_user_band?id=${user_id}`)
-//     .then((response) => { 
-//         if(response.status != 204) {
-//             alert("Error removing band member")
-//         }
-//     })
-// }
 
 export default function MatchProfileForm({
     user

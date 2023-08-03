@@ -209,7 +209,7 @@ function ResponsiveAppBar(props) {
                     Log In
                     </Button>
                 </Grid>
-                <Grid item sgrid-xs-auto>
+                <Grid item grid-xs-auto>
                     <Button
                       color="secondary"
                       variant="outlined"

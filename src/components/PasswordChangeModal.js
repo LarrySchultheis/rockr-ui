@@ -17,7 +17,7 @@ const style = {
   p: 4,
 };
 
-export default function CreateUserModal(props) {
+export default function PasswordChangeModal(props) {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 

@@ -95,7 +95,7 @@ export default function ProfileTabs({
           />
       </TabPanel>
       { user?.is_band ?
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={2}>
           <BandManagementForm 
             user={user}
           />
