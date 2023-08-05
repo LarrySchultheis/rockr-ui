@@ -6,12 +6,19 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/PasswordChangeModal';
 import RegistrationModal from '../components/RegistrationModal';
+import BandInvitationModal from '../components/BandInvitationModal';
 
 export default function UserProfilePage(props) {
     // RegistrationModal
     const [showModal, setShowModal] = useState(false);
     const closeModal = () => setShowModal(false);
     const {user, axiosInstance, settings} = props;
+
+
+    // BandInvitationModal
+    const [bandInvitations, setBandInvitations] = useState();
+    const [showBandInvitationModal, setShowBandInvitationModal] = useState(false);
+    const closeBandInvitationModal = () => setShowBandInvitationModal(false);
 
     useEffect(() => {
         if(user){
@@ -21,6 +28,17 @@ export default function UserProfilePage(props) {
             })
             .catch( 
                 (e) => console.log( e ) 
+            );
+
+            axiosInstance.get(`/user_band?user=${user.id}`)
+            .then(response => {
+                if(response.data){
+                    setBandInvitations(response.data);
+                    setShowBandInvitationModal(true);
+                }
+            })
+            .catch(
+                (e) => console.log( e )
             );
         }
       }, [user, axiosInstance])
@@ -122,6 +140,12 @@ export default function UserProfilePage(props) {
                 showModal={showModal}
                 closeModal={closeModal}
                 axiosInstance={axiosInstance}
+            />
+            <BandInvitationModal
+                user={user}
+                invitations={bandInvitations}
+                showModal={showBandInvitationModal}
+                closeModal={closeBandInvitationModal}
             />
         </>
     );
