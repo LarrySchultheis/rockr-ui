@@ -19,6 +19,7 @@ import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Socket } from './components/ChatService/Socket';
 import ChatPage from './components/ChatService/ChatPage';
+import MatchPage from './pages/MatchPage';
 import axios from 'axios';
 const settings = require("./settings.json");
 
