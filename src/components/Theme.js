@@ -45,7 +45,7 @@ const theme = responsiveFontSizes(createTheme({
 			main: '#009900', //green
 		},
 		text: {
-			primary: '#000000', //black
+			primary: '#1d1247', //black
 			secondary: '#FFFFFF', //white
 		},
 	}

@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, Typography } from "@mui/material";
 import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
 
 export default function InstrumentSelect(props) {
@@ -42,7 +42,9 @@ export default function InstrumentSelect(props) {
     return(
         <>
         { isLoading ?
-            <></> :
+          <></> :
+          <>
+            
             <Autocomplete
                 multiple
                 value={userInstruments}
@@ -52,9 +54,10 @@ export default function InstrumentSelect(props) {
                 onBlur={postUserInstruments}
                 style={{ width: 300 }}
                 renderInput={(params) => (
-                <TextField {...params} label="Instruments" variant="outlined" />
+                <TextField {...params} label={<Typography color='text.primary'>Instruments</Typography>} variant="outlined" />
             )}
             />
+          </> 
         }
         <SaveSuccessSnackbar
           component={"Instruments"}

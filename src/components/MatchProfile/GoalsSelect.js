@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, Typography } from "@mui/material";
 import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
 
 export default function GoalsSelect(props) {
@@ -52,7 +52,7 @@ export default function GoalsSelect(props) {
                 onChange={handleChange}
                 onBlur={postUserGoals}
                 renderInput={(params) => (
-                    <TextField {...params} label={"Goals"} variant="outlined" />
+                    <TextField {...params} label={<Typography color='text.primary'>Goals</Typography>} variant="outlined" />
                 )}
             />
         }

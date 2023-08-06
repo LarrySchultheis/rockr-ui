@@ -10,7 +10,7 @@ export default function AppFooter() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '75vh',
+        minHeight: '40vh',
       }}
     > 
     <Box

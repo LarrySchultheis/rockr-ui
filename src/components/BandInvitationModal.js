@@ -12,12 +12,8 @@ const style = {
   p: 4,
 };
 
-export default function BandInvitationModal({
-  user,
-  invitations,
-  showModal,
-  closeModal
-}) {
+export default function BandInvitationModal(props) {
+  const {user, invitations, showModal, closeModal, axiosInstance} = props;
   const handleCloseModal = () => closeModal();
 
   return (
@@ -30,6 +26,7 @@ export default function BandInvitationModal({
             user={user}
             invitations={invitations}
             closeModal={handleCloseModal}
+            axiosInstance={axiosInstance}
           />
         </Box>
       </Modal>

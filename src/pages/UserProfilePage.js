@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import { Button, Grid, Stack } from '@mui/material';
 import defaultAvatar from '../images/default_avatar.png'
 import DeleteIcon from '@mui/icons-material/Delete';
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/PasswordChangeModal';
 import RegistrationModal from '../components/RegistrationModal';
@@ -34,7 +34,6 @@ export default function UserProfilePage(props) {
             .then(response => {
                 if(response.data){
                     setBandInvitations(response.data);
-                    setShowBandInvitationModal(true);
                 }
             })
             .catch(
@@ -90,13 +89,14 @@ export default function UserProfilePage(props) {
                         <Button
                             color="primary"
                             variant="contained"
-                            endIcon={<InsertEmoticonIcon/>}
+                            onClick={()=> setShowBandInvitationModal(true)}
+                            endIcon={<MailOutlineIcon/>}
                             sx={{ 
                                 minWidth: '8rem',
                                 mt:"1.5rem",
                             }}
                         >
-                            preview
+                            Band Invitations
                         </Button>
                         <Button
                             color="primary"
@@ -146,6 +146,7 @@ export default function UserProfilePage(props) {
                 invitations={bandInvitations}
                 showModal={showBandInvitationModal}
                 closeModal={closeBandInvitationModal}
+                axiosInstance={axiosInstance}
             />
         </>
     );

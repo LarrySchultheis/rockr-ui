@@ -11,6 +11,8 @@ import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
 export default function PersonalDetailsForm(props) {
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
+    const [username, setUsername] = useState("")
+    const [bio, setBio] = useState("")
     const [isPaused, setIsPaused] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const handleCloseSnackbar = () => setOpenSnackbar(false);
@@ -19,8 +21,19 @@ export default function PersonalDetailsForm(props) {
     useEffect(() => {
         setFirstname(user?.first_name);
         setLastname(user?.last_name);
+        setUsername(user?.username);
         setIsPaused(user?.is_paused);
-    }, [user])
+
+        if(user){
+            axiosInstance?.get(`/match_profiles/${user?.id}`)
+            .then(response => {
+                setBio(response?.data.bio);
+            })
+            .catch(
+                (e) => console.log( e )
+            );
+        }
+    }, [user, axiosInstance])
 
     const handleFirstnameChange = (event) => {
         setFirstname(event.target.value)
@@ -58,8 +71,44 @@ export default function PersonalDetailsForm(props) {
         );
     };
 
-    const patchIsActive = (event) => {
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value)
+    };
+    const patchUsername = (event) => {
         axiosInstance?.patch(`/users/${user?.id}`, {
+            params:{
+                username: event.target.value
+            }
+        })
+        .then(response => {
+            setUsername(response?.data.username);
+            setOpenSnackbar(true);
+        })
+        .catch(
+            (e) => console.log( e )
+        );
+    };
+
+    const handleBioChange = (event) => {
+        setBio(event.target.value)
+    };
+    const patchBio = (event) => {
+        axiosInstance?.patch(`/match_profiles/${user?.id}`, {
+            params:{
+                bio: event.target.value
+            }
+        })
+        .then(response => {
+            setBio(response?.data.bio);
+            setOpenSnackbar(true);
+        })
+        .catch(
+            (e) => console.log( e )
+        );
+    };
+
+    const patchIsActive = (event) => {
+        axiosInstance.patch(`/users/${user?.id}`, {
             params: {
                 is_paused: event.target.checked
             }
@@ -75,18 +124,17 @@ export default function PersonalDetailsForm(props) {
 
     return (
         <form id="userForm">
-            <Typography sx={{mt: "2rem", mb:"2rem"}} color='#8A8A8A' variant="h4">Personal Details</Typography>
         <Stack
             component="form"
             alignItems="center"
         >
             <TextField
                 hiddenLabel
-                name="firstname"
+                label={<Typography color='text.primary'>First Name</Typography>}
                 placeholder="First Name"
                 variant="standard"
                 color="primary"
-                sx={{minWidth: "15rem", mb: "1.5rem"}}
+                sx={{minWidth: "15rem", mt: "2rem", mb: "1.5rem"}}
                 value={firstname}
                 onChange={handleFirstnameChange}
                 onBlur={patchFirstname}
@@ -94,7 +142,7 @@ export default function PersonalDetailsForm(props) {
             <TextField
                 hiddenLabel
                 required={true}
-                name="lastname"
+                label={<Typography color='text.primary'>Last Name</Typography>}
                 placeholder="Last Name"
                 variant="standard"
                 color="primary"
@@ -103,10 +151,33 @@ export default function PersonalDetailsForm(props) {
                 onChange={handleLastnameChange}
                 onBlur={patchLastname}
             />
-            <Typography sx={{mt: "2rem", mb:"2rem"}} color='#000000'>Pause Account?</Typography>
+            <TextField
+                hiddenLabel
+                required={true}
+                label={<Typography color='text.primary'>Username</Typography>}
+                placeholder="Username"
+                variant="standard"
+                color="primary"
+                sx={{minWidth: "15rem", mb: "1.5rem"}}
+                value={username}
+                onChange={handleUsernameChange}
+                onBlur={patchUsername}
+            />
+            <TextField
+                id="outlined-multiline-static"
+                label={<Typography color='text.primary'>Bio</Typography>}
+                multiline
+                rows={4}
+                placeholder="Fill out your bio to let other Rockrs know what you're all about!"
+                sx={{width:"100%"}}
+                value={bio}
+                onChange={handleBioChange}
+                onBlur={patchBio}
+            />
+            <Typography sx={{mt:"1rem"}} color='text.primary'>Pause Account?</Typography>
             <Checkbox
                 sx={{color: "black", '&.Mui-checked': {color: "primary"}} }
-                label="Label"
+                label="Pause Account"
                 checked={isPaused}
                 onChange={patchIsActive}
             />
