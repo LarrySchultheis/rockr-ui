@@ -37,16 +37,19 @@ export default function App () {
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
       // start session on BE
-      // axiosInstance.get('/login', {
-      //   params: {
-      //     email: user.email
-      //   }})
-      //   .catch(function(error) {
-      //     logout({
-      //       returnTo: window.location.origin,
-      //     });
-      //     console.log(error);
-      //   });
+      axiosInstance.get('/login', {
+        params: {
+          email: user?.email
+        }})
+        .then(response => {
+          setDbUser(response?.data?.data)
+        })
+        .catch(function(error) {
+          logout({
+            returnTo: window.location.origin,
+          });
+          console.log(error);
+        });
 
       axiosInstance.get('/get_user_role', {
         params: {
@@ -59,16 +62,6 @@ export default function App () {
           console.log(error);
         });
 
-        axiosInstance.get('/users', {
-          params: {
-            email: user.email,
-          }
-        }).then(response => {
-          setDbUser(response?.data)
-        })
-        .catch((err) => {
-          console.log(err);
-        }) 
       }
   }, [user, isAuthenticated, isLoading, logout])
 
