@@ -45,7 +45,6 @@ export default function InstrumentSelect(props) {
                 multiple
                 value={userInstruments}
                 options={instruments}
-                groupBy={(option) => option.type}
                 getOptionLabel={(option) => option?.description}
                 onChange={handleChange}
                 onBlur={postUserInstruments}

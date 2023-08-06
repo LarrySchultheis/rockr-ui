@@ -57,7 +57,7 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
 }));
 
 export default function ProfileTabs(props) {
-  const [value, setValue] = useState(0);  
+  const [value, setValue] = useState(0);
   
   const handleChange = (event, newValue) => {
     setValue(newValue);

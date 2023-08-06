@@ -80,5 +80,4 @@ export default function ContactList({
         handleSnackbarClose={handleCloseInvitationSnackbar}
     />
     </>
-
   )}

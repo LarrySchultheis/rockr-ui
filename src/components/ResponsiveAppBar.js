@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Grid from '@mui/material/Grid';
+import rockrLogo from '../images/logo.png';
 import { useAuth0 } from '@auth0/auth0-react'
 
 
@@ -45,21 +46,13 @@ function ResponsiveAppBar(props) {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters >
-          <PlayArrowIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: "3rem",
-              display: { xs: 'none', md: 'flex' },
-            }}
-          >
-            ROCKR
-          </Typography>
-
+          <Toolbar disableGutters >
+          <img 
+            src={rockrLogo}
+            alt="Logo"
+            style={{width: '10%', padding: '1rem'}}
+            href={window.location.origin}
+          />
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -200,9 +193,6 @@ function ResponsiveAppBar(props) {
                       variant="contained"
                       onClick={() => {
                         loginWithRedirect();
-                        // loginWithRedirect({
-                        //   appState: { returnTo: `${window.location.origin}/`}
-                        // });
 
                       }}
                     >

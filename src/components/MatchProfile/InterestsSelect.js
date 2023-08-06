@@ -45,7 +45,6 @@ export default function InterestsSelect(props) {
             multiple
             value={userInterests}
             options={interests}
-            groupBy={(option) => option.type}
             getOptionLabel={(option) => option?.description}
             onChange={handleChange}
             onBlur={postUserInterests}
