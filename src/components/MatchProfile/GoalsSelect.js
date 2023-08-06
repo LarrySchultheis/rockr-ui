@@ -15,7 +15,7 @@ export default function GoalsSelect(props) {
     }
 
     const postUserGoals = () => {
-      axiosInstance.post(`/user_goals/${user.id}`, {
+      axiosInstance?.post(`/user_goals/${user.id}`, {
           goals: userGoals
       })
       .then(setOpenSnackbar(true))
@@ -26,13 +26,15 @@ export default function GoalsSelect(props) {
   
     useEffect(() => {
       if(user){
-        axiosInstance.get(`/user_goals/${user.id}`).then(response => {
+        axiosInstance?.get(`/user_goals/${user.id}`).then(response => {
             setUserGoals(response?.data);
         }).then(
-            axiosInstance.get('/goals/').then(response => {
+            axiosInstance?.get('/goals/').then(response => {
                 setGoals(response?.data);     
                 setLoading(false);
-            })
+            }).catch( 
+                (e) => console.log( e ) 
+            )
         )
       }
     }, [user, axiosInstance])

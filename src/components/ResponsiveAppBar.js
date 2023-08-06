@@ -20,7 +20,6 @@ import rockrLogo from '../images/logo.png';
 import { useAuth0 } from '@auth0/auth0-react'
 
 
-const pages = ['Matches'];
 const settings = ['Account', 'Logout'];
 
 function ResponsiveAppBar(props) {
@@ -47,7 +46,7 @@ function ResponsiveAppBar(props) {
     <AppBar position="static">
       <Container maxWidth="xl">
           <Toolbar disableGutters >
-          <img 
+          <img
             src={rockrLogo}
             alt="Logo"
             style={{width: '10%', padding: '1rem'}}
@@ -82,11 +81,6 @@ function ResponsiveAppBar(props) {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"  sx={{ "&:hover": { color: "#5f3af2" } }}>{page}</Typography>
-                </MenuItem>
-              ))}
             </Menu>
           </Box>
           <PlayArrowIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -110,15 +104,12 @@ function ResponsiveAppBar(props) {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {isAuthenticated ?
             <>
-              {pages.map((page) => (
                 <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
+                  href="/matches"
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  {page}
+                Matches
                 </Button>
-              ))}
                 <Button
                   href="/user_profile"
                   sx={{ my: 2, color: 'white', display: 'block' }}
@@ -193,7 +184,6 @@ function ResponsiveAppBar(props) {
                       variant="contained"
                       onClick={() => {
                         loginWithRedirect();
-
                       }}
                     >
                     Log In

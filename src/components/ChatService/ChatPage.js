@@ -21,7 +21,7 @@ export default function ChatPage(props) {
     
   useEffect(() => {
     if (props.user) {
-      axiosInstance.get(`/matches?email=${props.user.email}`).then(response => {
+      axiosInstance?.get(`/matches?email=${props.user.email}`).then(response => {
         let m = response?.data?.data;
         m = m.sort(compare)
         setMatches(m);
@@ -37,7 +37,7 @@ export default function ChatPage(props) {
   }, [matches, setCurrentMatch])
 
   useEffect(() => {
-    axiosInstance.get('/messages').then(response => {
+    axiosInstance?.get('/messages').then(response => {
       setMessages(response?.data?.data);
     });
   }, [axiosInstance]);

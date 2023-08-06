@@ -26,7 +26,7 @@ export default function PersonalDetailsForm(props) {
         setFirstname(event.target.value)
     };
     const patchFirstname = (event) => {
-        axiosInstance.patch(`/users/${user?.id}`, {
+        axiosInstance?.patch(`/users/${user?.id}`, {
             params:{
                 first_name: event.target.value
             }
@@ -44,7 +44,7 @@ export default function PersonalDetailsForm(props) {
         setLastname(event.target.value)
     };
     const patchLastname = (event) => {
-        axiosInstance.patch(`/users/${user?.id}`, {
+        axiosInstance?.patch(`/users/${user?.id}`, {
             params: {
                 last_name: event.target.value
             }
@@ -59,7 +59,7 @@ export default function PersonalDetailsForm(props) {
     };
 
     const patchIsActive = (event) => {
-        axiosInstance.patch(`/users/${user?.id}`, {
+        axiosInstance?.patch(`/users/${user?.id}`, {
             params: {
                 is_paused: event.target.checked
             }

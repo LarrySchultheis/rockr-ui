@@ -15,7 +15,7 @@ export default function InterestsSelect(props) {
     }
 
     const postUserInterests = () => {
-      axiosInstance.post(`/user_musical_interests/${user.id}`, {
+      axiosInstance?.post(`/user_musical_interests/${user.id}`, {
           interests: userInterests
       })
       .then(setOpenSnackbar(true))
@@ -26,13 +26,15 @@ export default function InterestsSelect(props) {
 
     useEffect(() => {
       if(user){
-        axiosInstance.get(`/user_musical_interests/${user.id}`).then(response => {
+        axiosInstance?.get(`/user_musical_interests/${user.id}`).then(response => {
           setUserInterests(response?.data);
         }).then(
-          axiosInstance.get('/musical_interests/').then(response => {
+          axiosInstance?.get('/musical_interests/').then(response => {
               setInterests(response?.data);   
               setIsLoading(false);  
-          })
+          }).catch( 
+            (e) => console.log( e ) 
+          )
         )
       }
     }, [user, axiosInstance])

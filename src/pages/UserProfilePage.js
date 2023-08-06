@@ -22,7 +22,7 @@ export default function UserProfilePage(props) {
 
     useEffect(() => {
         if(user){
-            axiosInstance.get(`/check_match_profile/${user.id}`)
+            axiosInstance?.get(`/check_match_profile/${user.id}`)
             .then(response => {
                 setShowModal(!response?.data?.is_match_profile_complete);
             })

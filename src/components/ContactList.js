@@ -4,38 +4,28 @@ import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 import Paper from '@mui/material/Paper';
 import InvitationSuccessSnackbar from "./Snackbars/InvitationSuccessSnackbar";
-import axios from 'axios';
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-      "Content-Type": "application/json"
-    }
-});
-
-export default function ContactList({
-    user,
-    closeModal
-}) {
-  const [matches, setMatches] = useState();
-  const [openInvitationSnackbar, setOpenInvitationSnackbar] = useState(false)
-  const handleCloseInvitationSnackbar = () => setOpenInvitationSnackbar(false);
+export default function ContactList(props) {
+    const {user, axiosInstance, closeModal} = props;
+    const [matches, setMatches] = useState();
+    const [openInvitationSnackbar, setOpenInvitationSnackbar] = useState(false)
+    const handleCloseInvitationSnackbar = () => setOpenInvitationSnackbar(false);
 
     useEffect(() => {
         if(user){
-        axiosInstance.get(`/user_matches/${user?.id}`)
-        .then(response => {
-            setMatches(response?.data);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            axiosInstance?.get(`/user_matches/${user?.id}`)
+            .then(response => {
+                setMatches(response?.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
         }
-    }, [user])
+    }, [user, axiosInstance])
 
     // user id is the band
     const inviteUserToBand = (user_to_invite) => {
-        axiosInstance.post(`/user_band/${user?.id}`, {
+        axiosInstance?.post(`/user_band/${user?.id}`, {
             params: {
                 user_id: user_to_invite
             }

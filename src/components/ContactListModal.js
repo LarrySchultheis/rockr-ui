@@ -13,11 +13,8 @@ const style = {
   p: 4,
 };
 
-export default function ContactListModal({
-  user,
-  open,
-  handleClose,
-}) {
+export default function ContactListModal(props) {
+  const {user, axiosInstance, open, handleClose} = props;
   const handleCloseModal = () => handleClose();
 
   return (
@@ -26,7 +23,7 @@ export default function ContactListModal({
         open={open}
       >
         <Box sx={style}>
-          <ContactList user={user} closeModal={handleCloseModal}/>
+          <ContactList user={user} closeModal={handleCloseModal} axiosInstance={axiosInstance}/>
         </Box>
       </Modal>
     </div>

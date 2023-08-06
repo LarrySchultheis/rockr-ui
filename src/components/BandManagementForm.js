@@ -7,18 +7,9 @@ import Paper from '@mui/material/Paper';
 import DeleteSnackbar from "./Snackbars/DeleteSnackbar";
 import ContactListModal from "./ContactListModal";
 import InvitationSuccessSnackbar from "./Snackbars/InvitationSuccessSnackbar";
-import axios from 'axios';
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-      "Content-Type": "application/json"
-    }
-});
-
-export default function BandManagementForm({
-    user,
-}) {
+export default function BandManagementForm(props) {
+  const {user, axiosInstance} = props;
   const [bandMembers, setBandMembers] = useState();
   const [openInvitationSnackbar, setOpenInvitationSnackbar] = useState(false);
   const handleCloseInvitationSnackbar = () => setOpenInvitationSnackbar(false);
@@ -34,7 +25,7 @@ export default function BandManagementForm({
 
   useEffect(() => {
     if(user){
-      axiosInstance.get(`/user_band/${user?.id}`)
+      axiosInstance?.get(`/user_band/${user?.id}`)
       .then(response => {
         setBandMembers(response?.data?.data);
       })
@@ -42,11 +33,11 @@ export default function BandManagementForm({
           console.log(error);
       });
     }
-  }, [user])
+  }, [user, axiosInstance])
 
   
   const deleteUserFromBand = (user_to_delete) => {
-      axiosInstance.delete(`/user_band/${user?.id}`, {
+      axiosInstance?.delete(`/user_band/${user?.id}`, {
           params: {
             user: user_to_delete
           }
@@ -98,6 +89,7 @@ export default function BandManagementForm({
         user={user}
         open={openContactListModal}
         handleClose={handleCloseContactListModal}
+        axiosInstance={axiosInstance}
       >
 
       </ContactListModal>

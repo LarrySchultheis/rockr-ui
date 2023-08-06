@@ -15,7 +15,7 @@ export default function InstrumentSelect(props) {
     }
 
     const postUserInstruments = () => {
-      axiosInstance.post(`/user_instruments/${user.id}`, {
+      axiosInstance?.post(`/user_instruments/${user.id}`, {
           instruments: userInstruments
       })
       .then(setOpenSnackbar(true))
@@ -26,14 +26,16 @@ export default function InstrumentSelect(props) {
 
     useEffect(() => {
       if(user){
-        axiosInstance.get(`/user_instruments/${user.id}`).then(response => {
+        axiosInstance?.get(`/user_instruments/${user.id}`).then(response => {
             setUserInstruments(response?.data);
         }).then(
-            axiosInstance.get('/instruments/').then(response => {
+            axiosInstance?.get('/instruments/').then(response => {
                 setInstruments(response?.data);     
                 setLoading(false);
             })
-        )
+        ).catch( 
+          (e) => console.log( e ) 
+        );
       }
     }, [user, axiosInstance])
     

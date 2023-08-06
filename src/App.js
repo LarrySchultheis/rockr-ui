@@ -85,6 +85,7 @@ export default function App () {
             }
             <Route path="/user_profile" element={<UserProfilePage user={dbUser} axiosInstance={axiosInstance} settings={settings}/>}/>
             <Route path="/messages" element={<ChatPage socket={Socket} user={user} dbUser={dbUser} axiosInstance={axiosInstance}/>}/>
+            <Route path="/matches" element={<MatchPage user={dbUser} axiosInstance={axiosInstance} />}/>
           </Routes>
         </div>
       </Router>
