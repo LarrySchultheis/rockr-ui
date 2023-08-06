@@ -96,6 +96,7 @@ export default function ProfileTabs(props) {
         <TabPanel value={value} index={2}>
           <BandManagementForm 
             user={user}
+            axiosInstance={axiosInstance}
           />
         </TabPanel>
         : <></>

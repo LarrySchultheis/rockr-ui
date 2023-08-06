@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, Typography } from "@mui/material";
 import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
 
 export default function InterestsSelect(props) {
@@ -15,7 +15,7 @@ export default function InterestsSelect(props) {
     }
 
     const postUserInterests = () => {
-      axiosInstance.post(`/user_musical_interests/${user.id}`, {
+      axiosInstance?.post(`/user_musical_interests/${user.id}`, {
           interests: userInterests
       })
       .then(setOpenSnackbar(true))
@@ -26,13 +26,15 @@ export default function InterestsSelect(props) {
 
     useEffect(() => {
       if(user){
-        axiosInstance.get(`/user_musical_interests/${user.id}`).then(response => {
+        axiosInstance?.get(`/user_musical_interests/${user.id}`).then(response => {
           setUserInterests(response?.data);
         }).then(
-          axiosInstance.get('/musical_interests/').then(response => {
+          axiosInstance?.get('/musical_interests/').then(response => {
               setInterests(response?.data);   
               setIsLoading(false);  
-          })
+          }).catch( 
+            (e) => console.log( e ) 
+          )
         )
       }
     }, [user, axiosInstance])
@@ -50,7 +52,7 @@ export default function InterestsSelect(props) {
             onBlur={postUserInterests}
             style={{ width: 300 }}
             renderInput={(params) => (
-              <TextField {...params} label="Musical Interests" variant="outlined" />
+              <TextField {...params} label={<Typography color='text.primary'>Musical Interests</Typography>} variant="outlined" />
           )}
         />
       }

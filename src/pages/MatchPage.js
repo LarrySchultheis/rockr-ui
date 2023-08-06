@@ -1,39 +1,33 @@
-import React, { Component } from "react";
-import Slider from "react-slick";
+import {useEffect, useState, Fragment} from 'react';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+import MatchProfileCard from '../components/MatchProfile/MatchProfileCard';
 
-export default function MatchPage {
-  render() {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
-    return (
-      <div>
-        <h2> Single Item</h2>
-        <Slider {...settings}>
-          <div>
-            <h3>1</h3>
-          </div>
-          <div>
-            <h3>2</h3>
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
-          <div>
-            <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
-          </div>
-        </Slider>
-      </div>
-    );
-  }
-}
+export default function MatchPage(props) {
+  const {user, axiosInstance} = props;
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    if(user){
+      axiosInstance?.get(`/user_matches/${user?.id}`)
+      .then(response => {
+          setMatches(response?.data);
+      })
+      .catch(error => {
+          console.log(error);
+      });
+    }
+  }, [user, axiosInstance])
+
+  return (
+      <Slide autoplay={false}>
+        {matches?.map((u) => (
+          <Fragment key={user?.email}>
+            <div className="each-slide-effect">
+              <MatchProfileCard user={user} matchUser={u} axiosInstance={axiosInstance}/>
+            </div>
+          </Fragment>
+        ))}
+      </Slide>
+  );
+};

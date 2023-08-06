@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, Typography } from "@mui/material";
 import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
 
 export default function GoalsSelect(props) {
@@ -15,7 +15,7 @@ export default function GoalsSelect(props) {
     }
 
     const postUserGoals = () => {
-      axiosInstance.post(`/user_goals/${user.id}`, {
+      axiosInstance?.post(`/user_goals/${user.id}`, {
           goals: userGoals
       })
       .then(setOpenSnackbar(true))
@@ -26,13 +26,15 @@ export default function GoalsSelect(props) {
   
     useEffect(() => {
       if(user){
-        axiosInstance.get(`/user_goals/${user.id}`).then(response => {
+        axiosInstance?.get(`/user_goals/${user.id}`).then(response => {
             setUserGoals(response?.data);
         }).then(
-            axiosInstance.get('/goals/').then(response => {
+            axiosInstance?.get('/goals/').then(response => {
                 setGoals(response?.data);     
                 setLoading(false);
-            })
+            }).catch( 
+                (e) => console.log( e ) 
+            )
         )
       }
     }, [user, axiosInstance])
@@ -50,7 +52,7 @@ export default function GoalsSelect(props) {
                 onChange={handleChange}
                 onBlur={postUserGoals}
                 renderInput={(params) => (
-                    <TextField {...params} label={"Goals"} variant="outlined" />
+                    <TextField {...params} label={<Typography color='text.primary'>Goals</Typography>} variant="outlined" />
                 )}
             />
         }

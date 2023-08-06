@@ -19,6 +19,7 @@ import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Socket } from './components/ChatService/Socket';
 import ChatPage from './components/ChatService/ChatPage';
+import MatchPage from './pages/MatchPage';
 import axios from 'axios';
 const settings = require("./settings.json");
 
@@ -84,6 +85,7 @@ export default function App () {
             }
             <Route path="/user_profile" element={<UserProfilePage user={dbUser} axiosInstance={axiosInstance} settings={settings}/>}/>
             <Route path="/messages" element={<ChatPage socket={Socket} user={user} dbUser={dbUser} axiosInstance={axiosInstance}/>}/>
+            <Route path="/matches" element={<MatchPage user={dbUser} axiosInstance={axiosInstance} />}/>
           </Routes>
         </div>
       </Router>

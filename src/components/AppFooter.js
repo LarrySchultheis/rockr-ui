@@ -6,25 +6,40 @@ import { Typography, Container } from '@mui/material';
 
 export default function AppFooter() {
   return (
-    <Typography
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '40vh',
+      }}
+    > 
+    <Box
+      sx={{
+        marginTop: "auto",
+        p: 4,
+        bgcolor: 'secondary.light',
+      }}
       component="footer"
-      sx={{ display: 'flex', bgcolor: 'secondary.light' }}
     >
-      <Container sx={{ my: 8, display: 'flex' }}>
-          <Grid item xs={6} sm={4} md={2}>
-            <Box component="ul" sx={{ m: 0, listStyle: 'none', p: 0 }}>
-              <Box component="li" sx={{ py: 0.5 }}>
-                <Link href="">Terms</Link>
+      <Typography>
+        <Container sx={{my: 8, display: 'flex'}}>
+            <Grid item xs={6} sm={4} md={2}
+            >
+              <Box component="ul" sx={{ m: 0, listStyle: 'none', p: 0 }}>
+                <Box component="li" sx={{ py: 0.5 }}>
+                  <Link href="">Terms</Link>
+                </Box>
+                <Box component="li" sx={{ py: 0.5 }}>
+                  <Link href="">Privacy</Link>
+                </Box>
               </Box>
-              <Box component="li" sx={{ py: 0.5 }}>
-                <Link href="">Privacy</Link>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={8} md={4} />
-          <Grid item/>
-      </Container>
-    </Typography>
+            </Grid>
+            <Grid item xs={6} sm={8} md={4} />
+            <Grid item/>
+        </Container>
+      </Typography>
+    </Box>
+  </Box>
   );
 }
 

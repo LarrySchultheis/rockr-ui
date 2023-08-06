@@ -17,7 +17,7 @@ export default function UserTypeButtons(props) {
 
     const handleAlignment = (event, newAlignment) => {
       setAlignment(newAlignment);
-      axiosInstance.patch(`/users/${props?.user?.id}`, {
+      axiosInstance?.patch(`/users/${props?.user?.id}`, {
         params: {
           is_band: newAlignment
         }
