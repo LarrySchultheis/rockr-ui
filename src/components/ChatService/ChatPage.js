@@ -2,22 +2,14 @@ import React from 'react';
 import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
-import { useState, useEffect } from 'react';
-
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-  headers: {
-    "Content-Type": "application/json"
-  }
-});
+import { useState, useEffect, useRef } from 'react';
 
 export default function ChatPage(props) {
   const [matches, setMatches] = useState([]);
   const [currentMatch, setCurrentMatch] = useState(null);
   const [messages, setMessages] = useState([]);
-  const socket = props.socket;
+  const lastMessageRef = useRef(null);
+  const {socket, axiosInstance} = props;
 
   const compare = (a,b) => {
     if (a.ts < b.ts)
@@ -34,17 +26,32 @@ export default function ChatPage(props) {
         m = m.sort(compare)
         setMatches(m);
     });
+
+    }
+  }, [axiosInstance, props.user])
+
+  useEffect(() => {
+    if (matches.length > 0) {
+      setCurrentMatch(matches[0]);
+    }
+  }, [matches, setCurrentMatch])
+
+  useEffect(() => {
     axiosInstance.get('/messages').then(response => {
       setMessages(response?.data?.data);
     });
-    }
-  }, [props.user])
+  }, [axiosInstance]);
+
+  useEffect(() => {
+    // 👇️ scroll to bottom every time messages change
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   useEffect(() => {
     socket.on('messageResponse', (data) => {
-      setMessages([...messages, data]);
+      setMessages([...messages, {message: data.data, recipient_id: data.recipient.id, sender_id: data.sender.id}]);
     })
-  });
+  }, [messages, socket]);
 
   const handleUserChange = ((match) => {
     setCurrentMatch(match);
@@ -54,8 +61,8 @@ export default function ChatPage(props) {
     <div className="chat">
       <ChatBar user={props.user} matches={matches} handleUserChange={handleUserChange}/>
       <div className="chat__main">
-        <ChatBody messages={messages} user={props.dbUser} currentMatch={currentMatch}/>
-        <ChatFooter socket={socket} currentMatch={currentMatch} user={props.user}/>
+        <ChatBody messages={messages} user={props.dbUser} lastMessageRef={lastMessageRef} currentMatch={currentMatch}/>
+        <ChatFooter socket={socket} currentMatch={currentMatch} user={props.dbUser}/>
       </div>
     </div>
   );

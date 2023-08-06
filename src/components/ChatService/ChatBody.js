@@ -9,18 +9,17 @@ const ChatBody = (props) => {
     navigate('/');
     window.location.reload();
   };
-
   return (
     <>
       <header className="chat__mainHeader">
-        <p>Hangout with Colleagues</p>
+        {currentMatch ? <p>Chatting with {currentMatch.user.first_name} {currentMatch.user.last_name}</p> : <p>Select a match to open chat!</p>}
         <button className="leaveChat__btn" onClick={handleLeaveChat}>
           LEAVE CHAT
         </button>
       </header>
 
       <div className="message__container">
-        {currentMatch &&
+        {currentMatch && user && messages && messages.length > 0 &&
         messages.map((message) =>
         {
           if(message.sender_id === user.id && message.recipient_id === currentMatch.user.id) {
@@ -41,16 +40,12 @@ const ChatBody = (props) => {
                 <p>{message.message}</p>
               </div>
             </div>
-
             )
           }
           return null;
         })}
-      
+        <div ref={props.lastMessageRef} />
 
-        <div className="message__status">
-          <p>Someone is typing...</p>
-        </div>
       </div>
     </>
   );

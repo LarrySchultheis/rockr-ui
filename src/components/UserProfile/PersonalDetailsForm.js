@@ -7,23 +7,14 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { Typography, Checkbox } from '@mui/material';
 import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
-import axios from 'axios';
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-
-export default function PersonalDetailsForm({
-    user
-}) {
+export default function PersonalDetailsForm(props) {
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
     const [isPaused, setIsPaused] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const handleCloseSnackbar = () => setOpenSnackbar(false);
+    const {user, axiosInstance} = props;
 
     useEffect(() => {
         setFirstname(user?.first_name);

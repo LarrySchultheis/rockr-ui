@@ -20,9 +20,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Socket } from './components/ChatService/Socket';
 import ChatPage from './components/ChatService/ChatPage';
 import axios from 'axios';
+const settings = require("./settings.json");
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: settings.apiUrl,
   headers: {
     "Content-Type": "application/json"
   }
@@ -39,36 +40,38 @@ export default function App () {
       axiosInstance.get('/login', {
         params: {
           email: user?.email
-        }}).then(response => {
-          setDbUser(response?.data?.data);
-        }).then(
-          axiosInstance.get('/get_user_role', {
-            params: {
-              id: user.sub
-            }
-            }).then(response => {
-              setUserRole(response?.data["role"]);
-            })
-            .catch(function(error) {
-              console.log(error);
-            })
-        )
+        }})
+        .then(response => {
+          setDbUser(response?.data?.data)
+        })
         .catch(function(error) {
           logout({
             returnTo: window.location.origin,
           });
           console.log(error);
-      });
-    } 
+        });
+
+      axiosInstance.get('/get_user_role', {
+        params: {
+          id: user.sub,
+        }
+        }).then(response => {
+          setUserRole(response?.data["role"][0]);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+      }
   }, [user, isAuthenticated, isLoading, logout])
+
 
   return (
     <ThemeProvider theme={theme}>
-      <head><link
+      <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       />
-      </head>
       <Router>
         <div>
           <ResponsiveAppBar user={user} role={userRole}></ResponsiveAppBar>
@@ -77,10 +80,10 @@ export default function App () {
             <Route path="/" element={<LandingPage />}/>
             {
               userRole && userRole.name === 'Admin' &&
-              <Route path="/admin_management" Component={() => <AdminManagement user={user}/>} />
+              <Route path="/admin_management" Component={() => <AdminManagement user={user} axiosInstance={axiosInstance}/>} />
             }
-            <Route path="/user_profile" element={<UserProfilePage user={dbUser}/>}/>
-            <Route path="/messages" element={<ChatPage socket={Socket} user={user} dbUser={dbUser}/>}/>
+            <Route path="/user_profile" element={<UserProfilePage user={dbUser} axiosInstance={axiosInstance} settings={settings}/>}/>
+            <Route path="/messages" element={<ChatPage socket={Socket} user={user} dbUser={dbUser} axiosInstance={axiosInstance}/>}/>
           </Routes>
         </div>
       </Router>

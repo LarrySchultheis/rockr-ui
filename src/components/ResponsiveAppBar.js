@@ -19,7 +19,7 @@ import Grid from '@mui/material/Grid';
 import { useAuth0 } from '@auth0/auth0-react'
 
 
-const pages = ['Matches', 'Profile', 'Messages'];
+const pages = ['Matches'];
 const settings = ['Account', 'Logout'];
 
 function ResponsiveAppBar(props) {
@@ -194,7 +194,7 @@ function ResponsiveAppBar(props) {
               </>
               :
               <Grid container spacing={2}>
-                <Grid item grid-xs-auto>
+                <Grid item grid-xs-auto="true">
                     <Button
                       color="secondary"
                       variant="contained"
@@ -209,7 +209,7 @@ function ResponsiveAppBar(props) {
                     Log In
                     </Button>
                 </Grid>
-                <Grid item grid-xs-auto>
+                <Grid item sgrid-xs-auto="true">
                     <Button
                       color="secondary"
                       variant="outlined"

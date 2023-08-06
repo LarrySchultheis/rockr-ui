@@ -10,17 +10,10 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import indv from '../../images/individual.png'
 import band from '../../images/band.png';
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-      "Content-Type": "application/json"
-    }
-});
 
 export default function UserTypeButtons(props) {
     const [alignment, setAlignment] = useState(props.user.is_band);
+    const axiosInstance = props.axiosInstance;
 
     const handleAlignment = (event, newAlignment) => {
       setAlignment(newAlignment);

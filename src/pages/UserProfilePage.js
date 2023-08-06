@@ -6,21 +6,13 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/PasswordChangeModal';
 import RegistrationModal from '../components/RegistrationModal';
-import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-  headers: {
-    "Content-Type": "application/json"
-  }
-});
-
-export default function UserProfilePage({
-    user
-}) {
+export default function UserProfilePage(props) {
     // RegistrationModal
     const [showModal, setShowModal] = useState(false);
     const closeModal = () => setShowModal(false);
+    const {user, axiosInstance, settings} = props;
+
     useEffect(() => {
         if(user){
             axiosInstance.get(`/check_match_profile/${user.id}`)
@@ -31,7 +23,7 @@ export default function UserProfilePage({
                 (e) => console.log( e ) 
             );
         }
-      }, [user])
+      }, [user, axiosInstance])
 
     // PasswordChangeModal
     const [open, setOpen] = useState(false);
@@ -45,7 +37,7 @@ export default function UserProfilePage({
                         'Access-Control-Allow-Origin': '*' },
             body: JSON.stringify({password:  newPassword, email: user.email})
         }
-        fetch('http://localhost:5000/change_password', requestOptions)
+        fetch(`${settings.apiUrl}/change_password`, requestOptions)
         .then((response) => {
             if (response.status === 200) {
                 alert("Password successfully updated")
@@ -117,7 +109,7 @@ export default function UserProfilePage({
                     container 
                     md={8}
                 >
-                    <ProfileTabs user={user}/>
+                    <ProfileTabs user={user} axiosInstance={axiosInstance}/>
                 </Grid>
             </Grid>
             <PasswordChangeModal
@@ -129,6 +121,7 @@ export default function UserProfilePage({
                 user={user}
                 showModal={showModal}
                 closeModal={closeModal}
+                axiosInstance={axiosInstance}
             />
         </>
     );

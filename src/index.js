@@ -5,13 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from "@auth0/auth0-react";
 
+const settings = require("./settings.json");
+const auth0 = settings.environment === "production" ? settings.auth0_prod : settings.auth0_dev;
 const domNode = document.getElementById('root');
 const root = ReactDOM.createRoot(domNode);
-
 root.render(
   <Auth0Provider
-    domain="dev-6ary27eqnmjykel3.us.auth0.com"
-    clientId="7ZGbKRlV9YDvZluAFKDrc5cdul5GINdN"
+    domain={auth0.domain}
+    clientId={auth0.client_id}
     authorizationParams={{
       redirect_uri: `${window.location.origin}/user_profile`
     }}
