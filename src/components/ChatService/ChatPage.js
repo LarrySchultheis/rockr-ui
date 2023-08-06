@@ -31,15 +31,21 @@ export default function ChatPage(props) {
   }, [axiosInstance, props.user])
 
   useEffect(() => {
+    if (matches.length > 0) {
+      setCurrentMatch(matches[0]);
+    }
+  }, [matches, setCurrentMatch])
+
+  useEffect(() => {
     axiosInstance.get('/messages').then(response => {
       setMessages(response?.data?.data);
     });
   }, [axiosInstance]);
 
-  // useEffect(() => {
-  //   // 👇️ scroll to bottom every time messages change
-  //   lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
-  // }, [messages]);
+  useEffect(() => {
+    // 👇️ scroll to bottom every time messages change
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   useEffect(() => {
     socket.on('messageResponse', (data) => {
