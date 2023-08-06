@@ -19,7 +19,7 @@ const ChatBody = (props) => {
       </header>
 
       <div className="message__container">
-        {currentMatch && messages && messages.length > 0 &&
+        {currentMatch && user && messages && messages.length > 0 &&
         messages.map((message) =>
         {
           if(message.sender_id === user.id && message.recipient_id === currentMatch.user.id) {
