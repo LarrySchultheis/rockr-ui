@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, Fragment} from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import MatchProfileCard from '../components/MatchProfile/MatchProfileCard';
@@ -22,9 +22,11 @@ export default function MatchPage(props) {
   return (
       <Slide autoplay={false}>
         {matches?.map((u) => (
-          <div className="each-slide-effect">
-            <MatchProfileCard user={user} matchUser={u} axiosInstance={axiosInstance}/>
-          </div>
+          <Fragment key={user?.email}>
+            <div className="each-slide-effect">
+              <MatchProfileCard user={user} matchUser={u} axiosInstance={axiosInstance}/>
+            </div>
+          </Fragment>
         ))}
       </Slide>
   );
