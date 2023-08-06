@@ -1,8 +1,6 @@
 import {useEffect, useState} from 'react';
 import { Autocomplete, TextField } from "@mui/material";
-import SaveSuccessSnackbar from '../SaveSuccessSnackbar';
-
-
+import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
 
 export default function InterestsSelect(props) {
     const [userInterests, setUserInterests] = useState([]);

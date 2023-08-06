@@ -9,6 +9,7 @@ import { Grid, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import PersonalDetailsForm from './PersonalDetailsForm'
 import MatchProfileForm from '../MatchProfile/MatchProfileForm';
+import BandManagementForm from '../BandManagementForm';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -57,6 +58,10 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
 
 export default function ProfileTabs(props) {
   const [value, setValue] = useState(0);
+  // const [user, setUser] = useState();
+  
+  console.log(user);
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -90,6 +95,14 @@ export default function ProfileTabs(props) {
             axiosInstance={axiosInstance}
           />
       </TabPanel>
+      { user?.is_band ?
+        <TabPanel value={value} index={2}>
+          <BandManagementForm 
+            user={user}
+          />
+        </TabPanel>
+        : <></>
+      }
     </>
   );
 }

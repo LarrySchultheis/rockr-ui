@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import { Autocomplete, TextField } from "@mui/material";
-import SaveSuccessSnackbar from '../SaveSuccessSnackbar';
+import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
 
 export default function InstrumentSelect(props) {
     const [userInstruments, setUserInstruments] = useState([]);
