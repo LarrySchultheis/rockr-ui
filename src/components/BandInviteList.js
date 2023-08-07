@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
-export default function ContactList(props) {
+export default function BandInviteList(props) {
     const {user, axiosInstance, closeModal} = props;
     const [potentialBandMembers, setPotentialBandMembers] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
@@ -39,6 +39,7 @@ export default function ContactList(props) {
   return(
     <>
       <TableContainer style={{width: '100%'}}>
+        <div></div>
         <Typography variant="h6" color="text.primary">
             Invite any of the following users to your band:
             <IconButton onClick={() => closeModal()}>

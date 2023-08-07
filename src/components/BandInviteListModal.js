@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import ContactList from './ContactList';
+import BandInviteList from './BandInviteList';
 
 const style = {
   position: 'absolute',
@@ -12,7 +12,7 @@ const style = {
   p: 4,
 };
 
-export default function ContactListModal(props) {
+export default function BandInviteListModal(props) {
   const {user, axiosInstance, open, handleClose} = props;
   const handleCloseModal = () => handleClose();
 
@@ -22,7 +22,7 @@ export default function ContactListModal(props) {
         open={open}
       >
         <Box sx={style}>
-          <ContactList user={user}
+          <BandInviteList user={user}
             closeModal={handleCloseModal}
             axiosInstance={axiosInstance}
           />

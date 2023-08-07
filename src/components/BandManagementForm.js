@@ -3,46 +3,43 @@ import {Table, TextField, TableBody, TableRow, TableCell, TableContainer, Button
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-import Paper from '@mui/material/Paper';
 import DeleteSnackbar from "./Snackbars/DeleteSnackbar";
-import ContactListModal from "./ContactListModal";
-import InvitationSuccessSnackbar from "./Snackbars/InvitationSuccessSnackbar";
+import BandInviteListModal from "./BandInviteListModal";
 
 export default function BandManagementForm(props) {
   const {user, axiosInstance} = props;
   const [bandMembers, setBandMembers] = useState();
-  const [openInvitationSnackbar, setOpenInvitationSnackbar] = useState(false);
-  const handleCloseInvitationSnackbar = () => setOpenInvitationSnackbar(false);
+  const [refreshData, setRefreshData] = useState(false);
 
   const [openDeleteSnackbar, setOpenDeleteSnackbar] = useState(false)
   const handleCloseDeleteSnackbar = () => setOpenDeleteSnackbar(false);
 
-  const [ openContactListModal, setOpenContactListModal] = useState(false);
-  const handleCloseContactListModal = () => {
-    setOpenContactListModal(false);
-    setOpenInvitationSnackbar(true);
-  }
+  const [ openBandInviteListModal, setOpenBandInviteListModal] = useState(false);
+  const handleCloseBandInviteListModal = () => setOpenBandInviteListModal(false);
 
   useEffect(() => {
     if(user){
-      axiosInstance?.get(`/user_band/${user?.id}`)
+      axiosInstance?.get(`/user_bands/${user?.id}`)
       .then(response => {
         setBandMembers(response?.data?.data);
+        setRefreshData(false);
       })
       .catch(error => {
           console.log(error);
       });
     }
-  }, [user, axiosInstance])
+  }, [user, refreshData, axiosInstance])
 
   
   const deleteUserFromBand = (user_to_delete) => {
-      axiosInstance?.delete(`/user_band/${user?.id}`, {
+      axiosInstance?.delete(`/user_bands/${user?.id}`, {
           params: {
             user: user_to_delete
           }
         })
-        .then(setOpenDeleteSnackbar(true))
+        .then(
+          setRefreshData(true)
+        )
         .catch(error => {
           console.log(error);
         });
@@ -50,7 +47,7 @@ export default function BandManagementForm(props) {
 
   return(
     <>
-      <TableContainer component={Paper} style={{width: '100%', p:"1rem"}}>
+      <TableContainer style={{width: '100%'}}>
         <Table>
             <TableBody>
                 {bandMembers?.map((u) => (
@@ -75,7 +72,7 @@ export default function BandManagementForm(props) {
                     >
                         <TableCell component="th" scope="row">
                             <Button aria-label="delete"
-                              onClick={() => setOpenContactListModal(true)}
+                              onClick={() => setOpenBandInviteListModal(true)}
                             >
                               Invite a user   
                               <AddIcon />
@@ -85,18 +82,13 @@ export default function BandManagementForm(props) {
             </TableBody>
         </Table>
       </TableContainer>
-      <ContactListModal
+      <BandInviteListModal
         user={user}
-        open={openContactListModal}
-        handleClose={handleCloseContactListModal}
+        open={openBandInviteListModal}
+        handleClose={handleCloseBandInviteListModal}
         axiosInstance={axiosInstance}
       >
-
-      </ContactListModal>
-      <InvitationSuccessSnackbar
-        open={openInvitationSnackbar}
-        handleSnackbarClose={handleCloseInvitationSnackbar}
-      />
+      </BandInviteListModal>
       <DeleteSnackbar
         component={"Band member"}
         open={openDeleteSnackbar}

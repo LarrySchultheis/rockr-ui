@@ -30,7 +30,7 @@ export default function UserProfilePage(props) {
                 (e) => console.log( e ) 
             );
 
-            axiosInstance.get(`/user_band?user=${user.id}`)
+            axiosInstance.get(`/user_bands?user=${user.id}`)
             .then(response => {
                 if(response.data){
                     setBandInvitations(response.data);
