@@ -23,6 +23,7 @@ const style = theme => ({
   p: "1rem",
   m: "1rem",
   overflow:"scroll",
+  borderRadius: 10,
 });
 
 

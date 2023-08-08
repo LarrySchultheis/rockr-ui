@@ -42,7 +42,7 @@ export default function SendBandInvitationList(props) {
         <Grid container spacing={2}>
             <Grid container item xs={11} direction="column">
             <Typography variant="h6" color="text.primary">
-            Invite any of the following users to your band:
+                Invite any of the following users to your band:
             </Typography>
             </Grid>
             <Grid container item xs={1} direction="column" >

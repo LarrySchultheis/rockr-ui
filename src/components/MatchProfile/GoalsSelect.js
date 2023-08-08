@@ -57,7 +57,7 @@ export default function GoalsSelect(props) {
             />
         }
         <SuccessSnackbar
-            comessavemponent={"Your changes to Goals have been saved!"}
+            message={"Your changes to Goals have been saved!"}
             open={openSnackbar}
             handleSnackbarClose={handleCloseSnackbar}
         />

@@ -10,6 +10,7 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
+  borderRadius: 10,
 };
 
 export default function BandInvitationResponseModal(props) {

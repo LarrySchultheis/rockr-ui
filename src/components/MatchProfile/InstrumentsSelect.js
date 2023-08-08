@@ -60,7 +60,7 @@ export default function InstrumentSelect(props) {
           </> 
         }
         <SuccessSnackbar
-          component={"Your changes to Instruments have been saved!"}
+          message={"Your changes to Instruments have been saved!"}
           open={openSnackbar}
           handleSnackbarClose={handleCloseSnackbar}
         />
