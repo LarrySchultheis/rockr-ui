@@ -6,7 +6,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
 import PasswordChangeModal from '../components/UserProfile/PasswordChangeModal';
 import RegistrationModal from '../components/UserProfile/RegistrationModal';
-import BandInvitationModal from '../components/BandManagement/BandInvitationModal';
+import BandInvitationResponseModal from '../components/BandManagement/BandInvitationResponseModal';
 
 export default function UserProfilePage(props) {
     // RegistrationModal
@@ -15,10 +15,10 @@ export default function UserProfilePage(props) {
     const {user, axiosInstance, settings} = props;
 
 
-    // BandInvitationModal
+    // BandInvitationResponseModal
     const [bandInvitations, setBandInvitations] = useState();
-    const [showBandInvitationModal, setShowBandInvitationModal] = useState(false);
-    const closeBandInvitationModal = () => setShowBandInvitationModal(false);
+    const [showBandInvitationResponseModal, setShowBandInvitationResponseModal] = useState(false);
+    const closeBandInvitationResponseModal = () => setShowBandInvitationResponseModal(false);
 
     useEffect(() => {
         if(user){
@@ -89,7 +89,7 @@ export default function UserProfilePage(props) {
                         <Button
                             color="primary"
                             variant="contained"
-                            onClick={()=> setShowBandInvitationModal(true)}
+                            onClick={()=> setShowBandInvitationResponseModal(true)}
                             endIcon={<MailOutlineIcon/>}
                             sx={{ 
                                 minWidth: '8rem',
@@ -141,11 +141,11 @@ export default function UserProfilePage(props) {
                 closeModal={closeModal}
                 axiosInstance={axiosInstance}
             />
-            <BandInvitationModal
+            <BandInvitationResponseModal
                 user={user}
                 invitations={bandInvitations}
-                showModal={showBandInvitationModal}
-                closeModal={closeBandInvitationModal}
+                showModal={showBandInvitationResponseModal}
+                closeModal={closeBandInvitationResponseModal}
                 axiosInstance={axiosInstance}
             />
         </>

@@ -12,7 +12,7 @@ const style = {
   p: 4,
 };
 
-export default function BandInvitationModal(props) {
+export default function BandInvitationResponseModal(props) {
   const {user, invitations, showModal, closeModal, axiosInstance} = props;
   const handleCloseModal = () => closeModal();
 

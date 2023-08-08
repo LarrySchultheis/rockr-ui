@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import {Table, TextField, TableBody, TableRow, TableCell, TableContainer} from "@mui/material";
+import {Table, TextField, TableBody, TableRow, TableCell, TableContainer, Grid} from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
-export default function BandInviteList(props) {
+export default function SendBandInvitationList(props) {
     const {user, axiosInstance, closeModal} = props;
     const [potentialBandMembers, setPotentialBandMembers] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
@@ -39,13 +39,18 @@ export default function BandInviteList(props) {
   return(
     <>
       <TableContainer style={{width: '100%'}}>
-        <div></div>
-        <Typography variant="h6" color="text.primary">
+        <Grid container spacing={2}>
+            <Grid container item xs={11} direction="column">
+            <Typography variant="h6" color="text.primary">
             Invite any of the following users to your band:
+            </Typography>
+            </Grid>
+            <Grid container item xs={1} direction="column" >
             <IconButton onClick={() => closeModal()}>
                 <CloseIcon />
             </IconButton>
-        </Typography>
+            </Grid>
+        </Grid>
         <Table>
             <TableBody>
                 {potentialBandMembers?.map((u) => (

@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteSnackbar from "../DeleteSnackbar";
-import BandInviteListModal from "../BandManagement/BandInviteListModal";
+import SendBandInvitationModal from "../BandManagement/SendBandInvitationModal";
 
 export default function BandManagementForm(props) {
   const {user, axiosInstance} = props;
@@ -14,8 +14,8 @@ export default function BandManagementForm(props) {
   const [openDeleteSnackbar, setOpenDeleteSnackbar] = useState(false)
   const handleCloseDeleteSnackbar = () => setOpenDeleteSnackbar(false);
 
-  const [ openBandInviteListModal, setOpenBandInviteListModal] = useState(false);
-  const handleCloseBandInviteListModal = () => setOpenBandInviteListModal(false);
+  const [ openSendBandInvitationModal, setOpenSendBandInvitationModal] = useState(false);
+  const handleCloseSendBandInvitationModal = () => setOpenSendBandInvitationModal(false);
 
   useEffect(() => {
     if(user){
@@ -72,7 +72,7 @@ export default function BandManagementForm(props) {
                     >
                         <TableCell component="th" scope="row">
                             <Button aria-label="delete"
-                              onClick={() => setOpenBandInviteListModal(true)}
+                              onClick={() => setOpenSendBandInvitationModal(true)}
                             >
                               Invite a user   
                               <AddIcon />
@@ -82,13 +82,13 @@ export default function BandManagementForm(props) {
             </TableBody>
         </Table>
       </TableContainer>
-      <BandInviteListModal
+      <SendBandInvitationModal
         user={user}
-        open={openBandInviteListModal}
-        handleClose={handleCloseBandInviteListModal}
+        open={openSendBandInvitationModal}
+        handleClose={handleCloseSendBandInvitationModal}
         axiosInstance={axiosInstance}
       >
-      </BandInviteListModal>
+      </SendBandInvitationModal>
       <DeleteSnackbar
         component={"Band member"}
         open={openDeleteSnackbar}
