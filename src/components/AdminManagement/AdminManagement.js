@@ -1,7 +1,7 @@
 import React, { useEffect, useState }from "react";
 import {Box, Table, TableHead, TextField, TableBody, TableRow, TableCell, TableContainer, Checkbox, Button} from "@mui/material";
 import Paper from '@mui/material/Paper';
-import theme from "./Theme";
+import theme from "../Theme";
 import CreateUserModal from "./CreateUserModal";
 
 export default function AdminManagement(props) {

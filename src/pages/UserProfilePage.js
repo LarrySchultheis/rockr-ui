@@ -4,9 +4,9 @@ import defaultAvatar from '../images/default_avatar.png'
 import DeleteIcon from '@mui/icons-material/Delete';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
-import PasswordChangeModal from '../components/PasswordChangeModal';
-import RegistrationModal from '../components/RegistrationModal';
-import BandInvitationModal from '../components/BandInvitationModal';
+import PasswordChangeModal from '../components/UserProfile/PasswordChangeModal';
+import RegistrationModal from '../components/UserProfile/RegistrationModal';
+import BandInvitationModal from '../components/BandManagement/BandInvitationModal';
 
 export default function UserProfilePage(props) {
     // RegistrationModal

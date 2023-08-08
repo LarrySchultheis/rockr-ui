@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { Typography, Checkbox } from '@mui/material';
-import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
+import SuccessSnackbar from '../SuccessSnackbar';
 
 export default function PersonalDetailsForm(props) {
     const [firstname, setFirstname] = useState("")
@@ -182,8 +182,8 @@ export default function PersonalDetailsForm(props) {
                 onChange={patchIsActive}
             />
         </Stack>
-        <SaveSuccessSnackbar
-            component={"Personal Details"}
+        <SuccessSnackbar
+            message={"Your changes to Personal Details have been saved!"}
             open={openSnackbar}
             handleSnackbarClose={handleCloseSnackbar}
         />

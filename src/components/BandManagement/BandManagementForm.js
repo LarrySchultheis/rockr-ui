@@ -3,8 +3,8 @@ import {Table, TextField, TableBody, TableRow, TableCell, TableContainer, Button
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteSnackbar from "./Snackbars/DeleteSnackbar";
-import BandInviteListModal from "./BandInviteListModal";
+import DeleteSnackbar from "../DeleteSnackbar";
+import BandInviteListModal from "../BandManagement/BandInviteListModal";
 
 export default function BandManagementForm(props) {
   const {user, axiosInstance} = props;

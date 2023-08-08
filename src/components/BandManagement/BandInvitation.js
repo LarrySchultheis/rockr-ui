@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import CloseIcon from '@mui/icons-material/Close';
-import theme from "./Theme";
+import theme from "../Theme";
 
 export default function BandInvitation(props) {
     const {user, invitations, closeModal, axiosInstance} = props;

@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Divider from '@mui/material/Divider';
-import MatchResponseSnackbar from '../Snackbars/MatchResponseSnackBar';
+import SuccessSnackbar from '../SuccessSnackbar';
 import placeholder from "../../images/placeholder.jpg";
 
 export default function MatchProfileCard(props) {
@@ -130,7 +130,8 @@ export default function MatchProfileCard(props) {
                 </IconButton>
             </CardActions>
         </Card>
-        <MatchResponseSnackbar
+        <SuccessSnackbar
+            message={"Your response has been recorded."}
             open={openSnackbar}
             handleSnackbarClose={handleCloseSnackbar}
         />

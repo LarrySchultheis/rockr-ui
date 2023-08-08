@@ -1,7 +1,7 @@
 import { Alert, Snackbar } from "@mui/material";
 
-export default function SaveSuccessSnackbar({
-    component,
+export default function SuccessSnackbar({
+    message,
     open,
     handleSnackbarClose
 }){
@@ -16,7 +16,7 @@ export default function SaveSuccessSnackbar({
             <Alert
             severity="success"
             sx={{ width: '100%' }}>
-            {`Your changes to ${component} have been saved!`}
+            {message || "Success!"}
             </Alert>
         </Snackbar>
     );

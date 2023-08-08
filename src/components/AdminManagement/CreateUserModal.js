@@ -3,7 +3,7 @@ import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import {TextField, Switch, FormGroup, FormControlLabel, Button} from '@mui/material'
-import theme from "./Theme";
+import theme from "../Theme";
 
 const style = {
   position: 'absolute',

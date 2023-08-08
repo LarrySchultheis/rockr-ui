@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import { Autocomplete, TextField, Typography } from "@mui/material";
-import SaveSuccessSnackbar from '../Snackbars/SaveSuccessSnackbar';
+import SuccessSnackbar from '../SuccessSnackbar';
 
 export default function InterestsSelect(props) {
     const [userInterests, setUserInterests] = useState([]);
@@ -56,8 +56,8 @@ export default function InterestsSelect(props) {
           )}
         />
       }
-      <SaveSuccessSnackbar
-        component={"Musical Interests"}
+      <SuccessSnackbar
+        message={"Your changes to Musical Interests have been saved!"}
         open={openSnackbar}
         handleSnackbarClose={handleCloseSnackbar}
       />

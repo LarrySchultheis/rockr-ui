@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
-import UserProfilePage from "../pages/UserProfilePage";
+import UserProfilePage from "../../pages/UserProfilePage";
 
 const Profile = (props) => {
   const { user, isAuthenticated, isLoading } = useAuth0();

@@ -9,7 +9,7 @@ import { Grid, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import PersonalDetailsForm from './PersonalDetailsForm'
 import MatchProfileForm from '../MatchProfile/MatchProfileForm';
-import BandManagementForm from '../BandManagementForm';
+import BandManagementForm from '../BandManagement/BandManagementForm';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;

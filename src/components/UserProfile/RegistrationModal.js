@@ -1,14 +1,14 @@
 // import { useState, useEffect} from "react";
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import PersonalDetailsForm from './UserProfile/PersonalDetailsForm'
+import PersonalDetailsForm from './PersonalDetailsForm'
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import UserTypeButtons from "./MatchProfile/UserTypeButtons";
-import InstrumentSelect from "./MatchProfile/InstrumentsSelect";
-import InterestsSelect from "./MatchProfile/InterestsSelect";
-import GoalsSelect from "./MatchProfile/GoalsSelect";
+import UserTypeButtons from "../MatchProfile/UserTypeButtons";
+import InstrumentSelect from "../MatchProfile/InstrumentsSelect";
+import InterestsSelect from "../MatchProfile/InterestsSelect";
+import GoalsSelect from "../MatchProfile/GoalsSelect";
 
 const style = theme => ({
   position: 'absolute',
