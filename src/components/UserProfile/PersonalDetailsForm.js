@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { Typography, Checkbox } from '@mui/material';
+import { Typography } from '@mui/material';
 import SuccessSnackbar from '../SuccessSnackbar';
 
 export default function PersonalDetailsForm(props) {
@@ -13,7 +13,6 @@ export default function PersonalDetailsForm(props) {
     const [lastname, setLastname] = useState("")
     const [username, setUsername] = useState("")
     const [bio, setBio] = useState("")
-    const [isPaused, setIsPaused] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const handleCloseSnackbar = () => setOpenSnackbar(false);
     const {user, axiosInstance} = props;
@@ -22,7 +21,6 @@ export default function PersonalDetailsForm(props) {
         setFirstname(user?.first_name);
         setLastname(user?.last_name);
         setUsername(user?.username);
-        setIsPaused(user?.is_paused);
 
         if(user){
             axiosInstance?.get(`/match_profiles/${user?.id}`)
@@ -107,21 +105,6 @@ export default function PersonalDetailsForm(props) {
         );
     };
 
-    const patchIsActive = (event) => {
-        axiosInstance.patch(`/users/${user?.id}`, {
-            params: {
-                is_paused: event.target.checked
-            }
-        })
-        .then(response => {
-            setIsPaused(!response?.data.is_paused);
-            setOpenSnackbar(true);
-        })
-        .catch(
-            (e) => console.log( e )
-        );
-    };
-
     return (
         <form id="userForm">
         <Stack
@@ -173,13 +156,6 @@ export default function PersonalDetailsForm(props) {
                 value={bio}
                 onChange={handleBioChange}
                 onBlur={patchBio}
-            />
-            <Typography sx={{mt:"1rem"}} color='text.primary'>Pause Account?</Typography>
-            <Checkbox
-                sx={{color: "black", '&.Mui-checked': {color: "primary"}} }
-                label="Pause Account"
-                checked={isPaused}
-                onChange={patchIsActive}
             />
         </Stack>
         <SuccessSnackbar

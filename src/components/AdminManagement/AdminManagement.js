@@ -1,8 +1,9 @@
 import React, { useEffect, useState }from "react";
-import {Box, Table, TableHead, TextField, TableBody, TableRow, TableCell, TableContainer, Checkbox, Button} from "@mui/material";
+import {Box, Table, TableHead, TextField, TableBody, TableRow, TableCell, TableContainer, Checkbox, Button, IconButton} from "@mui/material";
 import Paper from '@mui/material/Paper';
 import theme from "../Theme";
 import CreateUserModal from "./CreateUserModal";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function AdminManagement(props) {
     const [users, setUsers] = useState([]);
@@ -76,8 +77,7 @@ export default function AdminManagement(props) {
         <div>
             <Paper sx={{pt: 10, pb: 50, pl: 10, pr: 10}}>
             <h1>Admin Management</h1>
-            
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Table>
                     <TableHead>
                         <TableRow sx={{backgroundColor: theme.palette.primary.main}}>
@@ -132,14 +132,13 @@ export default function AdminManagement(props) {
                                         onChange={() => handleCheckboxToggle(u.id, 'is_band')}
                                     />
                                 </TableCell>
-                                <TableCell align="flex">
-                                <Button 
-                                    sx={{backgroundColor: theme.palette.secondary.main}} 
-                                    variant="contained" 
-                                    onClick={() => deleteUser(u.id)}
-                                >
-                                    Delete
-                                </Button>          
+                                <TableCell align="flex" component="th" scope="row">
+                                    <IconButton aria-label="delete"
+                                        variant="contained" 
+                                        onClick={() => deleteUser(u.id)}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         )) 
