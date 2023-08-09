@@ -13,8 +13,8 @@ import LandingPage from './pages/LandingPage';
 import AppFooter from './components/AppFooter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/Theme';
-import AdminManagement from './components/AdminManagement';
-import Profile from "./components/Profile"
+import AdminManagement from './components/AdminManagement/AdminManagement';
+import Profile from "./components/AdminManagement/Profile"
 import UserProfilePage from './pages/UserProfilePage';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Socket } from './components/ChatService/Socket';

@@ -3,7 +3,7 @@ import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import {TextField, FormGroup, Button} from '@mui/material'
-import theme from "./Theme";
+import theme from "../Theme";
 
 const style = {
   position: 'absolute',
@@ -15,6 +15,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  borderRadius: 10,
 };
 
 export default function PasswordChangeModal(props) {

@@ -1,6 +1,7 @@
 import { Alert, Snackbar } from "@mui/material";
 
-export default function InvitationSuccessSnackbar({
+export default function SuccessSnackbar({
+    message,
     open,
     handleSnackbarClose
 }){
@@ -15,7 +16,7 @@ export default function InvitationSuccessSnackbar({
             <Alert
             severity="success"
             sx={{ width: '100%' }}>
-            {`Your invitation has been sent!`}
+            {message || "Success!"}
             </Alert>
         </Snackbar>
     );

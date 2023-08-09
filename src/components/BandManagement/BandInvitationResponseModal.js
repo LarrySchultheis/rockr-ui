@@ -10,9 +10,10 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
+  borderRadius: 10,
 };
 
-export default function BandInvitationModal(props) {
+export default function BandInvitationResponseModal(props) {
   const {user, invitations, showModal, closeModal, axiosInstance} = props;
   const handleCloseModal = () => closeModal();
 

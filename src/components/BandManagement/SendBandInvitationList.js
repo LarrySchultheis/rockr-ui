@@ -1,39 +1,36 @@
 import { useState, useEffect } from "react";
-import {Table, TextField, TableBody, TableRow, TableCell, TableContainer} from "@mui/material";
+import {Table, TextField, TableBody, TableRow, TableCell, TableContainer, Grid} from "@mui/material";
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
-import Paper from '@mui/material/Paper';
-import InvitationSuccessSnackbar from "./Snackbars/InvitationSuccessSnackbar";
 
-export default function ContactList(props) {
+export default function SendBandInvitationList(props) {
     const {user, axiosInstance, closeModal} = props;
-    const [matches, setMatches] = useState();
-    const [openInvitationSnackbar, setOpenInvitationSnackbar] = useState(false)
-    const handleCloseInvitationSnackbar = () => setOpenInvitationSnackbar(false);
+    const [potentialBandMembers, setPotentialBandMembers] = useState([]);
+    const [refreshData, setRefreshData] = useState(false);
 
     useEffect(() => {
         if(user){
-            axiosInstance?.get(`/user_matches/${user?.id}`)
+            axiosInstance?.get(`/user_bands/${user.id}?filter=${true}`)
             .then(response => {
-                setMatches(response?.data);
+                setPotentialBandMembers(response?.data);
+                setRefreshData(false);
             })
             .catch(error => {
                 console.log(error);
             });
         }
-    }, [user, axiosInstance])
+    }, [user, refreshData, axiosInstance])
 
     // user id is the band
     const inviteUserToBand = (user_to_invite) => {
-        axiosInstance?.post(`/user_band/${user?.id}`, {
+        axiosInstance?.post(`/user_bands/${user?.id}`, {
             params: {
                 user_id: user_to_invite
             }
-        }).then(
-            closeModal(),
-            setOpenInvitationSnackbar(true)
-            
-        )
+        })
+        .then(setRefreshData(true))
         .catch(error => {
             console.log(error);
         });
@@ -41,10 +38,22 @@ export default function ContactList(props) {
 
   return(
     <>
-      <TableContainer component={Paper} style={{width: '100%', p:"1rem"}}>
+      <TableContainer style={{width: '100%'}}>
+        <Grid container spacing={2}>
+            <Grid container item xs={11} direction="column">
+            <Typography variant="h6" color="text.primary">
+                Invite any of the following users to your band:
+            </Typography>
+            </Grid>
+            <Grid container item xs={1} direction="column" >
+            <IconButton onClick={() => closeModal()}>
+                <CloseIcon />
+            </IconButton>
+            </Grid>
+        </Grid>
         <Table>
             <TableBody>
-                {matches?.map((u) => (
+                {potentialBandMembers?.map((u) => (
                     <TableRow
                         key={u.email}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -64,10 +73,5 @@ export default function ContactList(props) {
             </TableBody>
         </Table>
       </TableContainer>
-    <InvitationSuccessSnackbar
-        component={"Band member"}
-        open={openInvitationSnackbar}
-        handleSnackbarClose={handleCloseInvitationSnackbar}
-    />
     </>
   )}

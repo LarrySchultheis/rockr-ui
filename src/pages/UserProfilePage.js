@@ -1,27 +1,32 @@
 import {useEffect, useState} from 'react';
 import { Button, Grid, Stack } from '@mui/material';
 import defaultAvatar from '../images/default_avatar.png'
-import DeleteIcon from '@mui/icons-material/Delete';
+import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
-import PasswordChangeModal from '../components/PasswordChangeModal';
-import RegistrationModal from '../components/RegistrationModal';
-import BandInvitationModal from '../components/BandInvitationModal';
+import PasswordChangeModal from '../components/UserProfile/PasswordChangeModal';
+import RegistrationModal from '../components/UserProfile/RegistrationModal';
+import BandInvitationResponseModal from '../components/BandManagement/BandInvitationResponseModal';
+import Alert from '@mui/material/Alert';
 
 export default function UserProfilePage(props) {
+    const {user, axiosInstance, settings} = props
+    const [isPaused, setIsPaused] = useState();
+    
     // RegistrationModal
     const [showModal, setShowModal] = useState(false);
     const closeModal = () => setShowModal(false);
-    const {user, axiosInstance, settings} = props;
 
-
-    // BandInvitationModal
+    // BandInvitationResponseModal
     const [bandInvitations, setBandInvitations] = useState();
-    const [showBandInvitationModal, setShowBandInvitationModal] = useState(false);
-    const closeBandInvitationModal = () => setShowBandInvitationModal(false);
+    const [showBandInvitationResponseModal, setShowBandInvitationResponseModal] = useState(false);
+    const closeBandInvitationResponseModal = () => setShowBandInvitationResponseModal(false);
 
     useEffect(() => {
         if(user){
+            setIsPaused(user?.is_paused);
+
             axiosInstance?.get(`/check_match_profile/${user.id}`)
             .then(response => {
                 setShowModal(!response?.data?.is_match_profile_complete);
@@ -30,7 +35,7 @@ export default function UserProfilePage(props) {
                 (e) => console.log( e ) 
             );
 
-            axiosInstance.get(`/user_band?user=${user.id}`)
+            axiosInstance.get(`/user_bands?user=${user.id}`)
             .then(response => {
                 if(response.data){
                     setBandInvitations(response.data);
@@ -67,8 +72,26 @@ export default function UserProfilePage(props) {
         })
     }
 
+
+    const patchIsActive = () => {
+        if(user){
+            axiosInstance.patch(`/users/${user?.id}`, {
+                params: {
+                    is_paused: !isPaused
+                }
+            })
+            .then(response => {
+                setIsPaused(response?.data.is_paused);
+            })
+            .catch(
+                (e) => console.log( e )
+            );
+        }
+    };
+
     return (
         <>
+        {isPaused ? <Alert severity="warning">Your account is paused. You will not receive new matches.</Alert> : <></>}
             <Grid 
                 container
                 direction='row'
@@ -89,7 +112,7 @@ export default function UserProfilePage(props) {
                         <Button
                             color="primary"
                             variant="contained"
-                            onClick={()=> setShowBandInvitationModal(true)}
+                            onClick={()=> setShowBandInvitationResponseModal(true)}
                             endIcon={<MailOutlineIcon/>}
                             sx={{ 
                                 minWidth: '8rem',
@@ -110,15 +133,16 @@ export default function UserProfilePage(props) {
                             update password
                         </Button>
                         <Button
-                            color="error"
+                            color={isPaused ? "success" : "error"}
                             variant="contained"
-                            startIcon={<DeleteIcon/>}
+                            endIcon={isPaused ? <PlayArrowIcon/> : <PauseIcon/>}
+                            onClick={() => patchIsActive()}
                             sx={{ 
                                 minWidth: '8rem',
                                 mt: "4rem"
                             }}
                         >
-                            delete
+                            {isPaused ? "Reactivate Account" : "Pause Account"}
                         </Button>
                     </Stack>
                 </Grid>
@@ -141,11 +165,11 @@ export default function UserProfilePage(props) {
                 closeModal={closeModal}
                 axiosInstance={axiosInstance}
             />
-            <BandInvitationModal
+            <BandInvitationResponseModal
                 user={user}
                 invitations={bandInvitations}
-                showModal={showBandInvitationModal}
-                closeModal={closeBandInvitationModal}
+                showModal={showBandInvitationResponseModal}
+                closeModal={closeBandInvitationResponseModal}
                 axiosInstance={axiosInstance}
             />
         </>

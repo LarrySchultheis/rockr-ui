@@ -1,46 +1,19 @@
 // REFERENCES:
 //  * https://github.com/mui/material-ui/tree/master/docs/src/pages/premium-themes/onepirate
 
-import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Grid from '@mui/material/Grid';
 import rockrLogo from '../images/logo.png';
 import { useAuth0 } from '@auth0/auth0-react'
 
-
-const settings = ['Account', 'Logout'];
-
 function ResponsiveAppBar(props) {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const { isAuthenticated, loginWithRedirect, logout} = useAuth0();
-  
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <AppBar position="static">
@@ -52,38 +25,6 @@ function ResponsiveAppBar(props) {
             style={{width: '10%', padding: '1rem'}}
             href={window.location.origin}
           />
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-            </Menu>
-          </Box>
-          <PlayArrowIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -106,43 +47,42 @@ function ResponsiveAppBar(props) {
             <>
                 <Button
                   href="/matches"
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, color: 'white', display: 'block', ml:2, mr:2, ':hover': {
+                      bgcolor: 'primary',
+                      clor: 'secondary',
+                    }
+                  }}
                 >
                 Matches
                 </Button>
                 <Button
                   href="/user_profile"
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, color: 'white', display: 'block', ml:2, mr:2  }}
                 >
                 Profile
                 </Button>
                 <Button
                   href="/messages"
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, color: 'white', display: 'block', ml:2, mr:2  }}
                 >
                 Messages
                 </Button>
-              </>
-              : <></>
-            }
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            { isAuthenticated ? 
-                <>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <AccountCircleIcon></AccountCircleIcon>
-                  </IconButton>
-                </Tooltip>
                 {props.role && props.role.name === "Admin" &&
                   <Button
                     href="/admin_management"
-                    color="secondary"
+                    sx={{ my: 2, color: 'white', display: 'block', ml:2, mr:2  }}
                   >
                     Admin Management
                   </Button>
                 }
-
+              </>
+              : <></>
+            }
+          </Box>
+          <Box>
+            { isAuthenticated ? 
+                <>
+                <AccountCircleIcon color="secondary"/>
                 <Button
                   color="secondary"
                   onClick={() =>
@@ -153,28 +93,6 @@ function ResponsiveAppBar(props) {
                 >
                   Logout
                 </Button>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
               </>
               :
               <Grid container spacing={2}>
