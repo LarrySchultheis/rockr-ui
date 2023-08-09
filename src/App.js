@@ -27,8 +27,7 @@ const axiosInstance = axios.create({
   baseURL: settings.apiUrl,
   headers: {
     "Content-Type": "application/json"
-  },
-  withCredentials: true
+  }
 });
 
 export default function App () {
