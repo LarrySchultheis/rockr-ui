@@ -27,7 +27,8 @@ const axiosInstance = axios.create({
   baseURL: settings.apiUrl,
   headers: {
     "Content-Type": "application/json"
-  }
+  },
+  withCredentials: true
 });
 
 export default function App () {
@@ -75,7 +76,7 @@ export default function App () {
       />
       <Router>
         <div>
-          <ResponsiveAppBar user={user} role={userRole}></ResponsiveAppBar>
+          <ResponsiveAppBar user={user} role={userRole} axiosInstance={axiosInstance}></ResponsiveAppBar>
           <Routes>
             <Route path="/register" element={<Profile />}/>
             <Route path="/" element={<LandingPage />}/>

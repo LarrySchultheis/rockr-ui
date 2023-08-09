@@ -14,6 +14,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 function ResponsiveAppBar(props) {
   const { isAuthenticated, loginWithRedirect, logout} = useAuth0();
+  const { axiosInstance } = props;
 
   return (
     <AppBar position="static">
@@ -86,9 +87,15 @@ function ResponsiveAppBar(props) {
                 <Button
                   color="secondary"
                   onClick={() =>
-                    logout({
-                      returnTo: window.location.origin,
+                    axiosInstance.post("/logout")
+                    .catch(function(error) {
+                        console.log(error);
                     })
+                    .finally(
+                      logout({
+                        returnTo: window.location.origin,
+                      })
+                    )
                   }
                 >
                   Logout
