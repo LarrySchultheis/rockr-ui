@@ -53,7 +53,7 @@ export default function UserProfilePage(props) {
 
     const passwordResetRequest = () => {
         if(user) {
-            axiosInstance.get(`reset_password?email=${user.email}`)
+            axiosInstance.post(`reset_password?email=${user.email}`)
             setOpenSnackbar(true);
         }
     }
