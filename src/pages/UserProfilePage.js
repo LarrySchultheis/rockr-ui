@@ -54,7 +54,10 @@ export default function UserProfilePage(props) {
     const passwordResetRequest = () => {
         if(user) {
             axiosInstance.post(`reset_password?email=${user.email}`)
-            setOpenSnackbar(true);
+            .then(setOpenSnackbar(true))
+            .catch( 
+                (e) => console.log( e ) 
+            ); 
         }
     }
 
@@ -108,7 +111,7 @@ export default function UserProfilePage(props) {
                             Band Invitations
                         </Button>
                         <Button
-                            color="error"
+                            color="primary"
                             variant="outlined"
                             onClick={() => passwordResetRequest()}
                             sx={{

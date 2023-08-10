@@ -14,7 +14,7 @@ const ChatBar = (props) => {
         <h4 className="chat__header">Matches</h4>
         <div className="chat__users">
             {matches.map(m => {
-                return <Button onClick={() => handleMatchChange(m)} key={`${m.user.id}`}>{m.user.first_name} {m.user.last_name}</Button>;
+                return <Button onClick={() => handleMatchChange(m)} key={`${m.id}`}>{m.first_name} {m.last_name}</Button>;
             })}
         </div>
       </div>

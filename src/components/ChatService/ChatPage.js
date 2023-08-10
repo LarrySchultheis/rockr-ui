@@ -10,21 +10,15 @@ export default function ChatPage(props) {
   const [messages, setMessages] = useState([]);
   const lastMessageRef = useRef(null);
   const {socket, axiosInstance} = props;
-
-  const compare = (a,b) => {
-    if (a.ts < b.ts)
-       return -1;
-    if (a.ts > b.ts)
-      return 1;
-    return 0;
-  }
     
   useEffect(() => {
     if (props.user) {
-      axiosInstance?.get(`/matches?email=${props.user.email}`).then(response => {
-        let m = response?.data?.data;
-        m = m.sort(compare)
-        setMatches(m);
+      axiosInstance?.get(`/matches?email=${props.user.email}`)
+      .then(response => {
+        setMatches(response?.data?.data);
+      })
+      .catch(error => {
+        console.log(error);
     });
 
     }
