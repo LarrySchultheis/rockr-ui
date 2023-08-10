@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import {Typography, TextField, Switch, FormGroup, FormControlLabel, Button, Grid} from '@mui/material'
@@ -26,9 +26,18 @@ export default function CreateUserModal(props) {
     const [username, setUsername] = useState("");
     const [isBand, setIsBand] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [password, setPassword] = useState("");
+    const [usernames, setUsernames] = useState([]);
     const formRef = React.useRef();
     const {handleClose} = props;
+
+    useEffect(() => {
+      let usrnames = [];
+      props.users.forEach((u) => {
+        usrnames.push(u.username);
+      })
+      setUsernames(usrnames);
+    }, [props.users])
+
 
     const handleInputChange = (e, field) => {
         if(field === 'firstName') setFirstName(e.target.value);
@@ -37,25 +46,11 @@ export default function CreateUserModal(props) {
         if(field === 'username') setUsername(e.target.value);
         if(field === 'isBand') setIsBand(e.target.checked);
         if(field === 'isAdmin') setIsAdmin(e.target.checked);
-        if(field === 'password') setPassword(e.target.value);
     }
-
-    const validatePassword = () => {
-      let errs = [];
-          if (password.length < 8) errs.push("Password must be at least 8 characters");
-          if (!/[A-Z]/.test(password)) errs.push("Password must contain at least one uppercase letter");
-          if (!/\d/.test(password)) errs.push("Password must contain at least one number");
-          if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(password)) errs.push("Password must contain at least one special character");
-          if (errs.length > 0) {
-            alert(errs.join('\n'));
-            return false;
-          }
-          return true
-      }
 
       const validateUsername = () => {
         setUsername(username === "" ? null : username);
-        if (username !== null && props.usernames.includes(username)) {
+        if (username !== null && usernames.includes(username)) {
           alert("Sorry, this username is already in our system!")
           return false
         }
@@ -63,16 +58,16 @@ export default function CreateUserModal(props) {
       }
  
     const validateForm = () => {
-      if (formRef.current.reportValidity() && validateUsername() && validatePassword()) {
+      if (formRef.current.reportValidity() && validateUsername()) {
         props.handleSubmit({
           first_name: firstName,
           last_name: lastName,
           email: email,
           username: username === "" ? null : username,
-          password: password,
           is_band: isBand,
           is_paused: false,
           is_admin: isAdmin,
+          is_active: true
         })
       }
     }
@@ -101,7 +96,6 @@ export default function CreateUserModal(props) {
                 <TextField required InputLabelProps={{ shrink: true }} label="Required" variant="standard" focused={true} sx={{p: 2}}  onChange={(e) => handleInputChange(e, "firstName")} placeholder="First Name" />
                 <TextField required InputLabelProps={{ shrink: true }} label="Required" variant="standard" focused={true} sx={{p: 2}} onChange={(e) => handleInputChange(e, "lastName")} placeholder="Last Name"/>
                 <TextField required InputLabelProps={{ shrink: true }} label="Required" variant="standard" focused={true} type="email" sx={{p: 2}} onChange={(e) => handleInputChange(e, "email")} placeholder="Email"/>
-                <TextField required InputLabelProps={{ shrink: true }} label="Required" variant="standard" focused={true} type="password" sx={{p: 2}} onChange={(e) => handleInputChange(e, "password")} placeholder="Password"/>
                 <TextField InputLabelProps={{ shrink: true }} variant="standard" sx={{p: 2}} onChange={(e) => handleInputChange(e, "username")} placeholder="Username"/>
                 <FormControlLabel control={<Switch />} onChange={(e) => handleInputChange(e, "isBand")}label="Registering as a band?"/>
                 <FormControlLabel control={<Switch />} onChange={(e) => handleInputChange(e, "isAdmin")}label="Admin?"/>

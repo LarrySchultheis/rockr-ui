@@ -56,8 +56,8 @@ export default function AdminManagement(props) {
 
     const deleteUser = (user_id) => axiosInstance.delete(`/users/${user_id}`)
         .then(
-            setRefreshData(true),
-            setOpenDeleteSnackbar(true)
+            setUsers(users.filter(item => item.id !== user_id)),
+            setOpenDeleteSnackbar(true),
         )
         .catch(function(error) {
             console.log(error);
@@ -110,6 +110,7 @@ export default function AdminManagement(props) {
                 open={open}
                 handleClose={handleClose}
                 handleSubmit={createUser}
+                users={users}
             />
             <TableContainer sx={{pl: 10, pr: 10}}>
                 <Table>
