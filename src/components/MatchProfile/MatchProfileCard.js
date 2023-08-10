@@ -15,8 +15,6 @@ export default function MatchProfileCard(props) {
     const [userInterests, setUserInterests] = useState([]);
     const [userInstruments, setUserInstruments] = useState([]);
 
-    console.log(matchUser);
-
     useEffect(() => {
         if(matchUser){
             axiosInstance?.get(`/match_profiles/${matchUser.id}`)
