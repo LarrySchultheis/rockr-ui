@@ -12,7 +12,7 @@ const ChatBody = (props) => {
   return (
     <>
       <header className="chat__mainHeader">
-        {currentMatch ? <p>Chatting with {currentMatch.user.first_name} {currentMatch.user.last_name}</p> : <p>Select a match to open chat!</p>}
+        {currentMatch ? <p>Chatting with {currentMatch.first_name} {currentMatch.last_name}</p> : <p>Select a match to open chat!</p>}
         <button className="leaveChat__btn" onClick={handleLeaveChat}>
           LEAVE CHAT
         </button>
@@ -22,7 +22,7 @@ const ChatBody = (props) => {
         {currentMatch && user && messages && messages.length > 0 &&
         messages.map((message) =>
         {
-          if(message.sender_id === user.id && message.recipient_id === currentMatch.user.id) {
+          if(message.sender_id === user.id && message.recipient_id === currentMatch.id) {
               return(
                 <div className="message__chats" key={message.id}>
                 <p className="sender__name">You</p>
@@ -32,7 +32,7 @@ const ChatBody = (props) => {
               </div>
               )
           }
-          if (message.sender_id === currentMatch.user.id && message.recipient_id === user.id) {
+          if (message.sender_id === currentMatch.id && message.recipient_id === user.id) {
             return (
               <div className="message__chats" key={message.id}>
               <p>{message.name}</p>

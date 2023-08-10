@@ -16,7 +16,7 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
-  borderRadius: 10,
+  borderRadius: 8,
 };
 
 export default function CreateUserModal(props) {
