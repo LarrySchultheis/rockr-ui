@@ -9,7 +9,7 @@ const ChatFooter = (props) => {
       socket.emit('message', {
         text: message,
         sender: user,
-        recipient: currentMatch.user,
+        recipient: currentMatch,
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
       });
