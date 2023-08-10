@@ -5,14 +5,17 @@ import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ProfileTabs from '../components/UserProfile/ProfileTabs';
-import PasswordChangeModal from '../components/UserProfile/PasswordChangeModal';
 import RegistrationModal from '../components/UserProfile/RegistrationModal';
 import BandInvitationResponseModal from '../components/BandManagement/BandInvitationResponseModal';
 import Alert from '@mui/material/Alert';
+import PasswordResetSnackbar from '../components/PasswordResetSnackbar';
 
 export default function UserProfilePage(props) {
-    const {user, axiosInstance, settings} = props
+    const {user, axiosInstance} = props
     const [isPaused, setIsPaused] = useState();
+    const [openSnackbar, setOpenSnackbar] = useState(false)
+    const handleCloseSnackbar = () => setOpenSnackbar(false);
+
     
     // RegistrationModal
     const [showModal, setShowModal] = useState(false);
@@ -47,29 +50,12 @@ export default function UserProfilePage(props) {
         }
       }, [user, axiosInstance])
 
-    // PasswordChangeModal
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
-    const changePassword = (newPassword) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*' },
-            body: JSON.stringify({password:  newPassword, email: user.email})
+    const passwordResetRequest = () => {
+        if(user) {
+            axiosInstance.get(`reset_password?email=${user.email}`)
+            setOpenSnackbar(true);
         }
-        fetch(`${settings.apiUrl}/change_password`, requestOptions)
-        .then((response) => {
-            if (response.status === 200) {
-                alert("Password successfully updated")
-                handleClose();
-            }
-            else {
-                alert("Error updating password");
-                handleClose();
-            }
-        })
     }
 
 
@@ -122,15 +108,15 @@ export default function UserProfilePage(props) {
                             Band Invitations
                         </Button>
                         <Button
-                            color="primary"
+                            color="error"
                             variant="outlined"
-                            onClick={() => handleOpen()}
+                            onClick={() => passwordResetRequest()}
                             sx={{
                                 minWidth: '8rem',
                                 mt:"1.5rem",
                             }}
                         >
-                            update password
+                            Reset Password
                         </Button>
                         <Button
                             color={isPaused ? "success" : "error"}
@@ -144,6 +130,10 @@ export default function UserProfilePage(props) {
                         >
                             {isPaused ? "Reactivate Account" : "Pause Account"}
                         </Button>
+                        <PasswordResetSnackbar
+                            open={openSnackbar}
+                            handleSnackbarClose={handleCloseSnackbar}
+                        />
                     </Stack>
                 </Grid>
                 <Grid 
@@ -154,11 +144,6 @@ export default function UserProfilePage(props) {
                     <ProfileTabs user={user} axiosInstance={axiosInstance}/>
                 </Grid>
             </Grid>
-            <PasswordChangeModal
-                open={open}
-                handleClose={handleClose}
-                handleSubmit={changePassword}
-            />
             <RegistrationModal
                 user={user}
                 showModal={showModal}
