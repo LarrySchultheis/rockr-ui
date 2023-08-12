@@ -1,8 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const ChatBody = (props) => {
-  const navigate = useNavigate();
   const {messages, user, currentMatch} = props;
 
   return (
