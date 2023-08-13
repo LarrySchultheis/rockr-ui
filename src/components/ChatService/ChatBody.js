@@ -1,21 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const ChatBody = (props) => {
-  const navigate = useNavigate();
   const {messages, user, currentMatch} = props;
-  const handleLeaveChat = () => {
-    localStorage.removeItem('userName');
-    navigate('/');
-    window.location.reload();
-  };
+
   return (
     <>
       <header className="chat__mainHeader">
         {currentMatch ? <p>Chatting with {currentMatch.first_name} {currentMatch.last_name}</p> : <p>Select a match to open chat!</p>}
-        <button className="leaveChat__btn" onClick={handleLeaveChat}>
-          LEAVE CHAT
-        </button>
       </header>
 
       <div className="message__container">
