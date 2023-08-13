@@ -5,4 +5,7 @@ Install [Node](https://nodejs.org/en/download) v>=14
 - `yarn build` bundles the app into static files for production
 - `yarn test` starts the test runner
 
-- `npm run cy:run` runs them cypress tests
+# cypress
+```npx cypress open``` runs the integrated cypress GUI
+```npm run cy:run``` runs tests via the CLI
+ 
