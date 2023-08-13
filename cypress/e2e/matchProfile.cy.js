@@ -1,6 +1,6 @@
 
 Cypress.Commands.add('login', () => {
-    cy.visit('localhost:3000')
+    cy.visit('https://localhost:3000')
     cy.contains('Log In').click();
     cy.origin('https://dev-6ary27eqnmjykel3.us.auth0.com', () => {
       const config = Cypress.require("../../cypress-settings.json");
@@ -12,20 +12,29 @@ Cypress.Commands.add('login', () => {
 const config = require("../../cypress-settings.json");
 describe('template spec', () => {
   it('passes', () => {
-    cy.login()
+    cy.login();
     cy.contains('Profile').click();
-    cy.contains('Personal Details');
-    cy.get('input[id="firstname"]').should('have.value', config.test_user.firstname);
-    cy.get('input[id="lastname"]').should('have.value', config.test_user.lastname)
-    cy.get('div[id="gender-select"]');
-    cy.get('button').contains('save');
-    cy.get('button').contains('update password');
-    cy.get('button').contains('preview');
-    cy.get('button').contains('delete');
     cy.contains('Match Profile').click();
-    cy.get('button').contains('save');
-    cy.get('button').contains('update password');
-    cy.get('button').contains('preview');
-    cy.get('button').contains('delete');
+    cy.get('button').contains('Reset Password');
+    cy.get('button').contains('Pause Account');
+    cy.get('button').contains('Band Invitations');
+    cy.wait(1500);
+    let ct = 0
+    cy.get('button[aria-label="Open"]').then($els => {
+      [...$els].forEach((e) => {
+        e.click({force: true});
+        if (ct === 0) {
+          cy.contains('bass').click({force: true});
+        }
+        if (ct === 1) {
+          cy.contains('build a band').click({force: true});
+        }
+        if (ct === 2) {
+          cy.contains('singing').click({force: true});
+        }
+        ct++;
+      })
+    })
+    cy.contains('Match Profile').click();
   })
 })

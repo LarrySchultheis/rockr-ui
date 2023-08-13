@@ -3,7 +3,7 @@
 //  * https://static.thenounproject.com/png/643342-200.png 
 //  * https://cdn-icons-png.flaticon.com/512/431/431249.png
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Grid from '@mui/material/Grid';
@@ -12,8 +12,15 @@ import indv from '../../images/individual.png'
 import band from '../../images/band.png';
 
 export default function UserTypeButtons(props) {
-    const [alignment, setAlignment] = useState(props.user.is_band);
+    const user = props.userl
+    const [alignment, setAlignment] = useState(null);
     const axiosInstance = props.axiosInstance;
+
+    useEffect(() => {
+        if (user) {
+            setAlignment(user.is_band);
+        }
+    }, [user])
 
     const handleAlignment = (event, newAlignment) => {
       setAlignment(newAlignment);
@@ -39,7 +46,7 @@ export default function UserTypeButtons(props) {
                 aria-label="text alignment"
                 sx={{width:"100%"}}
             >
-                <ToggleButton value={false} aria-label="left aligned" sx={{p:"1rem", width:"48%"}}>
+                <ToggleButton id={"indidual_btn"} value={false} aria-label="left aligned" sx={{p:"1rem", width:"48%"}}>
                     <Stack
                         justifyContent="center"
                         alignItems="center"
@@ -49,7 +56,7 @@ export default function UserTypeButtons(props) {
                         <img src={indv} alt={"Individual"} style={{maxWidth: '75%'}}/>
                     </Stack>
                 </ToggleButton>
-                <ToggleButton value={true} aria-label="right aligned" sx={{p:"1rem", width:"48%"}}>
+                <ToggleButton id={"band_btn"} value={true} aria-label="right aligned" sx={{p:"1rem", width:"48%"}}>
                     <Stack
                         justifyContent="center"
                         alignItems="center"

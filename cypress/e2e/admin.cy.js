@@ -1,7 +1,7 @@
 
 describe('template spec', () => {
     it('passes', () => {
-      cy.visit('localhost:3000')
+      cy.visit('https://localhost:3000')
       cy.contains('Log In').click();
       cy.origin('https://dev-6ary27eqnmjykel3.us.auth0.com', () => {
         const config = Cypress.require('../../cypress-settings.json');

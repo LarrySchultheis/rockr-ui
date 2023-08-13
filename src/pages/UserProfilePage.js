@@ -122,6 +122,7 @@ export default function UserProfilePage(props) {
                             Reset Password
                         </Button>
                         <Button
+                            id={'pause_btn'}
                             color={isPaused ? "success" : "error"}
                             variant="contained"
                             endIcon={isPaused ? <PlayArrowIcon/> : <PauseIcon/>}
