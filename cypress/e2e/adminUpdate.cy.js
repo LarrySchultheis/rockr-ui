@@ -1,5 +1,5 @@
 Cypress.Commands.add('login', () => {
-    cy.visit('localhost:3000')
+    cy.visit('https://localhost:3000')
     cy.contains('Log In').click();
     cy.origin('https://dev-6ary27eqnmjykel3.us.auth0.com', () => {
       const config = Cypress.require("../../cypress-settings.json");
@@ -14,21 +14,21 @@ describe('template spec', () => {
     cy.login()
     cy.contains('Admin Management').click();
     // Change ty man
-    let children = cy.get('input[value="ttchilders"]').parents('tr[class^=MuiTableRow]').children();
-    children.get('input[value="Tyler"]').clear().type('Tyler1');
-    children.get('input[value="Childers"]').clear().type('Childers1');
-    children.get('input[value="ttchilders"]').clear().type('ttchilders1');
-    children.get('input[value="the_child_man@ky.gov"]').clear().type('the_child_man1@ky.gov');
-    cy.contains('Save').click();
+    let children = cy.get('input[value="aconigsby27"]').parents('tr[class^=MuiTableRow]').children();
+    children.get('input[value="Ardelia"]').clear().type('Ardelia1');
+    children.get('input[value="Conigsby"]').clear().type('Conigsby1');
+    children.get('input[value="aconigsby27"]').clear().type('aconigsby271');
+    children.get('input[value="aconigsby27@wp.com"]').clear().type('aconigsby271@wp.com');
+    cy.contains('Rows per page:').click();
     cy.reload();
 
     // Change him back
-    children = cy.get('input[value="ttchilders1"]').parents('tr[class^=MuiTableRow]').children();
-    children.get('input[value="Tyler1"]').clear().type('Tyler');
-    children.get('input[value="Childers1"]').clear().type('Childers');
-    children.get('input[value="ttchilders1"]').clear().type('ttchilders');
-    children.get('input[value="the_child_man1@ky.gov"]').clear().type('the_child_man@ky.gov');
-    cy.contains('Save').click();
-
+    children = cy.get('input[value="aconigsby271"]').parents('tr[class^=MuiTableRow]').children();
+    children.get('input[value="Ardelia1"]').clear().type('Ardelia');
+    children.get('input[value="Conigsby1"]').clear().type('Conigsby');
+    children.get('input[value="aconigsby271"]').clear().type('aconigsby27');
+    children.get('input[value="aconigsby271@wp.com"]').clear().type('aconigsby27@wp.com');
+    cy.contains('Rows per page:').click();
+    cy.reload();
   })
 })

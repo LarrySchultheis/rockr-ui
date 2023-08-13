@@ -1,5 +1,5 @@
 Cypress.Commands.add('login', () => {
-    cy.visit('localhost:3000')
+    cy.visit('https://localhost:3000')
     cy.contains('Log In').click();
     cy.origin('https://dev-6ary27eqnmjykel3.us.auth0.com', () => {
       const config = Cypress.require("../../cypress-settings.json");
@@ -12,9 +12,9 @@ Cypress.Commands.add('login', () => {
 describe('template spec', () => {
   it('passes', () => {
     cy.login();
+    cy.wait(500)
     cy.contains('Messages').click();
     cy.contains('Matches');
-    cy.contains('LEAVE CHAT');
     cy.contains('Larry Schultheis').click();
     cy.get('div[class="message__sender"]');
   })

@@ -1,8 +1,3 @@
-function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  );
-}
 
 Cypress.Commands.add('login', () => {
     cy.visit('https://localhost:3000')
@@ -14,16 +9,10 @@ Cypress.Commands.add('login', () => {
       cy.contains('Continue').click({force: true});
     })
 })
-
 describe('template spec', () => {
   it('passes', () => {
     cy.login();
-    cy.wait(500)
-    cy.contains('Messages').click();
-    cy.contains('Larry Schultheis').click();
-    const uuid = uuidv4();
-    cy.get('input[class="message"').type(uuid);
-    cy.get('button[class="sendBtn"]').click();
-    cy.contains(uuid);
-  })
+    cy.contains('Profile').click();
+    cy.get('button[id="pause_btn"]').click();
+})
 })
